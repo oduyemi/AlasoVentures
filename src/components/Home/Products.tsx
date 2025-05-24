@@ -135,10 +135,10 @@ export const Products: React.FC = () => {
   return (
     <Box py={10} px={5} maxW="1200px" mx="auto">
       <Flex justify="center" mb={6} gap={4} wrap="wrap">
-        {['ready-made', 'fabrics', 'accessories'].map(option => (
+        {(['ready-made', 'fabrics', 'accessories'] as Product['category'][]).map(option => (
         <Button
             key={option}
-            onClick={() => setFilter(option as any)}
+            onClick={() => setFilter(option)}
             colorScheme={filter === option ? 'yellow' : 'gray'}
             variant={filter === option ? 'solid' : 'outline'}
             size="sm"

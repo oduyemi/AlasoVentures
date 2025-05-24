@@ -1,5 +1,5 @@
-// components/CountdownTimer.tsx
-import React, { useEffect, useState } from 'react';
+"use client";
+import React, { useEffect, useMemo, useState } from 'react';
 import { HStack, Text, VStack } from '@chakra-ui/react';
 
 interface CountdownTimerProps {
@@ -23,7 +23,7 @@ const getTimeLeft = (target: Date) => {
 };
 
 export const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate }) => {
-  const target = new Date(targetDate);
+  const target = useMemo(() => new Date(targetDate), [targetDate]);
   const [timeLeft, setTimeLeft] = useState(() => getTimeLeft(target));
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 // import { UserContext } from "../usercontext";
 // import { useCart } from "./Cart/CartContext";
 // import { useWishlist } from '../WishlistContext';
@@ -79,7 +79,7 @@ export const MainMenu: React.FC = () => {
           <Flex as="nav" className="navbar navbar-expand-lg navbar-dark py-3 py-lg-0 px-0">
             <Link className="text-decoration-none d-block d-lg-none" href="/">
                 <Image 
-                  src="/images/logo/logo_transparent.png" 
+                  src="/images/logo/trans_logo.png" 
                   width={40} 
                   height={40}
                   alt="sitelogo" 

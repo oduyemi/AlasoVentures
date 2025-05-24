@@ -1,3 +1,4 @@
+"use client";
 import {
   Box,
   Grid,
@@ -25,39 +26,22 @@ export const HomeCollections = () => {
   };
 
   const items = [
-    {
-      title: "Custom Asọòkè",
-      image: "/images/custom.jpeg",
-      link: "#",
-    },
-    {
-      title: "Off the Shelf",
-      image: "/images/shelf.jpeg",
-      link: "#",
-    },
-    {
-      title: "Ready to Wear",
-      image: "/images/agbada.jpeg",
-      link: "#",
-    },
-    {
-      title: "Made to Fit",
-      image: "/images/fit.png",
-      link: "#",
-    },
+    { title: "Custom Asọòkè", image: "/images/custom.jpeg", link: "#" },
+    { title: "Off the Shelf", image: "/images/shelf.jpeg", link: "#" },
+    { title: "Ready to Wear", image: "/images/agbada.jpeg", link: "#" },
+    { title: "Made to Fit", image: "/images/fit.png", link: "#" },
   ];
 
+  // ✅ Precompute hook values before render/map
   const bg = useColorModeValue("white", "gray.900");
   const textColor = useColorModeValue("gray.700", "gray.300");
   const headingColor = useColorModeValue("gray.800", "white");
+  const cardBg = useColorModeValue("gray.30", "gray.800");
+  const hoverLinkColor = useColorModeValue("black", "white");
+  const dividerColor = useColorModeValue("gray.300", "gray.600");
 
   return (
-    <Box
-      w="full"
-      py={{ base: 12, md: 20 }}
-      px={{ base: 6, md: 16 }}
-      bg={bg}
-    >
+    <Box w="full" py={{ base: 12, md: 20 }} px={{ base: 6, md: 16 }} bg={bg}>
       <Heading
         fontSize={{ base: "3xl", md: "4xl" }}
         textAlign="center"
@@ -67,10 +51,12 @@ export const HomeCollections = () => {
       >
         Our Collections
       </Heading>
+
       <Text textAlign="center" fontSize="md" color={textColor} mb={10}>
         Discover our latest range of stylish and quality products.
       </Text>
-      <Divider mb={12} borderColor={useColorModeValue("gray.300", "gray.600")} />
+
+      <Divider mb={12} borderColor={dividerColor} />
 
       <Grid
         templateColumns={{ base: "1fr", md: "1fr 1fr" }}
@@ -89,7 +75,7 @@ export const HomeCollections = () => {
             <Box
               h="100%"
               p={{ base: 4, md: 6 }}
-              bg={useColorModeValue("gray.30", "gray.800")}
+              bg={cardBg}
               borderRadius="xl"
               boxShadow="none"
               transition="box-shadow 0.3s ease"
@@ -101,7 +87,6 @@ export const HomeCollections = () => {
               <Grid
                 templateColumns={{ base: "1fr", md: "1fr 1fr" }}
                 gap={6}
-                // align="center"
                 h="100%"
               >
                 <GridItem>
@@ -121,10 +106,7 @@ export const HomeCollections = () => {
                 </GridItem>
                 <GridItem>
                   <Stack spacing={4} h="100%" justify="center">
-                    <Heading
-                      fontSize={{ base: "2xl", md: "3xl" }}
-                      color={headingColor}
-                    >
+                    <Heading fontSize={{ base: "2xl", md: "3xl" }} color={headingColor}>
                       {item.title}
                     </Heading>
                     <Link
@@ -133,7 +115,7 @@ export const HomeCollections = () => {
                       fontSize="md"
                       color={textColor}
                       _hover={{
-                        color: useColorModeValue("black", "white"),
+                        color: hoverLinkColor,
                         textDecoration: "underline",
                       }}
                       transition="color 0.3s ease"

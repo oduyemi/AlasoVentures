@@ -1,5 +1,5 @@
 "use client";
-import React from 'react';
+import React from "react";
 import {
   Box,
   Button,
@@ -10,36 +10,52 @@ import {
   Text,
   VStack,
   chakra,
+  shouldForwardProp,
   useBreakpointValue,
-} from '@chakra-ui/react';
-import { motion } from 'framer-motion';
-import Slider from 'react-slick';
+} from "@chakra-ui/react";
+import { motion, isValidMotionProp } from "framer-motion";
+import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+
+
+
+// Carousel items
 const carouselItems = [
   {
     imgSrc: "/images/hero1.jpg",
-    title: 'Asooke Specials',
+    title: "Asooke Specials",
     description: `Look amazing on your big day`,
   },
   {
     imgSrc: "/images/hero2.jpg",
     title: "What's Trending?",
-    description: 'See how much you can do with your asooke fabrics',
+    description: "See how much you can do with your asooke fabrics",
   },
   {
     imgSrc: "/images/hero3.jpg",
-    title: 'Ready Made Wears',
-    description: 'Awesome ready-made asooke outfits to grace your occasion',
+    title: "Ready Made Wears",
+    description: "Awesome ready-made asooke outfits to grace your occasion",
   },
 ];
 
 // Motion Components
-const MotionImage = chakra(motion.img);
-const MotionHeading = chakra(motion.h1);
-const MotionText = chakra(motion.p);
-const MotionBox = chakra(motion.div);
+const MotionBox = chakra(motion.div, {
+  shouldForwardProp: (prop) => isValidMotionProp(prop) || shouldForwardProp(prop),
+});
+
+const MotionImage = chakra(motion.img, {
+  shouldForwardProp: (prop) => isValidMotionProp(prop) || shouldForwardProp(prop),
+});
+
+const MotionHeading = chakra(motion.h1, {
+  shouldForwardProp: (prop) => isValidMotionProp(prop) || shouldForwardProp(prop),
+});
+
+const MotionText = chakra(motion.p, {
+  shouldForwardProp: (prop) => isValidMotionProp(prop) || shouldForwardProp(prop),
+});
 
 export const Banner: React.FC = () => {
   const settings = {
@@ -57,11 +73,11 @@ export const Banner: React.FC = () => {
 
   return (
     <Box maxW="100%" mb={10} mt={4} px={{ base: 2, md: 4 }}>
-      <Flex direction={{ base: 'column', lg: 'row' }} gap={6}>
+      <Flex direction={{ base: "column", lg: "row" }} gap={6}>
         {/* Carousel Section */}
         <Box flex="2" borderRadius="xl" overflow="hidden">
           <Slider {...settings}>
-            {carouselItems.map((item, index) => (
+            {carouselItems.map((item) => (
               <MotionBox
                 key={item.imgSrc}
                 position="relative"
@@ -73,7 +89,9 @@ export const Banner: React.FC = () => {
                 overflow="hidden"
                 initial={{ scale: 0.95 }}
                 animate={{ scale: 1 }}
-                transition="duration: 0.6, delay: 0.2"
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                transition={{ duration: 0.6, delay: 0.2 } as any}
+
               >
                 <MotionImage
                   src={item.imgSrc}
@@ -83,8 +101,9 @@ export const Banner: React.FC = () => {
                   loading="lazy"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition="duration: 0.6, delay: 0.2"
-                  sx={{ objectFit: 'cover' }} // Fixed objectFit here
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  transition={{ duration: 0.6, delay: 0.2 } as any}
+                  style={{ objectFit: "cover" }}
                 />
 
                 {/* Overlay */}
@@ -121,7 +140,8 @@ export const Banner: React.FC = () => {
                       fontWeight="extrabold"
                       initial={{ y: 20, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
-                      transition="duration: 0.6, delay: 0.2"
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      transition={{ duration: 0.6, delay: 0.2 } as any}
                     >
                       {item.title}
                     </MotionHeading>
@@ -131,10 +151,12 @@ export const Banner: React.FC = () => {
                       color="whiteAlpha.800"
                       initial={{ y: 20, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
-                      transition="duration: 0.6, delay: 0.4"
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      transition={{ duration: 0.6, delay: 0.4 } as any}
                     >
                       {item.description}
                     </MotionText>
+
                     <Link href="/shop">
                       <MotionBox
                         whileHover={{ scale: 1.05 }}
@@ -148,7 +170,7 @@ export const Banner: React.FC = () => {
                           boxShadow="lg"
                           mt={2}
                         >
-                          Shop Now
+                          Shop Now
                         </Button>
                       </MotionBox>
                     </Link>
@@ -170,7 +192,8 @@ export const Banner: React.FC = () => {
               overflow="hidden"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition="duration: 0.8, delay: index * 0.3"
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              transition={{ duration: 0.8, delay: index * 0.3 } as any}
             >
               <Image
                 src={offerImg}
@@ -201,13 +224,7 @@ export const Banner: React.FC = () => {
                 >
                   {index === 0 ? "Buy Aṣọ òkè Fabrics" : "Book Appointment"}
                 </Text>
-                <Heading
-                  as="h3"
-                  size="sm"
-                  fontWeight="light"
-                  mb={2}
-                  maxW="90%"
-                >
+                <Heading as="h3" size="sm" fontWeight="light" mb={2} maxW="90%">
                   {index === 0
                     ? "Check out our selection for unique or custom, handmade pieces."
                     : "Get expert styling, fashion advice & outfit recommendations."}

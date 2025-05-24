@@ -18,15 +18,13 @@ import Image from "next/image";
 
 export const MidNav: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
-  // const Logo = require("/images/logo/logo.png");
-
   return (
     <Flex bg="white" py={3} px={{ base: 4, xl: 5 }} display={{ base: "flex", lg: "flex" }}>
       {/* Logo Section */}
       <Box width="33.33%" className="d-md-block d-none">
         <Link href="/" textDecoration="none">
           <Image 
-            src="/images/logo/logo.png" 
+            src="/images/logo/trans_logo.png" 
             width={40} 
             height={40}
             alt="sitelogo" />
