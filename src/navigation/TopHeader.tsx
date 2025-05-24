@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Flex,
@@ -10,19 +10,39 @@ import {
   MenuItem,
   Badge,
   Icon,
+  Drawer,
+  DrawerBody,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  useDisclosure,
+  IconButton,
 } from '@chakra-ui/react';
-import { ChevronDownIcon } from '@chakra-ui/icons';
+import { ChevronDownIcon, HamburgerIcon } from '@chakra-ui/icons';
 import { FaHeart, FaShoppingCart } from 'react-icons/fa';
 
 export const TopHeader: React.FC = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Box bg="black" px={{ base: 4, xl: 10 }} py={2}>
       <Flex
-        direction={{ base: "column", lg: "row" }}
-        align={{ base: "center", lg: "center" }}
+        direction={{ base: "row", lg: "row" }}
+        align="center"
         justify="space-between"
       >
-        {/* Left-side links */}
+        {/* Hamburger Icon for Mobile */}
+        <IconButton
+          aria-label="Open menu"
+          icon={<HamburgerIcon />}
+          variant="ghost"
+          color="white"
+          display={{ base: "flex", lg: "none" }}
+          onClick={onOpen}
+        />
+
+        {/* Left-side links (desktop only) */}
         <Flex
           display={{ base: "none", lg: "flex" }}
           align="center"
@@ -35,13 +55,10 @@ export const TopHeader: React.FC = () => {
           <Link color="gray.100" href="/contact">Contact</Link>
         </Flex>
 
-        {/* Right-side: My Account Dropdown & Icons */}
+        {/* Right-side: My Account & Mobile Icons */}
         <Flex
           align="center"
-          justify={{ base: "center", lg: "flex-end" }}
           gap={4}
-          mt={{ base: 2, lg: 0 }}
-          width="100%"
         >
           {/* My Account Dropdown */}
           <Menu>
@@ -61,7 +78,7 @@ export const TopHeader: React.FC = () => {
             </MenuList>
           </Menu>
 
-          {/* Icons (visible on mobile only) */}
+          {/* Icons (only on mobile) */}
           <Flex display={{ base: "flex", lg: "none" }} align="center" gap={4}>
             <Box position="relative">
               <Icon as={FaHeart} fontSize="20px" color="gray.200" />
@@ -93,6 +110,25 @@ export const TopHeader: React.FC = () => {
           </Flex>
         </Flex>
       </Flex>
+
+      {/* Mobile Navigation Drawer */}
+      <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
+        <DrawerOverlay />
+        <DrawerContent bg="black" color="white">
+          <DrawerCloseButton />
+          <DrawerHeader>Menu</DrawerHeader>
+
+          <DrawerBody>
+            <Flex direction="column" gap={4}>
+              <Link href="/" onClick={onClose}>Home</Link>
+              <Link href="/about" onClick={onClose}>About</Link>
+              <Link href="/faqs" onClick={onClose}>FAQs</Link>
+              <Link href="/blog" onClick={onClose}>Blog</Link>
+              <Link href="/contact" onClick={onClose}>Contact</Link>
+            </Flex>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </Box>
   );
 };
