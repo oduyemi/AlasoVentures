@@ -26,7 +26,7 @@ export const TopHeader: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box bg="black" px={{ base: 4, xl: 10 }} py={2}>
+    <Box bg="#3a3a3a" px={{ base: 4, xl: 10 }} py={2}>
       <Flex
         direction={{ base: "row", lg: "row" }}
         align="center"
@@ -73,8 +73,8 @@ export const TopHeader: React.FC = () => {
               My Account
             </MenuButton>
             <MenuList>
-              <MenuItem as="a" href="/login">Login</MenuItem>
-              <MenuItem as="a" href="/register">Register</MenuItem>
+              <MenuItem  _hover={{ bg: "gray.700" }} as="a" href="/login">Login</MenuItem>
+              <MenuItem  _hover={{ bg: "gray.700" }} as="a" href="/register">Register</MenuItem>
             </MenuList>
           </Menu>
 

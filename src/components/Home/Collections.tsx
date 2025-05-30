@@ -33,12 +33,12 @@ export const HomeCollections = () => {
   ];
 
   // ✅ Precompute hook values before render/map
-  const bg = useColorModeValue("white", "gray.900");
-  const textColor = useColorModeValue("gray.700", "gray.300");
-  const headingColor = useColorModeValue("gray.800", "white");
-  const cardBg = useColorModeValue("gray.30", "gray.800");
-  const hoverLinkColor = useColorModeValue("black", "white");
-  const dividerColor = useColorModeValue("gray.300", "gray.600");
+  const bg = useColorModeValue("#000", "gray.200");
+  const textColor = useColorModeValue("gray.200", "gray.300");
+  const headingColor = useColorModeValue("gray.300", "white");
+  const cardBg = useColorModeValue("gray.30", "gray.300");
+  const hoverLinkColor = useColorModeValue("#fff", "white");
+  const dividerColor = useColorModeValue("gray.200", "gray.400");
 
   return (
     <Box w="full" py={{ base: 12, md: 20 }} px={{ base: 6, md: 16 }} bg={bg}>
@@ -46,7 +46,7 @@ export const HomeCollections = () => {
         fontSize={{ base: "3xl", md: "4xl" }}
         textAlign="center"
         mb={2}
-        bgGradient="linear(to-r, #C28840, #000)"
+        bgGradient="linear(to-r, #C28840, #fff)"
         bgClip="text"
       >
         Our Collections

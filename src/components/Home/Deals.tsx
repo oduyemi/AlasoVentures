@@ -78,18 +78,18 @@ export const Deals: React.FC = () => {
           align="center"
           justify="space-between"
           gap={10}
-          bg="gray.900"
+          bg="#3a3a3a"
           color="white"
           p={8}
           borderRadius="xl"
           boxShadow="xl"
         >
           <VStack align="start" spacing={4} flex={1}>
-            <Text fontSize="xl" fontWeight="medium">
+            <Text fontSize="xl" color="gray.400" fontWeight="medium">
               {deal.subtitle}
             </Text>
             <Heading size="2xl" lineHeight="short">
-              <Text as="span" color="#C28840">
+              <Text as="span" bgGradient="linear(to-r, #C28840, #fff)" bgClip="text">
                 {deal.title}
               </Text>
             </Heading>

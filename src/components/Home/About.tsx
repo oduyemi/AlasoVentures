@@ -13,7 +13,7 @@ const MotionBox = motion(Box);
 const MotionImage = motion(Image);
 
 export const AboutSection = () => {
-  const textColor = useColorModeValue('gray.700', 'gray.300');
+  const textColor = useColorModeValue('gray.200', 'gray.400');
   const imageShadow = useColorModeValue('xl', '2xl');
   const imageMaxW = useBreakpointValue({ base: '100%', md: '400px' });
 
@@ -25,7 +25,7 @@ export const AboutSection = () => {
       px={{ base: 6, md: 20 }}
       py={{ base: 12, md: 24 }}
       gap={{ base: 12, md: 16 }}
-      bg={useColorModeValue('white', 'gray.900')}
+      bg={useColorModeValue('#000', 'gray.900')}
     >
       {/* Text Content */}
       <MotionBox
@@ -39,7 +39,7 @@ export const AboutSection = () => {
           fontSize={{ base: '3xl', md: '4xl' }}
           fontWeight="extrabold"
           mb={6}
-          bgGradient="linear(to-r, #C28840, #000)"
+          bgGradient="linear(to-r, #C28840, #fff)"
           bgClip="text"
         >
           Hi, we’re Kòfowórọlá Alásọ Ventures.

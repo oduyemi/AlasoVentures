@@ -38,7 +38,7 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate }) =>
     <HStack spacing={4} mt={4}>
       {Object.entries(timeLeft).map(([label, value]) => (
         <VStack key={label} spacing={0}>
-          <Text fontSize="2xl" fontWeight="bold">
+          <Text color="gray.400" fontSize="2xl" fontWeight="bold">
             {value.toString().padStart(2, '0')}
           </Text>
           <Text fontSize="sm" textTransform="capitalize" color="gray.400">

@@ -130,7 +130,7 @@ export const Products: React.FC = () => {
     };
     const ctaLink = categoryToPath[filter];
     const displayedProducts = filteredProducts.slice(0, 4)
-    const bgColor = useColorModeValue('white', 'gray.800');
+    const bgColor = useColorModeValue('#000', 'gray.400');
 
   return (
     <Box py={10} px={5} maxW="1200px" mx="auto">
@@ -139,7 +139,7 @@ export const Products: React.FC = () => {
         <Button
             key={option}
             onClick={() => setFilter(option)}
-            colorScheme={filter === option ? 'yellow' : 'gray'}
+            colorScheme={filter === option ? 'yellow' : 'red'}
             variant={filter === option ? 'solid' : 'outline'}
             size="sm"
             textTransform="capitalize"
@@ -162,7 +162,7 @@ export const Products: React.FC = () => {
             display="flex"
             flexDirection="column"
           >
-            <Box position="relative" h="250px" w="100%">
+            <Box position="relative" h="250px" w="100%"color="#fff" >
               {product.label && (
                 <Badge position="absolute" top={2} left={2} colorScheme="red" px={2}>
                   {product.label}
@@ -179,16 +179,16 @@ export const Products: React.FC = () => {
             </Box>
 
             <Flex justify="center" gap={4} mt={2}>
-              <IconButton aria-label="Like" icon={<FaHeart />} variant="ghost" size="sm" />
-              <IconButton aria-label="Compare" icon={<FaBalanceScale />} variant="ghost" size="sm" />
-              <IconButton aria-label="Search" icon={<FaSearch />} variant="ghost" size="sm" />
+              <IconButton aria-label="Like" icon={<FaHeart />} color="#fff" variant="ghost" size="sm" />
+              <IconButton aria-label="Compare" icon={<FaBalanceScale />} color="#fff" variant="ghost" size="sm" />
+              <IconButton aria-label="Search" icon={<FaSearch />} color="#fff" variant="ghost" size="sm" />
             </Flex>
 
             <Box p={4} mt="auto">
-              <Text fontWeight="bold" bgGradient="linear(to-l,#000,  #C28840, #000)" bgClip="text" mb={2}>
+              <Text fontWeight="bold" bgGradient="linear(to-l,#fff,  #C28840, #fff)" bgClip="text" mb={2}>
                 {product.name}
               </Text>
-              <Button size="sm" bgColor="black" color="white" variant="solid" mb={3} w="full">
+              <Button size="sm" bgColor="#fff" color="#000" variant="solid" mb={3} w="full">
                 Buy via WhatsApp
               </Button>
               <Text fontWeight="bold" color="#C28840" fontSize="lg">

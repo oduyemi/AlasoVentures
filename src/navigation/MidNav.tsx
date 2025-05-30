@@ -19,7 +19,7 @@ export const MidNav: React.FC = () => {
 
   return (
     <Flex
-      bg="white"
+      bg="#000"
       py={3}
       px={{ base: 4, xl: 5 }}
       direction={{ base: "column", md: "row" }}
@@ -36,9 +36,9 @@ export const MidNav: React.FC = () => {
       >
         <Link href="/" textDecoration="none" display="inline-block">
           <Image
-            src="/images/logo/trans_logo.png"
-            width={40}
-            height={40}
+            src="/images/logo/logo.png"
+            width={100}
+            height={100}
             alt="sitelogo"
           />
         </Link>
@@ -81,10 +81,10 @@ export const MidNav: React.FC = () => {
         <Text fontWeight="bold" color="#C28840" mb={1}>
           Contact
         </Text>
-        <Heading as="h5" size="xs" m={0} mb={1}>
+        <Heading as="h5" color="#fff" size="xs" m={0} mb={1}>
           +234 703 473 9950
         </Heading>
-        <Heading as="h5" size="xs" m={0}>
+        <Heading as="h5" color="#fff" size="xs" m={0}>
           kofoworola.alasooke@gmail.com
         </Heading>
       </Box>

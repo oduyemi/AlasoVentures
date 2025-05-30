@@ -20,6 +20,7 @@
     "bootstrap": "^5.3.5",
     "framer-motion": "^12.6.5",
     "next": "15.3.0",
+    "pixi.js": "^8.9.2",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
     "react-dom": "^19.0.0",
