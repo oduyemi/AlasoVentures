@@ -13,7 +13,7 @@ export default function NotFound() {
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      minH="50vh"
+      minH="44vh"
       bg="radial-gradient(ellipse at center, #1a1a1a 0%, #000000 100%)"
       color="white"
       position="relative"
@@ -31,12 +31,13 @@ export default function NotFound() {
         404
       </Heading>
       <Text
-        mt={4}
+        mt={1}
         fontSize="xl"
         className="animate__animated animate__fadeInUp"
+        color="gray.400"
         zIndex="1"
       >
-        Page Not Found
+        The page you are looking for does not exist
       </Text>
       <Box className="stars" />
     </Box>
