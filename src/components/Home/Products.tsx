@@ -139,7 +139,7 @@ export const Products: React.FC = () => {
         <Button
             key={option}
             onClick={() => setFilter(option)}
-            colorScheme={filter === option ? 'yellow' : 'red'}
+            colorScheme={filter === option ? 'yellow' : 'orange'}
             variant={filter === option ? 'solid' : 'outline'}
             size="sm"
             textTransform="capitalize"
