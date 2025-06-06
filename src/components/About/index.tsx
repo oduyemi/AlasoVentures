@@ -85,8 +85,8 @@ export const AboutUs = () => {
                   masterpieces.
                 </>,
                 <>
-                  Whether you're walking down the aisle or making a statement, our pieces are more
-                  than fashion—they're living stories.
+                  Whether you&apos;re walking down the aisle or making a statement, our pieces are more
+                  than fashion—they&apos;re living stories.
                 </>,
               ].map((content, i) => (
                 <MotionText

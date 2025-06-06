@@ -41,7 +41,7 @@ export const Contact = () => {
           bgClip="text"
           fontWeight="extrabold"
         >
-          We'd Love to Hear From You
+          We&apos;d Love to Hear From You
         </Heading>
         <Text fontSize="md" color="gray.400" maxW="xl" mx="auto">
           Whether it’s a custom attire, business inquiry, or creative

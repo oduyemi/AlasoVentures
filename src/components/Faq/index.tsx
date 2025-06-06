@@ -85,7 +85,7 @@ export const FAQ = () => {
           </Heading>
 
           <Text maxW="2xl" fontSize="lg" color={textColor}>
-            Find answers to your most common questions below. Need further help? We're just a message away.
+            Find answers to your most common questions below. Need further help? We&apos;re just a message away.
           </Text>
         </VStack>
 
