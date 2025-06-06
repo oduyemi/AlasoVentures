@@ -19,7 +19,6 @@ export const MidNav: React.FC = () => {
 
   return (
     <Flex
-      bg="#000"
       py={3}
       px={{ base: 4, xl: 5 }}
       direction={{ base: "column", md: "row" }}
@@ -36,7 +35,7 @@ export const MidNav: React.FC = () => {
       >
         <Link href="/" textDecoration="none" display="inline-block">
           <Image
-            src="/images/logo/logo.png"
+            src="/images/logo/logo_transparent.png"
             width={100}
             height={100}
             alt="sitelogo"

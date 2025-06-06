@@ -25,7 +25,7 @@ export const AboutSection = () => {
       px={{ base: 6, md: 20 }}
       py={{ base: 12, md: 24 }}
       gap={{ base: 12, md: 16 }}
-      bg={useColorModeValue('#000', 'gray.900')}
+      bg={useColorModeValue('#0D0D0D', 'gray.900')}
     >
       {/* Text Content */}
       <MotionBox
@@ -42,11 +42,11 @@ export const AboutSection = () => {
           bgGradient="linear(to-r, #C28840, #fff)"
           bgClip="text"
         >
-          Hi, we’re Kòfowórọlá Alásọ Ventures.
+          Hi, we&apos;re Kòfowórọlá Alásọ Ventures.
         </Heading>
 
         <Text fontSize="lg" color={textColor} mb={4} lineHeight="1.8">
-          Founded by <strong>Kofoworola Aro</strong>, our brand celebrates heritage, craftsmanship, and culture through timeless fashion and fabric artistry.
+          Founded by <strong>Kòfowórọlá Aró</strong>, our brand celebrates heritage, craftsmanship, and culture through timeless fashion and fabric artistry.
         </Text>
 
         <Text fontSize="lg" color={textColor} lineHeight="1.8">

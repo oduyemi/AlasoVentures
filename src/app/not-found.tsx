@@ -34,7 +34,7 @@ export default function NotFound() {
         mt={1}
         fontSize="xl"
         className="animate__animated animate__fadeInUp"
-        color="gray.400"
+        color="gray.300"
         zIndex="1"
       >
         The page you are looking for does not exist

@@ -33,7 +33,7 @@ export const HomeCollections = () => {
   ];
 
   // ✅ Precompute hook values before render/map
-  const bg = useColorModeValue("#000", "gray.200");
+  const bg = useColorModeValue("#0D0D0D", "gray.200");
   const textColor = useColorModeValue("gray.200", "gray.300");
   const headingColor = useColorModeValue("gray.300", "white");
   const cardBg = useColorModeValue("gray.30", "gray.300");

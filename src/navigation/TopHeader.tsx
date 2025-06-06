@@ -50,7 +50,7 @@ export const TopHeader: React.FC = () => {
         >
           <Link color="gray.100" href="/">Home</Link>
           <Link color="gray.100" href="/about">About</Link>
-          <Link color="gray.100" href="/faqs">FAQs</Link>
+          <Link color="gray.100" href="/faq">FAQs</Link>
           <Link color="gray.100" href="/blog">Blog</Link>
           <Link color="gray.100" href="/contact">Contact</Link>
         </Flex>

@@ -130,7 +130,7 @@ export const Products: React.FC = () => {
     };
     const ctaLink = categoryToPath[filter];
     const displayedProducts = filteredProducts.slice(0, 4)
-    const bgColor = useColorModeValue('#000', 'gray.400');
+    const bgColor = useColorModeValue('#0D0D0D', 'gray.400');
 
   return (
     <Box py={10} px={5} maxW="1200px" mx="auto">
@@ -188,7 +188,7 @@ export const Products: React.FC = () => {
               <Text fontWeight="bold" bgGradient="linear(to-l,#fff,  #C28840, #fff)" bgClip="text" mb={2}>
                 {product.name}
               </Text>
-              <Button size="sm" bgColor="#fff" color="#000" variant="solid" mb={3} w="full">
+              <Button size="md" bgColor="#fff" color="#0D0D0D" variant="solid" mb={3} w="full">
                 Buy via WhatsApp
               </Button>
               <Text fontWeight="bold" color="#C28840" fontSize="lg">

@@ -31,7 +31,7 @@ export const MainMenu: React.FC = () => {
 //   }, [wishlist]); // Will log whenever wishlist changes  
 
   return (
-    <Box className="container-fluid mb-30" bgColor="#000">
+    <Box className="container-fluid mb-30">
       <Flex px={{ base: 4, xl: 5 }} flexDirection={{ base: 'column', lg: 'row' }}>
         <Box className="col-lg-3 d-none d-lg-block">
           <Box
@@ -66,10 +66,12 @@ export const MainMenu: React.FC = () => {
               className="navbar-light"
             >
               <VStack spacing={0} align="stretch" pl={4}>
-                <Link className="dropdown-item" href="/fabrics">Custom Aṣọ òkè</Link>
-                <Link className="dropdown-item" href="/bridals">Made To Fit</Link>
-                <Link className="dropdown-item" href="/bridals">Off The Shelve</Link>
-                <Link className="dropdown-item" href="/ready-to-wear">Ready To Wear</Link>
+                <Link className="dropdown-item" href="/shop">Akwete</Link>
+                <Link className="dropdown-item" href="/shop">Aṣọ òkè</Link>
+                <Link className="dropdown-item" href="/shop">Kente</Link>
+                <Link className="dropdown-item" href="/shop">Off The Shelve</Link>
+                <Link className="dropdown-item" href="/shop">Ready To Wear</Link>
+                <Link className="dropdown-item" href="/shop">Saki</Link>
               </VStack>
             </Box>
           )}
@@ -79,7 +81,7 @@ export const MainMenu: React.FC = () => {
           <Flex as="nav" className="navbar navbar-expand-lg navbar-dark py-3 py-lg-0 px-0">
             <Link className="text-decoration-none d-block d-lg-none" href="/">
                 <Image 
-                  src="/images/logo/trans_logo.png" 
+                  src="/images/logo/logo_transparent.png" 
                   width={40} 
                   height={40}
                   alt="sitelogo" 
@@ -96,7 +98,7 @@ export const MainMenu: React.FC = () => {
               <Flex justifyContent="space-between" className="navbar-nav mr-auto py-0 mt-2" color="#fff">
                 <Link href="/shop" className="nav-item nav-link">Shop</Link>
                 <Link href="/services" className="nav-item nav-link">Services</Link>
-                <Link href="/dashboard" className="nav-item nav-link">Dashboard</Link>
+                <Link href="/book-appointment" className="nav-item nav-link">Book Appointment</Link>
               </Flex>
               <HStack spacing={4} className="navbar-nav ml-auto py-0 d-none d-lg-block">
                 <Flex justifyContent="space-between">

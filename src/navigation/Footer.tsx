@@ -35,10 +35,14 @@ export const Footer: React.FC = () => {
                       About
                     </Heading>
                     <Text color="#fff" sx={{ width: {md:"70%"} }}>
-                    VoIP services are tailored for industries 
-                    requiring consistent, reliable connectivity 
-                    and are backed by a dedicated team of engineers 
-                    stationed in strategic locations in the UK.
+                    We redefine Aso-Oke fashion, preserving its 
+                    cultural significance while adapting to 
+                    contemporary styles. We blend vintage Yoruba 
+                    aesthetics with contemporary fashion, offering 
+                    both custom and ready-to-wear pieces. Our designs 
+                    are prominently featured in traditional Nigerian 
+                    ceremonies, such as weddings, where Aso-Oke 
+                    attire is customary.
                     </Text>
                   </Box>
                   <Box>
@@ -84,7 +88,7 @@ export const Footer: React.FC = () => {
                   </GridItem>
                   <GridItem>
                     <VStack align="start" spacing={2} style={{ marginTop: "20%" }} className="whitie">
-                      <Link href="packages" _hover={{ color: "#C28840" }}>Packages</Link>
+                      <Link href="/services" _hover={{ color: "#C28840" }}>Services</Link>
                       <Link href="/contact" _hover={{ color: "#C28840" }}>Contact</Link>
                     </VStack>
                   </GridItem>

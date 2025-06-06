@@ -9,6 +9,7 @@ import { HomeCollections } from "@/components/Home/Collections";
 import { Products } from "@/components/Home/Products";
 import { Deals } from "@/components/Home/Deals";
 import { AboutSection } from "@/components/Home/About";
+import { FeaturedIn } from "@/components/Home/FeaturedIn";
 // import { AdBox } from "@/components/Home/AdBox";
 
 export default function Home() {
@@ -20,6 +21,7 @@ export default function Home() {
           <Features />
           <AboutSection />
           <HomeCollections />
+          <FeaturedIn />
           <Products />
           <Deals />
           {/* <Intro />

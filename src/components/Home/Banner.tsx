@@ -236,7 +236,7 @@ export const Banner: React.FC = () => {
                       variant="outline"
                       borderColor="white"
                       color="white"
-                      _hover={{ bg: "#000" }}
+                      _hover={{ bg: "#0D0D0D" }}
                       boxShadow="base"
                     >
                       {index === 0 ? "Buy Now" : "Book Now"}
