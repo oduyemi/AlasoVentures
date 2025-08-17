@@ -1,13 +1,12 @@
+import { Suspense } from "react";
 import { Shop } from "@/components/Shop";
 
 
 
 export default function shop () {
- 
-    return(
-        <>
-            <Shop />
-            
-        </>
-    )
+    return (
+    <Suspense fallback={<div>Loading shop...</div>}>
+      <Shop />
+    </Suspense>
+  );
 }
