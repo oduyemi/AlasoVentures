@@ -81,7 +81,7 @@ export const MidNav: React.FC = () => {
           Contact
         </Text>
         <Heading as="h5" color="#fff" size="xs" m={0} mb={1}>
-           +234 901 801 5143
+           +234 915 580 3902
         </Heading>
         <Heading as="h5" color="#fff" size="xs" m={0}>
           kofoworola.alasooke@gmail.com

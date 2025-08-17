@@ -14,8 +14,8 @@ export const CallButton: React.FC = () => {
       style={{
         position: 'fixed',
         bottom: '20px',
-        right: '20px',
-        backgroundColor: '#25D366', // nice green
+        right: '90px',
+        backgroundColor: '#ccc', 
         border: 'none',
         borderRadius: '50%',
         padding: '16px',
@@ -25,7 +25,7 @@ export const CallButton: React.FC = () => {
       }}
       aria-label="Call us"
     >
-      <FaPhone size={24} color="#fff" />
+      <FaPhone size={24} color="#000" />
     </button>
   );
 };
