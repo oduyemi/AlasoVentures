@@ -13,6 +13,7 @@ import { MidNav } from "@/navigation/MidNav";
 import { MainMenu } from "@/navigation/MainMenu";
 import { Footer } from "@/navigation/Footer";
 import { WhatsAppChatButton } from "@/components/LiveChat";
+import { CallButton } from "@/components/Call";
 
 
 export default function RootLayout({
@@ -87,6 +88,7 @@ const ClientSideLayout = ({ children }: { children: React.ReactNode }) => {
       {!isAdminRoute && (
         <>
           <WhatsAppChatButton />
+          <CallButton />
         <Box className="mt-5">
 
           <Footer />

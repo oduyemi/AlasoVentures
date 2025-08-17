@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"cd server && npm run dev\" \"next dev --turbo\"",
-    "build": "concurrently \"cd server && npm run build\" \"next build\"",
-    "start": "node server/build/dist/index.js",
-    "compile": "tsc -p server -w"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.2.4",
@@ -18,7 +18,9 @@
     "@types/slick-carousel": "^1.6.40",
     "animate.css": "^4.1.1",
     "bootstrap": "^5.3.5",
+    "cloudinary": "^2.7.0",
     "framer-motion": "^12.6.5",
+    "mongoose": "^8.17.1",
     "next": "^15.3.0",
     "pixi.js": "^8.9.2",
     "react": "^19.0.0",
