@@ -55,13 +55,12 @@ const initialState: FormState = {
   instructions: "",
   terms: false,
 };
-
-// >>> Put your business WhatsApp number here in international format, no plus sign.
 const WHATSAPP_NUMBER = "2348094217767";
 
 export default function PreOrder() {
   const toast = useToast();
   const [formData, setFormData] = useState<FormState>(initialState);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [submitting, setSubmitting] = useState(false);
 
   const handleChange = (

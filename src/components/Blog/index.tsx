@@ -21,6 +21,18 @@ import {
 import { motion } from "framer-motion";
 import { useState } from "react";
 
+interface Post {
+  id: number; 
+  title: string;
+  excerpt: string;
+  image: string;
+  content?: string; 
+  category: string;
+  date: string;
+}
+
+
+
 const MotionBox = motion(Box);
 const MotionVStack = motion(VStack);
 const MotionImage = motion(Image);
@@ -73,11 +85,10 @@ export const Blog = () => {
   const bg = "#0D0D0D";
   const textColor = "gray.400";
   const headingColor = "white";
-
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [selectedPost, setSelectedPost] = useState<any>(null);
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
-  const handleOpen = (post: any) => {
+  const handleOpen = (post: Post) => {
     setSelectedPost(post);
     onOpen();
   };
