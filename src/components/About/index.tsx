@@ -69,9 +69,20 @@ export const AboutUs = () => {
               {[
                 <>
                   <Text as="span" fontWeight="semibold" color="gray.300">
-                    At Kòfowórọlá Alásọ,
+                    At Kòfowórọlá Alásọòkè
                   </Text>{" "}
-                  we are dedicated to the art and tradition of African textile craftsmanship.
+                  is a subsidiary of ElegancebyRholarglow which specialize in designing, 
+                  weaving, tailoring bespoke Aso oke individuals and group of people for 
+                  all events both home and abroad. We also have a sister arm, EleganceRTW 
+                  which specializes in using asooke for ReadyToWear pieces ranging from 
+                  dansiki, skirts, shorts, pants, corset tops, dresses, sandals, ties, 
+                  hair fascinators etc. We weave strictly based on pre-orders and all our 
+                  customers can customize their asooke patterns, colors and general look 
+                  to suite them. We deliver worldwide and we have impeccable customer 
+                  service ratings over the years.
+                </>,
+                <>
+                  We are dedicated to the art and tradition of African textile craftsmanship.
                   Our expertise lies in the weaving of Asooke, Kente, Saki, and Akwete —
                   producing high-quality fabrics that reflect both cultural heritage and refined elegance.
                 </>,
@@ -116,7 +127,7 @@ export const AboutUs = () => {
               borderColor={borderColor}
             >
               <MotionImage
-                src="/images/weave.jpg"
+                src="/images/abthero.jpg"
                 alt="Weaving Aso-Oke fabric"
                 objectFit="cover"
                 w="full"

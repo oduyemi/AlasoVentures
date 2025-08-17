@@ -42,15 +42,28 @@ export const AboutSection = () => {
           bgGradient="linear(to-r, #C28840, #fff)"
           bgClip="text"
         >
-          Hi, we&apos;re Kòfowórọlá Alásọ Ventures.
+          Hi, we&apos;re Kòfowórọlá Alásọòkè.
         </Heading>
 
         <Text fontSize="lg" color={textColor} mb={4} lineHeight="1.8">
           Founded by <strong>Kòfowórọlá Aró</strong>, our brand celebrates heritage, craftsmanship, and culture through timeless fashion and fabric artistry.
         </Text>
 
+        <Text fontSize="lg" color={textColor} mb={4} lineHeight="1.8">
+          Kòfowórọlá Alásọòkè is a subsidiary of ElegancebyRholarglow 
+          which specialize in designing, weaving, tailoring bespoke 
+          Asọ òkè individuals and group of people for all events 
+          both home and abroad. We also have a sister arm, EleganceRTW 
+          which specializes in using asooke for ReadyToWear pieces 
+          ranging from dansiki, skirts, shorts, pants, corset tops, 
+          dresses, sandals, ties, hair fascinators etc. We weave 
+          strictly based on pre-orders and all our customers can 
+          customize their asooke patterns, colors and general look 
+          to suite them. We deliver worldwide and we have impeccable 
+          customer service ratings over the years.
+        </Text>
         <Text fontSize="lg" color={textColor} lineHeight="1.8">
-          At Kòfowórọlá Alásọ Ventures, we design elegant, African-inspired clothing and textiles that tell stories, honor tradition, and inspire confidence. Our mission is to wrap you in beauty and boldness—one stitch at a time.
+          At Kòfowórọlá Alásọòkè, we design elegant, African-inspired clothing and textiles that tell stories, honor tradition, and inspire confidence. Our mission is to wrap you in beauty and boldness—one stitch at a time.
         </Text>
       </MotionBox>
 
@@ -59,7 +72,7 @@ export const AboutSection = () => {
         borderRadius="2xl"
         boxShadow={imageShadow}
         src="/images/kofo.jpg"
-        alt="Kofoworola Aro, CEO of Kòfowórọlá Alásọ Ventures"
+        alt="Kofoworola Aro, CEO of Kòfowórọlá Alásọòkè"
         objectFit="cover"
         maxW={imageMaxW}
         initial={{ opacity: 0, x: 60 }}
