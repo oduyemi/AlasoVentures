@@ -14,12 +14,13 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, Variants, TargetAndTransition } from "framer-motion";
 
 const MotionBox = motion(Box);
 const MotionVStack = motion(VStack);
 const MotionFormControl = motion(FormControl);
 const MotionButton = motion(Button);
+
 
 export const BookAppointment = () => {
   const toast = useToast();
@@ -60,14 +61,19 @@ export const BookAppointment = () => {
   };
 
   // Variants for form fields animation
-  const fieldVariant = {
+  const fieldVariant: Variants = {
     hidden: { opacity: 0, y: 20 },
-    visible: (i: number) => ({
+    visible: (i: number): TargetAndTransition => ({
       opacity: 1,
       y: 0,
-      transition: { delay: i * 0.1, duration: 0.4, ease: "easeOut" },
+      transition: {
+        delay: i * 0.1,
+        duration: 0.4,
+        ease: "easeOut",
+      },
     }),
   };
+
 
   return (
     <Box minH="100vh" py={{ base: 10, md: 20 }} bg="#0D0D0D">
@@ -209,6 +215,12 @@ export const BookAppointment = () => {
               initial="hidden"
               animate="visible"
               custom={6}
+              bgGradient="linear(to-r, #C28840, #fff)"
+                color="black"
+                _hover={{
+                  transform: "translateY(-2px)",
+                  boxShadow: "lg",
+                }}
             >
               Submit Appointment
             </MotionButton>

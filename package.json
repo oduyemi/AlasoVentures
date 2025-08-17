@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "concurrently \"cd server && npm run dev\" \"next dev --turbo\"",
+    "build": "concurrently \"cd server && npm run build\" \"next build\"",
+    "start": "node server/build/dist/index.js",
+    "compile": "tsc -p server -w"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.2.4",
@@ -19,7 +19,7 @@
     "animate.css": "^4.1.1",
     "bootstrap": "^5.3.5",
     "framer-motion": "^12.6.5",
-    "next": "15.3.0",
+    "next": "^15.3.0",
     "pixi.js": "^8.9.2",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
@@ -33,6 +33,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "concurrently": "^9.2.0",
     "eslint": "^9",
     "eslint-config-next": "15.3.0",
     "typescript": "^5"

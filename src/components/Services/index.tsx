@@ -23,7 +23,7 @@ import {
   FormLabel,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 const MotionStack = motion(Stack);
 const MotionModalContent = motion(ModalContent);
@@ -53,20 +53,26 @@ export const Services = () => {
   };
 
   // Animation variants for cards
-  const cardVariants = {
+  const cardVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
       transition: {
         delay: i * 0.15,
-        type: "spring",
+        type: "spring" as const,
         stiffness: 100,
       },
     }),
-    hover: { scale: 1.05, boxShadow: "0 10px 20px rgba(194, 136, 64, 0.6)" },
+    hover: {
+      scale: 1.05,
+      boxShadow: "0 10px 20px rgba(194, 136, 64, 0.6)",
+      transition: {
+        type: "spring" as const,
+        stiffness: 200,
+      },
+    },
   };
-
   // Animation for modal content
   const modalVariants = {
     hidden: { opacity: 0, scale: 0.9 },

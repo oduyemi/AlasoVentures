@@ -1,4 +1,5 @@
 "use client";
+import React, { useState } from "react";
 import {
   Box,
   Heading,
@@ -15,6 +16,7 @@ import {
   HStack,
   Divider,
   Stack,
+  useToast,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import {
@@ -28,9 +30,64 @@ import { motion } from "framer-motion";
 const MotionBox = motion(Box);
 const MotionStack = motion(Stack);
 
-export const Contact = () => {
+export const Contact: React.FC = () => {
   const bgColor = useColorModeValue("#0D0D0D", "gray.400");
   const cardBg = useColorModeValue("#121212", "gray.700");
+  const toast = useToast();
+  const [formData, setFormData] = useState({
+    fullname: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const res = await fetch("http://localhost:5000/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await res.json();
+
+      if (res.ok) {
+        toast({
+          title: "Message sent!",
+          description: result.message,
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+        setFormData({ fullname: "", email: "", phone: "", message: "" });
+      } else {
+        toast({
+          title: "Error",
+          description: result.error || "Submission failed.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+    } catch {
+      toast({
+        title: "Network Error",
+        description: "Please try again later.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
 
   return (
     <Box py={20} px={{ base: 4, md: 16 }} bg={bgColor}>
@@ -77,7 +134,7 @@ export const Contact = () => {
             <Icon as={FaPhoneAlt} boxSize={5} color="#C28840" mt={1} />
             <Box>
               <Text fontWeight="bold" color="gray.300">Phone</Text>
-              <Text color="gray.400">+234 703 473 9950</Text>
+              <Text color="gray.400">+234 901 801 5143</Text>
             </Box>
           </HStack>
 
@@ -96,9 +153,8 @@ export const Contact = () => {
           <HStack align="start" spacing={4}>
             <Icon as={FaMapMarkerAlt} boxSize={5} color="#C28840" mt={1} />
             <Box>
-              <Text fontWeight="bold" color="gray.300">Locations</Text>
-              <Text color="gray.400">Ilọrin, Kwara State</Text>
-              <Text color="gray.400">Ìbàdàn, Oyo State</Text>
+              <Text fontWeight="bold" color="gray.300">Location</Text>
+              <Text color="gray.400"> off Atiku Abubakar Rd, Estate, Ilorin 240243, Kwara, Nigeria</Text>
             </Box>
           </HStack>
 
@@ -141,7 +197,7 @@ export const Contact = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <form>
+          <form onSubmit={handleSubmit}>
             <VStack spacing={6}>
               <FormControl isRequired>
                 <FormLabel color="gray.400">Name</FormLabel>
@@ -150,6 +206,8 @@ export const Contact = () => {
                   name="name"
                   variant="filled"
                   focusBorderColor="#C28840"
+                  value={formData.fullname}
+                  onChange={handleChange}
                 />
               </FormControl>
 
@@ -161,6 +219,8 @@ export const Contact = () => {
                   name="email"
                   variant="filled"
                   focusBorderColor="#C28840"
+                  value={formData.email}
+                  onChange={handleChange}
                 />
               </FormControl>
 
@@ -171,6 +231,8 @@ export const Contact = () => {
                   name="phone"
                   variant="filled"
                   focusBorderColor="#C28840"
+                  value={formData.phone}
+                  onChange={handleChange}
                 />
               </FormControl>
 
@@ -182,11 +244,14 @@ export const Contact = () => {
                   name="message"
                   variant="filled"
                   focusBorderColor="#C28840"
+                  value={formData.message}
+                  onChange={handleChange}
                 />
               </FormControl>
 
               <Button
                 type="submit"
+                isLoading={loading}
                 size="lg"
                 w="full"
                 bgGradient="linear(to-r, #C28840, #fff)"

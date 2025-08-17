@@ -73,8 +73,8 @@ export const TopHeader: React.FC = () => {
               My Account
             </MenuButton>
             <MenuList>
-              <MenuItem  _hover={{ bg: "gray.700" }} as="a" href="/login">Login</MenuItem>
-              <MenuItem  _hover={{ bg: "gray.700" }} as="a" href="/register">Register</MenuItem>
+              <MenuItem  _hover={{ bg: "black" }} as="a" href="/login">Login</MenuItem>
+              <MenuItem  _hover={{ bg: "black" }} as="a" href="/register">Register</MenuItem>
             </MenuList>
           </Menu>
 

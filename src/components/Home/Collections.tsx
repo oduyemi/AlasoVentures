@@ -11,20 +11,24 @@ import {
   Divider,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { motion } from "framer-motion";
+import { cubicBezier, motion } from "framer-motion";
 
 const MotionBox = motion(Box);
+const customEase = cubicBezier(0.42, 0, 0.58, 1);
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: customEase,
+    },
+  },
+};
 
 export const HomeCollections = () => {
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  };
-
   const items = [
     { title: "Custom Asọòkè", image: "/images/custom.jpeg", link: "#" },
     { title: "Off the Shelf", image: "/images/shelf.jpeg", link: "#" },
@@ -32,7 +36,6 @@ export const HomeCollections = () => {
     { title: "Made to Fit", image: "/images/fit.png", link: "#" },
   ];
 
-  // ✅ Precompute hook values before render/map
   const bg = useColorModeValue("#0D0D0D", "gray.200");
   const textColor = useColorModeValue("gray.200", "gray.300");
   const headingColor = useColorModeValue("gray.300", "white");

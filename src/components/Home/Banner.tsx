@@ -239,7 +239,7 @@ export const Banner: React.FC = () => {
                       _hover={{ bg: "#0D0D0D" }}
                       boxShadow="base"
                     >
-                      {index === 0 ? "Buy Now" : "Book Now"}
+                      {index === 0 ? "Pre Order" : "Book Now"}
                     </Button>
                   </MotionBox>
                 </Link>
