@@ -229,7 +229,7 @@ export const Banner: React.FC = () => {
                     ? "Check out our selection for unique or custom, handmade pieces."
                     : "Get expert styling, fashion advice & outfit recommendations."}
                 </Heading>
-                <Link href={index === 0 ? "/shop" : "/appointment"}>
+                <Link href={index === 0 ? "/pre-order" : "/book-appointment"}>
                   <MotionBox whileHover={{ scale: 1.05 }}>
                     <Button
                       size="sm"
