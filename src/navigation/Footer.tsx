@@ -14,11 +14,14 @@ import {
   Divider,
 } from '@chakra-ui/react';
 import { 
+  FaGoogle,
+  FaInstagram,
   // FaFacebookF, 
   // FaInstagram, 
   // FaLinkedin, 
   FaTiktok, 
-  FaWhatsapp 
+  FaWhatsapp, 
+  FaYoutube
 } from 'react-icons/fa';
 import { FaX } from 'react-icons/fa6';
 
@@ -50,22 +53,22 @@ export const Footer: React.FC = () => {
                       Connect with us
                     </Heading>
                     <HStack spacing={4} className="whitie">
-                      {/* <Link href="" aria-label="Facebook" isExternal>
-                        <Icon as={FaFacebookF} boxSize={6} _hover={{ color: "#C28840" }} />
-                      </Link> */}
+                      <Link href="https://www.youtube.com/@K%C3%B2fow%C3%B3r%E1%BB%8Dl%C3%A1Al%C3%A1s%E1%BB%8D%C3%B2k%C3%A8" aria-label="YouTube" isExternal>
+                        <Icon as={FaYoutube} boxSize={6} _hover={{ color: "#C28840" }} />
+                      </Link>
                       <Link href="" aria-label="Twitter" isExternal>
                         <Icon as={FaX} boxSize={6} _hover={{ color: "#C28840" }} />
                       </Link>
-                      {/* <Link href="" aria-label="Instagram" isExternal>
+                      <Link href="https://www.instagram.com/kofoworolaasookebrand?igsh=YzJ5anVyMnlxOTd2&utm_source=qr" aria-label="Instagram" isExternal>
                         <Icon as={FaInstagram} boxSize={6} _hover={{ color: "#C28840" }} />
-                      </Link> */}
-                      {/* <Link href="" aria-label="LinkedIn" isExternal>
-                        <Icon as={FaLinkedin} boxSize={6} _hover={{ color: "#C28840" }} />
-                      </Link> */}
-                      <Link href="" aria-label="Twitter" isExternal>
+                      </Link>
+                      <Link href="https://share.google/jAPtiWVqxobOnUIiA" aria-label="Google Store" isExternal>
+                        <Icon as={FaGoogle} boxSize={6} _hover={{ color: "#C28840" }} />
+                      </Link>
+                      <Link href="https://www.tiktok.com/@kofoworola.alasooke?_t=ZS-8yjG4VGilIf&_r=1" aria-label="TikTok" isExternal>
                         <Icon as={FaTiktok} boxSize={6} _hover={{ color: "#C28840" }} />
                       </Link>
-                      <Link href="" aria-label="Twitter" isExternal>
+                      <Link href="http://wa.me/2348094217767" aria-label="WhatsApp" isExternal>
                         <Icon as={FaWhatsapp} boxSize={6} _hover={{ color: "#C28840" }} />
                       </Link>
                     </HStack>

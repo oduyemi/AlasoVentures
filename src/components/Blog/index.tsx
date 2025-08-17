@@ -22,9 +22,21 @@ const MotionText = motion(Text);
 const blogPosts = [
   {
     id: 1,
-    title: "The Legacy of Asọ Òkè: A Story Woven in Threads",
+    title: "Metallic Aso Oke – The Contemporary Elegance",
     excerpt:
-      "Explore the rich history and cultural significance of Asọ Òkè in Yoruba heritage—and how we reimagine it for today's world.",
+      `
+      Metallic Aso Oke is a modern interpretation of the traditional fabric, distinguished by its subtle sheen and smooth, almost silky texture. Its sophisticated, lustrous finish has earned it wide acclaim, as it exudes elegance with minimal or no embellishment. This makes it an excellent choice for brides and guests who desire a refined, stylish appearance while maintaining simplicity and reducing the need for additional decorative details.
+
+Types of Metallic Aso Oke
+
+1. Monotone
+
+Monotone Metallic Aso Oke is woven using a single color of metallic thread, resulting in a smooth, uniform silky sheen rather than a contrasting tone. It delivers a refined, single-tone shine that highlights the fabric’s luxurious texture. Whether duotone or monotone, the signature ultra-silky shimmer of Metallic Aso Oke remains unmistakable, making it a timeless choice for elegant occasions.
+
+2. Duotone
+
+Duotone Metallic Aso Oke is created by weaving two different metallic thread colors together on the loom. The contrasting colors produce a striking two-tone effect that reflects light beautifully, giving a mirror-like shimmer—especially when styled as a headwrap (known as gele in Yoruba culture). This is considered the premium form of Metallic Aso Oke, offering 100% sheen. For the best tone contrast, colors positioned farther apart on the color wheel (such as green and deep blue) create a more vibrant “tone-pop” compared to closer shades like purple and lilac.
+      `,
     image: "/images/ofi.jpg",
     date: "June 2, 2025",
     slug: "/blog/legacy-of-aso-oke",
