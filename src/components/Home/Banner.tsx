@@ -183,7 +183,7 @@ export const Banner: React.FC = () => {
 
         {/* Offer Section */}
         <Flex flex="1" direction="column" gap={6}>
-          {["/images/asooke.png", "/images/etu.jpg"].map((offerImg, index) => (
+          {["/images/etu.jpg", "/images/asooke.jpg"].map((offerImg, index) => (
             <MotionBox
               key={offerImg}
               height="200px"

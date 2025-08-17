@@ -12,8 +12,9 @@ import {
   HStack,
   Badge,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSearchParams } from "next/navigation";
 
 const products = [
   {
@@ -110,7 +111,15 @@ const MotionBox = motion(Box);
 const MotionButton = motion(Button);
 
 export const Shop = () => {
+  const searchParams = useSearchParams();
   const [activeFilter, setActiveFilter] = useState("All");
+
+  useEffect(() => {
+    const filterFromUrl = searchParams.get("filter");
+    if (filterFromUrl && fabricFilters.includes(filterFromUrl)) {
+      setActiveFilter(filterFromUrl);
+    }
+  }, [searchParams]);
 
   const filteredProducts =
     activeFilter === "All"

@@ -50,7 +50,7 @@ export const MainMenu: React.FC = () => {
           >
             <HStack>
               <FaBars />
-              <Text m={0}>Products</Text>
+              <Text m={0}>Fabrics</Text>
             </HStack>
             <FaAngleDown />
           </Box>
@@ -66,12 +66,12 @@ export const MainMenu: React.FC = () => {
               className="navbar-light"
             >
               <VStack spacing={0} align="stretch" pl={4}>
-                <Link className="dropdown-item" href="/shop">Akwete</Link>
-                <Link className="dropdown-item" href="/shop">Aṣọ òkè</Link>
-                <Link className="dropdown-item" href="/shop">Kente</Link>
-                <Link className="dropdown-item" href="/shop">Off The Shelve</Link>
-                <Link className="dropdown-item" href="/shop">Ready To Wear</Link>
-                <Link className="dropdown-item" href="/shop">Saki</Link>
+                <Link className="dropdown-item" href="/shop?filter=Asooke">Aṣọ òkè</Link>
+                <Link className="dropdown-item" href="/shop?filter=Saki">Saki</Link>
+                <Link className="dropdown-item" href="/shop?filter=Akwete">Akwete</Link>
+                <Link className="dropdown-item" href="/shop?filter=Kente">Kente</Link>
+                <Link className="dropdown-item" href="/shop?filter=Ready to Wear">Ready To Wear</Link>
+                <Link className="dropdown-item" href="/shop?filter=Off the Shelf">Off The Shelve</Link>
               </VStack>
             </Box>
           )}
@@ -121,8 +121,6 @@ export const MainMenu: React.FC = () => {
                       className="badge border border-secondary rounded-circle"
                       style={{
                         paddingBottom: '2px',
-                        // color: cartColor,
-                        // borderColor: cartColor,
                       }}
                     >
                       {/* {cartCount} */}
