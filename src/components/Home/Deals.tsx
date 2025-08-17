@@ -29,7 +29,7 @@ const deals = [
     title: 'Ready To Wear',
     subtitle: 'Classic Looks',
     category: 'ready-made',
-    image: '/images/clothing.png',
+    image: '/images/cloth.jpg',
     price: '₦94,500',
     product: 'Tailored Couple Wears',
     cta: '/shop/ready-to-wear',

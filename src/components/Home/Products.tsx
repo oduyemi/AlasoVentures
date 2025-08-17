@@ -25,9 +25,9 @@ interface Product {
 const productItems: Product[] = [
   {
     id: 1,
-    name: 'Piqué Biker Jacket',
-    price: 67.24,
-    image: 'img/product/product-1.jpg',
+    name: "Two Piece Asooke",
+    price: 30000,
+    image: "/images/asooke/h.jpg",
     label: 'New',
     category: 'fabrics'
   },
@@ -40,9 +40,9 @@ const productItems: Product[] = [
   },
   {
     id: 3,
-    name: 'Multi-pocket Chest Bag',
-    price: 43.48,
-    image: 'img/product/product-3.jpg',
+    name: "Two Tone Dotted Asooke",
+    price: 20000,
+    image: "/images/asooke/i.jpg",
     label: 'Sale',
     category: 'fabrics'
   },
@@ -55,9 +55,9 @@ const productItems: Product[] = [
   },
   {
     id: 5,
-    name: 'Lether Backpack',
-    price: 31.37,
-    image: 'img/product/product-5.jpg',
+    name: "Tonic Blend Asooke",
+    price: 40000,
+    image: "/images/asooke/a.jpg",
     category: 'fabrics'
   },
   {
@@ -102,9 +102,9 @@ const productItems: Product[] = [
   },
   {
     id: 11,
-    name: 'Ankle Boots',
-    price: 98.49,
-    image: 'img/product/product-6.jpg',
+    name: "High Textured Asooke",
+    price: 40000,
+    image: "/images/asooke/k.jpg",
     label: 'Sale',
     category: 'fabrics'
   },
@@ -124,9 +124,9 @@ export const Products: React.FC = () => {
   const filteredProducts =
     filter === 'ready-made' ? productItems : productItems.filter(product => product.category === filter);
     const categoryToPath: Record<Product['category'], string> = {
-      'ready-made': '/shop/ready-to-wear',
-      fabrics: '/shop/asooke',
-      accessories: '/shop/off-the-shelf'
+      'ready-made': '/shop?filter=Ready to Wear',
+      fabrics: '/shop?filter=Asooke',
+      accessories: '/shop?filter=Off The Shelf',
     };
     const ctaLink = categoryToPath[filter];
     const displayedProducts = filteredProducts.slice(0, 4)

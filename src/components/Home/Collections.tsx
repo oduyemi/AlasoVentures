@@ -30,10 +30,10 @@ const fadeInUp = {
 
 export const HomeCollections = () => {
   const items = [
-    { title: "Custom Asọòkè", image: "/images/custom.jpeg", link: "#" },
+    { title: "Custom Asọòkè", image: "/images/customasooke.jpg", link: "#" },
     { title: "Off the Shelf", image: "/images/shelf.jpeg", link: "#" },
-    { title: "Ready to Wear", image: "/images/agbada.jpeg", link: "#" },
-    { title: "Made to Fit", image: "/images/fit.png", link: "#" },
+    { title: "Ready to Wear", image: "/images/cstm.jpg", link: "#" },
+    { title: "Made to Fit", image: "/images/fit.jpg", link: "#" },
   ];
 
   const bg = useColorModeValue("#0D0D0D", "gray.200");
