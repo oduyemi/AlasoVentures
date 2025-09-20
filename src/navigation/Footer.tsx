@@ -56,7 +56,7 @@ export const Footer: React.FC = () => {
                       <Link href="https://www.youtube.com/@K%C3%B2fow%C3%B3r%E1%BB%8Dl%C3%A1Al%C3%A1s%E1%BB%8D%C3%B2k%C3%A8" aria-label="YouTube" isExternal>
                         <Icon as={FaYoutube} boxSize={6} _hover={{ color: "#C28840" }} />
                       </Link>
-                      <Link href="" aria-label="Twitter" isExternal>
+                      <Link href="https://x.com/kofoworolaalaso?s=11" aria-label="Twitter" isExternal>
                         <Icon as={FaX} boxSize={6} _hover={{ color: "#C28840" }} />
                       </Link>
                       <Link href="https://www.instagram.com/kofoworolaasookebrand?igsh=YzJ5anVyMnlxOTd2&utm_source=qr" aria-label="Instagram" isExternal>
