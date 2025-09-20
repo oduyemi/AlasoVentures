@@ -1,4 +1,3 @@
-// eslint-disable-line @typescript-eslint/no-unused-vars
 "use client";
 import {
   Box,
@@ -311,6 +310,8 @@ const fabricFilters = [
 ];
 
 const MotionBox = motion(Box);
+const MotionHeading = motion(Heading);
+const MotionText = motion(Text);
 const MotionButton = motion(Button);
 
 export const Shop = () => {
@@ -334,29 +335,28 @@ export const Shop = () => {
       <Container maxW="7xl">
         {/* Section Header */}
         <VStack spacing={4} textAlign="center" mb={10}>
-          <Heading
+          <MotionHeading
             fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
             bgGradient="linear(to-r, #C28840, #0D0D0D)"
             bgClip="text"
-            as={motion.h2}
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 } as any}
+            transition={{ duration: 0.6 }}
           >
             Shop Our Collection
-          </Heading>
-          <Text
+          </MotionHeading>
+          <MotionText
             fontSize={{ base: "md", md: "lg" }}
             color="gray.600"
             maxW="2xl"
             as={motion.p}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.6 } as any}
+            transition={{ delay: 0.3, duration: 0.6 }}
           >
             Discover timeless craftsmanship and culturally rooted fashion
             pieces.
-          </Text>
+          </MotionText>
         </VStack>
 
         {/* Filters */}

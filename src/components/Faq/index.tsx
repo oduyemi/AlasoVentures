@@ -1,4 +1,3 @@
-// eslint-disable-line @typescript-eslint/no-unused-vars
 "use client";
 import {
   Box,
@@ -78,8 +77,7 @@ export const FAQ = () => {
           mb={16}
           as={motion.div}
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 } as any}
+          whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8} }}
         >
           <Heading
             fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
@@ -114,8 +112,7 @@ export const FAQ = () => {
           bg={useColorModeValue("whiteAlpha.900", "blackAlpha.400")}
           backdropFilter="blur(10px)"
           initial={{ opacity: 0, scale: 0.97 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
+          whileInView={{ opacity: 1, scale: 1, transition: { duration: 0.7, ease: "easeOut" } }}
         >
           <Accordion allowToggle>
             {faqs.map((faq, idx) => (
@@ -124,8 +121,7 @@ export const FAQ = () => {
                 border="none"
                 py={4}
                 initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1, duration: 0.5 } as any}
+                whileInView={{ opacity: 1, y: 0, transition: { delay: idx * 0.1, duration: 0.5 } }}
               >
                 {({ isExpanded }) => (
                   <Box
@@ -168,7 +164,7 @@ export const FAQ = () => {
                                 ? { scale: [1, 1.2, 1] }
                                 : { scale: 1 }
                             }
-                            transition={{ duration: 0.6 } as any}
+                            transition={{ duration: 0.6 }}
                           >
                             <Icon as={FaQuestionCircle} color={accent} />
                           </motion.div>
@@ -188,7 +184,7 @@ export const FAQ = () => {
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.4, ease: "easeInOut" }as any}
+                          transition={{ duration: 0.4, ease: "easeInOut" }}
                         >
                           <AccordionPanel
                             px={1}

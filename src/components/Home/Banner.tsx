@@ -1,4 +1,3 @@
-// eslint-disable-line @typescript-eslint/no-unused-vars
 "use client";
 import React from "react";
 import {
@@ -10,11 +9,9 @@ import {
   Link,
   Text,
   VStack,
-  chakra,
-  shouldForwardProp,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { motion, isValidMotionProp } from "framer-motion";
+import { motion } from "framer-motion";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -38,26 +35,10 @@ const carouselItems = [
   },
 ];
 
-// Motion Components
-const MotionBox = chakra(motion.div, {
-  shouldForwardProp: (prop) =>
-    isValidMotionProp(prop) || shouldForwardProp(prop),
-});
-
-const MotionImage = chakra(motion.img, {
-  shouldForwardProp: (prop) =>
-    isValidMotionProp(prop) || shouldForwardProp(prop),
-});
-
-const MotionHeading = chakra(motion.h1, {
-  shouldForwardProp: (prop) =>
-    isValidMotionProp(prop) || shouldForwardProp(prop),
-});
-
-const MotionText = chakra(motion.p, {
-  shouldForwardProp: (prop) =>
-    isValidMotionProp(prop) || shouldForwardProp(prop),
-});
+const MotionBox = motion(Box);
+const MotionImage = motion(Image);
+const MotionHeading = motion(Heading);
+const MotionText = motion(Text);
 
 export const Banner: React.FC = () => {
   const settings = {
@@ -109,7 +90,7 @@ export const Banner: React.FC = () => {
                 overflow="hidden"
                 initial={{ scale: 0.95 }}
                 animate={{ scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.2 } as any}
+                transition={{ duration: 0.6, delay: 0.2 }}
               >
                 <MotionImage
                   src={item.imgSrc}
@@ -119,7 +100,7 @@ export const Banner: React.FC = () => {
                   loading="lazy"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 0.6, delay: 0.2 } as any}
+                  transition={{ duration: 0.6, delay: 0.2 }}
                   style={{ objectFit: "cover" }}
                 />
 
@@ -153,7 +134,7 @@ export const Banner: React.FC = () => {
                       fontWeight="extrabold"
                       initial={{ y: 20, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.6, delay: 0.2 } as any}
+                      transition={{ duration: 0.6, delay: 0.2 }}
                     >
                       {item.title}
                     </MotionHeading>
@@ -163,7 +144,7 @@ export const Banner: React.FC = () => {
                       color="whiteAlpha.900"
                       initial={{ y: 20, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.6, delay: 0.4 } as any}
+                      transition={{ duration: 0.6, delay: 0.4 }}
                     >
                       {item.description}
                     </MotionText>
@@ -204,7 +185,7 @@ export const Banner: React.FC = () => {
               whileHover={{ scale: 1.02 }}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.3 } as any}
+              transition={{ duration: 0.8, delay: index * 0.3 }}
             >
               <Image
                 src={offerImg}
