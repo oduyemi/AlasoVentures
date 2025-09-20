@@ -31,7 +31,7 @@ const MotionBox = motion(Box);
 const MotionStack = motion(Stack);
 
 export const Contact: React.FC = () => {
-  const bgColor = useColorModeValue("#0D0D0D", "gray.400");
+  const bgColor = useColorModeValue("#fff", "#0D0D0D");
   const cardBg = useColorModeValue("#121212", "gray.700");
   const toast = useToast();
   const [formData, setFormData] = useState({
@@ -94,13 +94,13 @@ export const Contact: React.FC = () => {
       <Stack spacing={2} textAlign="center" mb={16}>
         <Heading
           fontSize={{ base: "2xl", md: "4xl" }}
-          bgGradient="linear(to-r, #C28840, #fff)"
+          bgGradient="linear(to-r, #C28840, #0D0D0D)"
           bgClip="text"
           fontWeight="extrabold"
         >
           We&apos;d Love to Hear From You
         </Heading>
-        <Text fontSize="md" color="gray.400" maxW="xl" mx="auto">
+        <Text fontSize="md" color="gray.600" maxW="xl" mx="auto">
           Whether it’s a custom attire, business inquiry, or creative
           collaboration — reach out and let’s make something beautiful together.
         </Text>
@@ -119,12 +119,12 @@ export const Contact: React.FC = () => {
             <Heading
               size="lg"
               mb={2}
-              bgGradient="linear(to-r, #fff, #C28840, #fff)"
+              bgGradient="linear(to-r, #0D0D0D, #C28840, #fff)"
               bgClip="text"
             >
               How to Reach Us
             </Heading>
-            <Text color="gray.400">
+            <Text color="gray.600">
               We’re open to business discussions, design requests, and friendly chats.
               Every message is important to us.
             </Text>
@@ -133,16 +133,16 @@ export const Contact: React.FC = () => {
           <HStack align="start" spacing={4}>
             <Icon as={FaPhoneAlt} boxSize={5} color="#C28840" mt={1} />
             <Box>
-              <Text fontWeight="bold" color="gray.300">Phone</Text>
-              <Text color="gray.400">+234 901 801 5143</Text>
+              <Text fontWeight="bold" color="gray.500">Phone</Text>
+              <Text color="gray.600">+234 901 801 5143</Text>
             </Box>
           </HStack>
 
           <HStack align="start" spacing={4}>
             <Icon as={FaEnvelope} boxSize={5} color="#C28840" mt={1} />
             <Box>
-              <Text fontWeight="bold" color="gray.300">Email</Text>
-              <Text color="gray.400">
+              <Text fontWeight="bold" color="gray.500">Email</Text>
+              <Text color="gray.600">
                 <Link href="mailto:kofoworola.alasooke@gmail.com">
                   kofoworola.alasooke@gmail.com
                 </Link>
@@ -153,8 +153,8 @@ export const Contact: React.FC = () => {
           <HStack align="start" spacing={4}>
             <Icon as={FaMapMarkerAlt} boxSize={5} color="#C28840" mt={1} />
             <Box>
-              <Text fontWeight="bold" color="gray.300">Location</Text>
-              <Text color="gray.400"> off Atiku Abubakar Rd, Estate, Ilorin 240243, Kwara, Nigeria</Text>
+              <Text fontWeight="bold" color="gray.500">Location</Text>
+              <Text color="gray.600"> off Atiku Abubakar Rd, Estate, Ilorin 240243, Kwara, Nigeria</Text>
             </Box>
           </HStack>
 
@@ -164,7 +164,7 @@ export const Contact: React.FC = () => {
             <Text
               fontWeight="semibold"
               mb={2}
-              bgGradient="linear(to-r,#fff, #C28840)"
+              bgGradient="linear(to-r,#0D0D0D, #C28840)"
               bgClip="text"
               fontSize="lg"
             >
@@ -173,15 +173,15 @@ export const Contact: React.FC = () => {
             <Stack spacing={3}>
               <HStack>
                 <Icon as={FaCheckCircle} color="yellow.400" />
-                <Text color="gray.400">Trusted tailoring & fashion service</Text>
+                <Text color="gray.600" className="pt-3">Trusted tailoring & fashion service</Text>
               </HStack>
               <HStack>
                 <Icon as={FaCheckCircle} color="yellow.400" />
-                <Text color="gray.400">Creative, elegant & custom designs</Text>
+                <Text color="gray.600" className="pt-3">Creative, elegant & custom designs</Text>
               </HStack>
               <HStack>
                 <Icon as={FaCheckCircle} color="yellow.400" />
-                <Text color="gray.400">Fast, warm & professional response</Text>
+                <Text color="gray.600" className="pt-3">Fast, warm & professional response</Text>
               </HStack>
             </Stack>
           </Box>

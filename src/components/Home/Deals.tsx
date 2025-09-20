@@ -58,37 +58,42 @@ export const Deals: React.FC = () => {
   const [isVisible, setIsVisible] = useState(true);
 
   const changeDeal = (newIndex: number) => {
-    // Start fade out
     setIsVisible(false);
-
-    // After fade out duration, switch deal and fade in
     setTimeout(() => {
       setIndex(newIndex);
       setIsVisible(true);
-    }, 300); // fade duration (ms), adjust to match <Fade> duration
+    }, 300);
   };
 
   const deal = randomizedDeals[index];
 
   return (
-    <Box py={12} px={6} maxW="7xl" mx="auto">
+    <Box py={16} px={6} maxW="7xl" mx="auto">
       <Fade in={isVisible} unmountOnExit>
         <Flex
           direction={{ base: 'column', md: 'row' }}
           align="center"
           justify="space-between"
           gap={10}
-          bg="#3a3a3a"
+          bgGradient="linear(to-r, rgba(13,13,13,0.95), rgba(40,40,40,0.85))"
+          backdropFilter="blur(12px)"
           color="white"
-          p={8}
-          borderRadius="xl"
-          boxShadow="xl"
+          p={{ base: 6, md: 12 }}
+          borderRadius="2xl"
+          boxShadow="2xl"
+          overflow="hidden"
         >
-          <VStack align="start" spacing={4} flex={1}>
+          {/* Left Section */}
+          <VStack align="start" spacing={5} flex={1}>
             <Text fontSize="xl" color="gray.400" fontWeight="medium">
               {deal.subtitle}
             </Text>
-            <Heading size="2xl" lineHeight="short">
+            <Heading
+              size="2xl"
+              lineHeight="short"
+              letterSpacing="tight"
+              fontWeight="extrabold"
+            >
               <Text as="span" bgGradient="linear(to-r, #C28840, #fff)" bgClip="text">
                 {deal.title}
               </Text>
@@ -107,33 +112,49 @@ export const Deals: React.FC = () => {
               href={deal.cta}
               mt={6}
               size="lg"
-              border="2px solid white"
-              color="white"
+              border="2px solid #C28840"
+              color="#C28840"
               variant="outline"
-              _hover={{ bg: 'white', color: 'black' }}
+              borderRadius="full"
+              px={8}
+              _hover={{
+                bg: '#C28840',
+                color: 'white',
+                transform: 'scale(1.05)',
+              }}
+              transition="all 0.3s ease"
             >
               Explore {deal.title}
             </Button>
           </VStack>
 
-          <Box flex={1} maxW="400px">
+          {/* Right Section */}
+          <Box flex={1} maxW="420px" position="relative">
             <Image
               src={deal.image}
               alt={deal.product}
-              borderRadius="lg"
+              borderRadius="xl"
               objectFit="cover"
               w="100%"
-              h={{ base: 'auto', md: '400px' }}
+              h={{ base: 'auto', md: '420px' }}
+              transition="all 0.5s ease"
+              _hover={{
+                transform: 'scale(1.05)',
+                boxShadow: '0 12px 30px rgba(0,0,0,0.4)',
+              }}
             />
             <Box
-              mt={4}
+              position="absolute"
+              bottom={4}
+              right={4}
               bg="white"
-              color="black"
+              color="#0D0D0D"
               py={2}
-              px={4}
+              px={6}
               borderRadius="full"
-              fontWeight="semibold"
-              textAlign="center"
+              fontWeight="bold"
+              fontSize="lg"
+              boxShadow="lg"
             >
               {deal.price}
             </Box>
@@ -141,23 +162,30 @@ export const Deals: React.FC = () => {
         </Flex>
       </Fade>
 
-      <HStack justify="center" mt={8} spacing={6}>
+      {/* Navigation Controls */}
+      <HStack justify="center" mt={10} spacing={6}>
         <Button
           onClick={() =>
             changeDeal((index - 1 + randomizedDeals.length) % randomizedDeals.length)
           }
           size="sm"
-          variant="ghost"
-          colorScheme="whiteAlpha"
-          isDisabled={!isVisible} // prevent spamming while fading
+          borderRadius="full"
+          bg="transparent"
+          border="1px solid #C28840"
+          color="#C28840"
+          _hover={{ bg: '#C28840', color: 'white' }}
+          isDisabled={!isVisible}
         >
           Previous
         </Button>
         <Button
           onClick={() => changeDeal((index + 1) % randomizedDeals.length)}
           size="sm"
-          variant="ghost"
-          colorScheme="whiteAlpha"
+          borderRadius="full"
+          bg="transparent"
+          border="1px solid #C28840"
+          color="#C28840"
+          _hover={{ bg: '#C28840', color: 'white' }}
           isDisabled={!isVisible}
         >
           Next

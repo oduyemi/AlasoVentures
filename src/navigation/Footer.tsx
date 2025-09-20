@@ -27,7 +27,7 @@ import { FaX } from 'react-icons/fa6';
 
 export const Footer: React.FC = () => { 
   return (
-    <Box className="site-footer" py={10} bg="#111111">
+    <Box className="site-footer" py={10} bg="gray.800" color="white">
         <Box width="100%">
           <Container maxW="container.xl">
             <Grid templateColumns={{ base: '1fr', lg: '3fr 2fr' }} gap={8}>

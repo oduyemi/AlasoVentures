@@ -18,9 +18,6 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-
-
-
 // Carousel items
 const carouselItems = [
   {
@@ -42,56 +39,76 @@ const carouselItems = [
 
 // Motion Components
 const MotionBox = chakra(motion.div, {
-  shouldForwardProp: (prop) => isValidMotionProp(prop) || shouldForwardProp(prop),
+  shouldForwardProp: (prop) =>
+    isValidMotionProp(prop) || shouldForwardProp(prop),
 });
 
 const MotionImage = chakra(motion.img, {
-  shouldForwardProp: (prop) => isValidMotionProp(prop) || shouldForwardProp(prop),
+  shouldForwardProp: (prop) =>
+    isValidMotionProp(prop) || shouldForwardProp(prop),
 });
 
 const MotionHeading = chakra(motion.h1, {
-  shouldForwardProp: (prop) => isValidMotionProp(prop) || shouldForwardProp(prop),
+  shouldForwardProp: (prop) =>
+    isValidMotionProp(prop) || shouldForwardProp(prop),
 });
 
 const MotionText = chakra(motion.p, {
-  shouldForwardProp: (prop) => isValidMotionProp(prop) || shouldForwardProp(prop),
+  shouldForwardProp: (prop) =>
+    isValidMotionProp(prop) || shouldForwardProp(prop),
 });
 
 export const Banner: React.FC = () => {
   const settings = {
     dots: true,
-    loop: true,
     autoplay: true,
     infinite: true,
     speed: 700,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
+    appendDots: (dots: React.ReactNode) => (
+      <Box>
+        <ul style={{ margin: "0px" }}>{dots}</ul>
+      </Box>
+    ),
+    customPaging: () => (
+      <Box
+        w="10px"
+        h="10px"
+        borderRadius="full"
+        bg="whiteAlpha.700"
+        _hover={{ bg: "white" }}
+      />
+    ),
   };
 
   const isMobile = useBreakpointValue({ base: true, lg: false });
+  const carouselHeight = useBreakpointValue({
+    base: "250px",
+    md: "400px",
+    lg: "500px",
+  });
 
   return (
-    <Box maxW="100%" mb={10} mt={4} px={{ base: 2, md: 4 }}>
+    <Box maxW="100%" mb={12} mt={4} px={{ base: 2, md: 4 }}>
       <Flex direction={{ base: "column", lg: "row" }} gap={6}>
         {/* Carousel Section */}
-        <Box flex="2" borderRadius="xl" overflow="hidden">
+        <Box flex="2" borderRadius="2xl" overflow="hidden" boxShadow="xl">
           <Slider {...settings}>
             {carouselItems.map((item) => (
               <MotionBox
                 key={item.imgSrc}
                 position="relative"
-                height={{ base: "300px", md: "430px" }}
+                height={carouselHeight}
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
-                borderRadius="xl"
+                borderRadius="2xl"
                 overflow="hidden"
                 initial={{ scale: 0.95 }}
                 animate={{ scale: 1 }}
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 transition={{ duration: 0.6, delay: 0.2 } as any}
-
               >
                 <MotionImage
                   src={item.imgSrc}
@@ -101,7 +118,6 @@ export const Banner: React.FC = () => {
                   loading="lazy"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   transition={{ duration: 0.6, delay: 0.2 } as any}
                   style={{ objectFit: "cover" }}
                 />
@@ -113,18 +129,14 @@ export const Banner: React.FC = () => {
                   left={0}
                   right={0}
                   bottom={0}
-                  bgGradient="linear(to-t, rgba(0,0,0,0.6), rgba(0,0,0,0.2))"
-                  backdropBlur="4px"
+                  bgGradient="linear(to-t, rgba(0,0,0,0.6), rgba(0,0,0,0.1))"
                   zIndex={1}
                 />
 
                 {/* Captions */}
                 <Flex
                   position="absolute"
-                  top={0}
-                  left={0}
-                  right={0}
-                  bottom={0}
+                  inset={0}
                   align="center"
                   justify="center"
                   direction="column"
@@ -140,7 +152,6 @@ export const Banner: React.FC = () => {
                       fontWeight="extrabold"
                       initial={{ y: 20, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       transition={{ duration: 0.6, delay: 0.2 } as any}
                     >
                       {item.title}
@@ -148,20 +159,16 @@ export const Banner: React.FC = () => {
 
                     <MotionText
                       fontSize={{ base: "sm", md: "md" }}
-                      color="whiteAlpha.800"
+                      color="whiteAlpha.900"
                       initial={{ y: 20, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       transition={{ duration: 0.6, delay: 0.4 } as any}
                     >
                       {item.description}
                     </MotionText>
 
                     <Link href="/shop">
-                      <MotionBox
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.98 }}
-                      >
+                      <MotionBox whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
                         <Button
                           size="sm"
                           bg="#C28840"
@@ -169,6 +176,8 @@ export const Banner: React.FC = () => {
                           _hover={{ bg: "#A86B30" }}
                           boxShadow="lg"
                           mt={2}
+                          borderRadius="full"
+                          px={6}
                         >
                           Shop Now
                         </Button>
@@ -186,13 +195,14 @@ export const Banner: React.FC = () => {
           {["/images/etu.jpg", "/images/asooke.jpg"].map((offerImg, index) => (
             <MotionBox
               key={offerImg}
-              height="200px"
+              height="230px"
               position="relative"
-              borderRadius="xl"
+              borderRadius="2xl"
               overflow="hidden"
+              boxShadow="lg"
+              whileHover={{ scale: 1.02 }}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               transition={{ duration: 0.8, delay: index * 0.3 } as any}
             >
               <Image
@@ -204,10 +214,7 @@ export const Banner: React.FC = () => {
               />
               <Flex
                 position="absolute"
-                top={0}
-                left={0}
-                right={0}
-                bottom={0}
+                inset={0}
                 bg="rgba(0, 0, 0, 0.5)"
                 color="white"
                 direction="column"
@@ -221,10 +228,11 @@ export const Banner: React.FC = () => {
                   color="#C28840"
                   fontWeight="bold"
                   textTransform="uppercase"
+                  letterSpacing="1px"
                 >
                   {index === 0 ? "Buy Aṣọ òkè Fabrics" : "Book Appointment"}
                 </Text>
-                <Heading as="h3" size="sm" fontWeight="light" mb={2} maxW="90%">
+                <Heading as="h3" size="sm" fontWeight="semibold" mb={2} maxW="90%">
                   {index === 0
                     ? "Check out our selection for unique or custom, handmade pieces."
                     : "Get expert styling, fashion advice & outfit recommendations."}
@@ -236,7 +244,8 @@ export const Banner: React.FC = () => {
                       variant="outline"
                       borderColor="white"
                       color="white"
-                      _hover={{ bg: "#0D0D0D" }}
+                      borderRadius="full"
+                      _hover={{ bg: "white", color: "#0D0D0D" }}
                       boxShadow="base"
                     >
                       {index === 0 ? "Pre Order" : "Book Now"}

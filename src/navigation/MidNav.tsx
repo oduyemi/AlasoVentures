@@ -21,6 +21,7 @@ export const MidNav: React.FC = () => {
     <Flex
       py={3}
       px={{ base: 4, xl: 5 }}
+      bg={"#0D0D0D"}
       direction={{ base: "column", md: "row" }}
       align={{ base: "stretch", md: "center" }}
       justify="space-between"

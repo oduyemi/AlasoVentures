@@ -60,19 +60,17 @@ export const Services = () => {
       y: 0,
       transition: {
         delay: i * 0.15,
-        type: "spring" as const,
+        type: "spring",
         stiffness: 100,
       },
     }),
     hover: {
-      scale: 1.05,
-      boxShadow: "0 10px 20px rgba(194, 136, 64, 0.6)",
-      transition: {
-        type: "spring" as const,
-        stiffness: 200,
-      },
+      scale: 1.03,
+      boxShadow: "0 12px 24px rgba(194, 136, 64, 0.25)",
+      transition: { type: "spring", stiffness: 200 },
     },
   };
+
   // Animation for modal content
   const modalVariants = {
     hidden: { opacity: 0, scale: 0.9 },
@@ -80,32 +78,35 @@ export const Services = () => {
   };
 
   return (
-    <Box py={{ base: 10, md: 20 }} minH="100vh">
+    <Box py={{ base: 12, md: 20 }} bg="#fff" minH="100vh">
       <Container maxW="6xl">
-        <VStack spacing={6} textAlign="center" mb={12}>
+        {/* Section Header */}
+        <VStack spacing={4} textAlign="center" mb={12}>
           <Heading
-            fontSize={{ base: "2xl", md: "3xl" }}
-            color="white"
-            bgGradient="linear(to-r, #C28840, #fff)"
+            fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
+            bgGradient="linear(to-r, #C28840, #0D0D0D)"
             bgClip="text"
           >
             Our Core Services
           </Heading>
-          <Text fontSize="lg" color="gray.400" maxW="2xl">
-            Rooted in tradition. Refined for today. Explore how Kòfowórọlá Alásọ
-            Ventures can bring your cultural fashion dreams to life.
+          <Text fontSize={{ base: "md", md: "lg" }} color="gray.600" maxW="2xl">
+            Rooted in tradition. Refined for today. Explore how Kòfowórọlá
+            Alásọ Ventures can bring your cultural fashion dreams to life.
           </Text>
         </VStack>
 
+        {/* Service Cards */}
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
           {services.map((service, index) => (
             <MotionStack
               key={service.title}
-              bg="gray.900"
+              bg="white"
               rounded="xl"
               overflow="hidden"
+              border="1px solid"
+              borderColor="gray.200"
+              shadow="md"
               spacing={0}
-              shadow="lg"
               custom={index}
               initial="hidden"
               animate="visible"
@@ -124,18 +125,24 @@ export const Services = () => {
                 <Heading
                   fontSize="xl"
                   mb={3}
-                  bgGradient="linear(to-r,#fff, #C28840)"
+                  bgGradient="linear(to-r, #C28840, #0D0D0D)"
                   bgClip="text"
                 >
                   {service.title}
                 </Heading>
-                <Text color="gray.400" mb={6}>
+                <Text color="gray.600" mb={6}>
                   {service.description}
                 </Text>
                 <Button
-                  colorScheme="yellow"
                   size="sm"
                   onClick={() => handleBooking(service.title)}
+                  variant="outline"
+                  borderColor="#C28840"
+                  color="#C28840"
+                  _hover={{
+                    bg: "#C28840",
+                    color: "white",
+                  }}
                 >
                   Book Now
                 </Button>
@@ -149,16 +156,19 @@ export const Services = () => {
       <Modal isOpen={isOpen} onClose={onClose} size="md" isCentered>
         <ModalOverlay />
         <MotionModalContent
-          bg="gray.900"
-          color="gray.100"
+          bg="white"
+          color="gray.800"
           initial="hidden"
           animate={isOpen ? "visible" : "hidden"}
           variants={modalVariants}
           transition={{ duration: 0.3 }}
+          rounded="xl"
+          shadow="xl"
         >
           <ModalHeader
-            bgGradient="linear(to-r, #fff, #C28840, #fff)"
+            bgGradient="linear(to-r, #C28840, #0D0D0D)"
             bgClip="text"
+            fontWeight="bold"
           >
             Book: {selectedService}
           </ModalHeader>
@@ -167,28 +177,33 @@ export const Services = () => {
             <VStack spacing={4}>
               <FormControl>
                 <FormLabel>Your Name</FormLabel>
-                <Input placeholder="Full Name" bg="gray.800" />
+                <Input placeholder="Full Name" bg="gray.100" />
               </FormControl>
               <FormControl>
                 <FormLabel>Email Address</FormLabel>
-                <Input placeholder="you@example.com" bg="gray.800" />
+                <Input placeholder="you@example.com" bg="gray.100" />
               </FormControl>
               <FormControl>
                 <FormLabel>Phone Number</FormLabel>
-                <Input placeholder="Phone Number" bg="gray.800" />
+                <Input placeholder="Phone Number" bg="gray.100" />
               </FormControl>
               <FormControl>
                 <FormLabel>Details / Preferences</FormLabel>
                 <Textarea
                   placeholder="Include fabric choices, color palette, date..."
-                  bg="gray.800"
+                  bg="gray.100"
                 />
               </FormControl>
             </VStack>
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="yellow" mr={3}>
+            <Button
+              bg="#C28840"
+              color="white"
+              _hover={{ bg: "#a06d34" }}
+              mr={3}
+            >
               Submit Request
             </Button>
             <Button onClick={onClose} variant="ghost">

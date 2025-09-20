@@ -77,7 +77,9 @@ const ClientSideLayout = ({ children }: { children: React.ReactNode }) => {
         <>
           <TopHeader />
           <MidNav />
-          <MainMenu />
+          <div className="mt-2">
+            <MainMenu />
+          </div>
         </>
       )}
 

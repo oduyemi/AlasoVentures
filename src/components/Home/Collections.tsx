@@ -10,6 +10,7 @@ import {
   Text,
   Divider,
   useColorModeValue,
+  Button,
 } from "@chakra-ui/react";
 import { cubicBezier, motion } from "framer-motion";
 
@@ -18,14 +19,11 @@ const customEase = cubicBezier(0.42, 0, 0.58, 1);
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
-  visible: {
+  visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.5,
-      ease: customEase,
-    },
-  },
+    transition: { duration: 0.6, delay: i * 0.2, ease: customEase },
+  }),
 };
 
 export const HomeCollections = () => {
@@ -36,42 +34,52 @@ export const HomeCollections = () => {
     { title: "Made to Fit", image: "/images/fit.jpg", link: "#" },
   ];
 
-  const bg = useColorModeValue("#0D0D0D", "gray.200");
-  const textColor = useColorModeValue("gray.200", "gray.300");
-  const headingColor = useColorModeValue("gray.300", "white");
-  const cardBg = useColorModeValue("gray.30", "gray.300");
-  const hoverLinkColor = useColorModeValue("#fff", "white");
-  const dividerColor = useColorModeValue("gray.200", "gray.400");
+  const bg = useColorModeValue("white", "gray.900");
+  const textColor = useColorModeValue("gray.700", "gray.300");
+  const headingColor = useColorModeValue("#0D0D0D", "white");
+  const cardBg = useColorModeValue("gray.50", "gray.800");
+  const dividerColor = useColorModeValue("gray.200", "gray.600");
 
   return (
-    <Box w="full" py={{ base: 12, md: 20 }} px={{ base: 6, md: 16 }} bg={bg}>
+    <Box as="section" py={{ base: 12, md: 20 }} px={{ base: 6, md: 16 }} bg={bg}>
+      {/* Section Heading */}
       <Heading
         fontSize={{ base: "3xl", md: "4xl" }}
         textAlign="center"
-        mb={2}
-        bgGradient="linear(to-r, #C28840, #fff)"
+        mb={4}
+        bgGradient="linear(to-r, #C28840, #0D0D0D)"
         bgClip="text"
       >
         Our Collections
       </Heading>
 
-      <Text textAlign="center" fontSize="md" color={textColor} mb={10}>
-        Discover our latest range of stylish and quality products.
+      <Text
+        textAlign="center"
+        fontSize={{ base: "md", md: "lg" }}
+        color={textColor}
+        maxW="2xl"
+        mx="auto"
+        mb={10}
+      >
+        Discover our latest range of stylish and quality products crafted to make you stand out.
       </Text>
 
-      <Divider mb={12} borderColor={dividerColor} />
+      <Divider mb={12} borderColor={dividerColor} maxW="5xl" mx="auto" />
 
+      {/* Collections Grid */}
       <Grid
         templateColumns={{ base: "1fr", md: "1fr 1fr" }}
         gap={10}
-        alignItems="stretch"
+        maxW="6xl"
+        mx="auto"
       >
-        {items.map((item) => (
+        {items.map((item, index) => (
           <MotionBox
             key={item.title}
             variants={fadeInUp}
             initial="hidden"
             whileInView="visible"
+            custom={index}
             viewport={{ once: true, amount: 0.3 }}
             h="100%"
           >
@@ -79,10 +87,10 @@ export const HomeCollections = () => {
               h="100%"
               p={{ base: 4, md: 6 }}
               bg={cardBg}
-              borderRadius="xl"
+              borderRadius="2xl"
               boxShadow="none"
-              transition="box-shadow 0.3s ease"
-              _hover={{ boxShadow: "none" }}
+              transition="all 0.3s ease"
+              _hover={{ transform: "translateY(-6px)", boxShadow: "sm" }}
               display="flex"
               flexDirection="column"
               justifyContent="center"
@@ -90,8 +98,9 @@ export const HomeCollections = () => {
               <Grid
                 templateColumns={{ base: "1fr", md: "1fr 1fr" }}
                 gap={6}
-                h="100%"
+                alignItems="center"
               >
+                {/* Image */}
                 <GridItem>
                   <Image
                     src={item.image}
@@ -107,23 +116,29 @@ export const HomeCollections = () => {
                     }}
                   />
                 </GridItem>
+
+                {/* Text + CTA */}
                 <GridItem>
-                  <Stack spacing={4} h="100%" justify="center">
-                    <Heading fontSize={{ base: "2xl", md: "3xl" }} color={headingColor}>
+                  <Stack spacing={4}>
+                    <Heading
+                      fontSize={{ base: "2xl", md: "3xl" }}
+                      color={headingColor}
+                      fontWeight="bold"
+                    >
                       {item.title}
                     </Heading>
-                    <Link
-                      href={item.link}
-                      fontWeight="medium"
-                      fontSize="md"
-                      color={textColor}
-                      _hover={{
-                        color: hoverLinkColor,
-                        textDecoration: "underline",
-                      }}
-                      transition="color 0.3s ease"
-                    >
-                      Shop Now →
+                    <Link href={item.link} _hover={{ textDecoration: "none" }}>
+                      <Button
+                        size="sm"
+                        w="fit-content"
+                        bg="#C28840"
+                        color="white"
+                        _hover={{ bg: "#A86B30" }}
+                        borderRadius="full"
+                        boxShadow="sm"
+                      >
+                        Shop Now →
+                      </Button>
                     </Link>
                   </Stack>
                 </GridItem>

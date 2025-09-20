@@ -17,21 +17,20 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
+  Divider,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
 interface Post {
-  id: number; 
+  id: number;
   title: string;
   excerpt: string;
   image: string;
-  content?: string; 
+  content?: string;
   category: string;
   date: string;
 }
-
-
 
 const MotionBox = motion(Box);
 const MotionVStack = motion(VStack);
@@ -44,10 +43,12 @@ const blogPosts = [
     id: 1,
     title: "Metallic Aso Oke – The Contemporary Elegance",
     excerpt:
-      "Metallic Aso Oke is a modern interpretation of the traditional fabric, distinguished by its subtle sheen and smooth, almost silky texture. Its sophisticated, lustrous finish has earned it wide acclaim, as it exudes elegance with minimal or no embellishment. This makes it an excellent choice for brides and guests who desire a refined, stylish appearance while maintaining simplicity and reducing the need for additional decorative details.\n\nTypes of Metallic Aso Oke\n\n1. Monotone\n\nMonotone Metallic Aso Oke is woven using a single color of metallic thread, resulting in a smooth, uniform silky sheen rather than a contrasting tone. It delivers a refined, single-tone shine that highlights the fabric’s luxurious texture. Whether duotone or monotone, the signature ultra-silky shimmer of Metallic Aso Oke remains unmistakable, making it a timeless choice for elegant occasions.\n\n2. Duotone\n\nDuotone Metallic Aso Oke is created by weaving two different metallic thread colors together on the loom. The contrasting colors produce a striking two-tone effect that reflects light beautifully, giving a mirror-like shimmer—especially when styled as a headwrap (known as gele in Yoruba culture). This is considered the premium form of Metallic Aso Oke, offering 100% sheen. For the best tone contrast, colors positioned farther apart on the color wheel (such as green and deep blue) create a more vibrant “tone-pop” compared to closer shades like purple and lilac.",
+      "Metallic Aso Oke is a modern interpretation of the traditional fabric, distinguished by its subtle sheen and smooth, almost silky texture. Its sophisticated, lustrous finish has earned it wide acclaim, as it exudes elegance with minimal or no embellishment...",
     image: "/images/ofi.jpg",
     date: "June 2, 2025",
     category: "Tradition",
+    content:
+      "Metallic Aso Oke is a modern interpretation of the traditional fabric... (full article text here).",
   },
   {
     id: 2,
@@ -72,9 +73,7 @@ const blogPosts = [
 // animation variants
 const containerVariants = {
   hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.15 },
-  },
+  visible: { transition: { staggerChildren: 0.15 } },
 };
 const cardVariant = {
   hidden: { opacity: 0, y: 30 },
@@ -82,9 +81,9 @@ const cardVariant = {
 };
 
 export const Blog = () => {
-  const bg = "#0D0D0D";
-  const textColor = "gray.400";
-  const headingColor = "white";
+  const bg = "#fff";
+  const textColor = "gray.700";
+  const headingColor = "#0D0D0D";
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
@@ -100,7 +99,7 @@ export const Blog = () => {
         <MotionVStack
           spacing={4}
           textAlign="center"
-          mb={12}
+          mb={14}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -108,13 +107,19 @@ export const Blog = () => {
         >
           <Heading
             fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
-            fontWeight="bold"
+            fontWeight="extrabold"
             color={headingColor}
-            bgGradient="linear(to-r, #C28840, #fff)"
+            bgGradient="linear(to-r, #C28840, #0D0D0D)"
             bgClip="text"
           >
             The Kòfowórọlá Journal
           </Heading>
+          <Divider
+            borderColor="#C28840"
+            borderWidth={1.5}
+            w="70px"
+            borderRadius="full"
+          />
           <Text maxW="2xl" fontSize="lg" color={textColor}>
             Fashion, heritage, and stories told through cloth—discover the
             journey behind every thread.
@@ -128,26 +133,29 @@ export const Blog = () => {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={12}>
+          <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={{ base: 8, md: 12 }}>
             {blogPosts.map((post, idx) => (
               <MotionBox
                 key={post.id}
                 as={LinkBox}
-                bg="gray.900"
                 rounded="2xl"
                 overflow="hidden"
                 shadow="lg"
+                bg="rgba(255,255,255,0.02)"
+                backdropFilter="blur(12px)"
+                border="1px solid rgba(255,255,255,0.08)"
                 variants={cardVariant}
                 whileHover={{
                   scale: 1.03,
-                  boxShadow: "0 12px 40px rgba(194, 136, 64, 0.4)",
+                  y: -6,
+                  boxShadow: "0 12px 45px rgba(194, 136, 64, 0.35)",
                 }}
                 transition={{ type: "spring", stiffness: 300, damping: 22 }}
                 cursor="pointer"
                 onClick={() => handleOpen(post)}
-                gridColumn={idx === 0 ? { base: "auto", lg: "span 2" } : "auto"} // Featured
+                gridColumn={idx === 0 ? { base: "auto", lg: "span 2" } : "auto"} // featured
               >
-                <Box position="relative" h={idx === 0 ? "300px" : "220px"}>
+                <Box position="relative" h={idx === 0 ? "320px" : "240px"}>
                   <MotionImage
                     src={post.image}
                     alt={post.title}
@@ -155,7 +163,7 @@ export const Blog = () => {
                     h="full"
                     w="full"
                     initial={{ scale: 1 }}
-                    whileHover={{ scale: 1.07 }}
+                    whileHover={{ scale: 1.08 }}
                     transition={{ type: "spring", stiffness: 300 }}
                   />
                   <Box
@@ -164,18 +172,20 @@ export const Blog = () => {
                     left={0}
                     right={0}
                     bottom={0}
-                    bgGradient="linear(to-t, rgba(0,0,0,0.6), rgba(0,0,0,0))"
+                    bgGradient="linear(to-t, rgba(0,0,0,0.65), rgba(0,0,0,0.1))"
                   />
                   <Badge
                     position="absolute"
                     top={4}
                     left={4}
-                    colorScheme="orange"
+                    bg="#C28840"
+                    color="white"
                     rounded="full"
                     px={3}
                     py={1}
                     fontSize="xs"
                     textTransform="uppercase"
+                    shadow="sm"
                   >
                     {post.category}
                   </Badge>
@@ -185,14 +195,28 @@ export const Blog = () => {
                   <MotionText fontSize="xs" color="gray.500" mb={1}>
                     {post.date}
                   </MotionText>
-                  <MotionHeading fontSize={idx === 0 ? "2xl" : "lg"} mb={2} color={headingColor}>
+                  <MotionHeading
+                    fontSize={idx === 0 ? "2xl" : "lg"}
+                    mb={2}
+                    color={headingColor}
+                    noOfLines={2}
+                  >
                     {post.title}
                   </MotionHeading>
-                  <Text color={textColor} fontSize="md" noOfLines={idx === 0 ? 4 : 3}>
+                  <Text
+                    color={textColor}
+                    fontSize="md"
+                    noOfLines={idx === 0 ? 4 : 3}
+                  >
                     {post.excerpt}
                   </Text>
                   <Flex mt={3}>
-                    <Text fontSize="sm" color="#C28840" fontWeight="semibold">
+                    <Text
+                      fontSize="sm"
+                      color="#C28840"
+                      fontWeight="semibold"
+                      _hover={{ textDecor: "underline" }}
+                    >
                       Read more →
                     </Text>
                   </Flex>
@@ -204,27 +228,54 @@ export const Blog = () => {
       </Container>
 
       {/* Dialog Modal */}
-      <Modal isOpen={isOpen} onClose={onClose} size="3xl" motionPreset="slideInBottom" isCentered>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        size="4xl"
+        motionPreset="slideInBottom"
+        isCentered
+        scrollBehavior="inside"
+      >
         <ModalOverlay />
-        <ModalContent bg="gray.900" color="white" rounded="2xl" shadow="2xl" overflow="hidden">
+        <ModalContent
+          bg="gray.900"
+          color="white"
+          rounded="2xl"
+          shadow="2xl"
+          overflow="hidden"
+        >
           {selectedPost && (
             <>
-              <ModalHeader p={0}>
-                <Image src={selectedPost.image} alt={selectedPost.title} w="full" h="250px" objectFit="cover" />
+              <ModalHeader p={0} position="relative">
+                <Image
+                  src={selectedPost.image}
+                  alt={selectedPost.title}
+                  w="full"
+                  h="280px"
+                  objectFit="cover"
+                />
               </ModalHeader>
-              <ModalCloseButton color="white" />
-              <ModalBody p={6}>
-                <Badge colorScheme="orange" mb={2} rounded="full" px={3} py={1} fontSize="xs">
+              <ModalCloseButton color="white" top={3} right={3} />
+              <ModalBody p={8}>
+                <Badge
+                  bg="#C28840"
+                  color="white"
+                  mb={3}
+                  rounded="full"
+                  px={3}
+                  py={1}
+                  fontSize="xs"
+                >
                   {selectedPost.category}
                 </Badge>
-                <Heading fontSize="2xl" mb={2}>
+                <Heading fontSize="2xl" mb={3}>
                   {selectedPost.title}
                 </Heading>
-                <Text fontSize="sm" color="gray.400" mb={4}>
+                <Text fontSize="sm" color="gray.400" mb={6}>
                   {selectedPost.date}
                 </Text>
-                <Text fontSize="md" color="gray.300" whiteSpace="pre-line">
-                  {selectedPost.excerpt}
+                <Text fontSize="md" color="gray.200" lineHeight="tall" whiteSpace="pre-line">
+                  {selectedPost.content ?? selectedPost.excerpt}
                 </Text>
               </ModalBody>
             </>
