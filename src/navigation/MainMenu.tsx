@@ -9,7 +9,6 @@ import {
   Link,
   Text,
   VStack,
-  Badge,
   useDisclosure,
   Drawer,
   DrawerOverlay,

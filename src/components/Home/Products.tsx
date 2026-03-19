@@ -169,7 +169,7 @@ export const Products: React.FC = () => {
                 <Box key={item.id}>
                   <HStack justify="space-between">
                     <HStack>
-                      <Image src={item.image} boxSize="50px" rounded="md" />
+                      <Image src={item.image} alt={item.name} boxSize="50px" rounded="md" />
                       <Text fontSize="sm">{item.name}</Text>
                     </HStack>
                     <IconButton

@@ -5,7 +5,6 @@ import { SocialProof } from "@/components/Home/SocialProof";
 import { HomeCollections } from "@/components/Home/Collections";
 import { FeaturedVideos } from "@/components/Home/FeaturedVideos";
 import { Products } from "@/components/Home/Products";
-import { Deals } from "@/components/Home/Deals";
 import { AboutSection } from "@/components/Home/About";
 import { FeaturedIn } from "@/components/Home/FeaturedIn";
 import { Testimonials } from "@/components/Home/Testimonials";
