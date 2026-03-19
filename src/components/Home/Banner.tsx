@@ -94,7 +94,7 @@ export const Banner: React.FC = () => {
               >
                 <MotionImage
                   src={item.imgSrc}
-                  alt={item.title}
+                  alt="heroImage"
                   width="100%"
                   height="100%"
                   loading="lazy"
