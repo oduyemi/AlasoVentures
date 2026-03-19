@@ -35,7 +35,6 @@ export default function RootLayout({
         <ChakraProvider>
           <Box minH="100vh" display="flex" flexDirection="column" m={0} p={0}>
             {<ClientSideLayout>{children}</ClientSideLayout>}
-            {children}
           </Box>
         </ChakraProvider>
       </body>
