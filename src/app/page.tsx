@@ -24,11 +24,13 @@ export default function Home() {
           <WhatsAppCTA />
           <Products />
           <FeaturedVideos />
-          <FeaturedIn />
+          {/* Flash sales */}
           <BlogPreview />
           <div id="testimonies">
             <Testimonials />
           </div>
+          <FeaturedIn />
+          
           
           {/* <Deals /> */}
         </div>
