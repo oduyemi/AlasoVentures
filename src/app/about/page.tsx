@@ -4,7 +4,7 @@ import { WhyChooseUs } from "@/components/About/WhyChooseUs";
 
 
 
-export default function about () {
+export default function aboutPage () {
  
     return(
         <>
