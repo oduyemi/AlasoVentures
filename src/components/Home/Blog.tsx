@@ -1,5 +1,5 @@
 "use client";
-
+import { useState } from "react";
 import {
   Box,
   Container,
@@ -9,15 +9,27 @@ import {
   VStack,
   Image,
   Badge,
+  useDisclosure,
   Flex,
   Link,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import NextLink from "next/link";
+import { BlogDialog } from "@/dialogs/BlogDialog";
 
 const MotionBox = motion(Box);
 const MotionVStack = motion(VStack);
 const MotionImage = motion(Image);
+
+interface Post {
+    id: number;
+    title: string;
+    excerpt: string;
+    image: string;
+    content?: string;
+    category: string;
+    date: string;
+  }
 
 const blogPreview = [
   {
@@ -50,6 +62,13 @@ const blogPreview = [
 ];
 
 export const BlogPreview = () => {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+
+    const handleOpen = (post: Post) => {
+    setSelectedPost(post);
+    onOpen();
+    };
   return (
     <Box py={{ base: 16, md: 24 }} bg="#FAFAFA">
       <Container maxW="7xl">
@@ -133,17 +152,16 @@ export const BlogPreview = () => {
                   {post.excerpt}
                 </Text>
 
-                <Link
-                  as={NextLink}
-                  href="/blog"
-                  mt={4}
-                  display="inline-block"
-                  fontSize="sm"
-                  color="#C28840"
-                  fontWeight="semibold"
-                >
-                  Read more →
-                </Link>
+                <Text
+                    mt={4}
+                    fontSize="sm"
+                    color="#C28840"
+                    fontWeight="semibold"
+                    cursor="pointer"
+                    onClick={() => handleOpen(post)}
+                    >
+                    Read more →
+                </Text>
               </Box>
             </MotionBox>
           ))}
@@ -163,6 +181,13 @@ export const BlogPreview = () => {
           </Link>
         </Flex>
       </Container>
+
+    {/* Dialog Modal */}
+    <BlogDialog
+    isOpen={isOpen}
+    onClose={onClose}
+    post={selectedPost}
+    />
     </Box>
   );
 };

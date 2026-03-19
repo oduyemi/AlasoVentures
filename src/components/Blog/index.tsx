@@ -1,4 +1,6 @@
 "use client";
+import { useState } from "react";
+import { BlogDialog } from "@/dialogs/BlogDialog";
 import {
   Box,
   Container,
@@ -11,16 +13,10 @@ import {
   Badge,
   Flex,
   useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
   Divider,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { useState } from "react";
+
 
 interface Post {
   id: number;
@@ -153,7 +149,7 @@ export const Blog = () => {
                 transition={{ type: "spring", stiffness: 300, damping: 22 }}
                 cursor="pointer"
                 onClick={() => handleOpen(post)}
-                gridColumn={idx === 0 ? { base: "auto", lg: "span 2" } : "auto"} // featured
+                gridColumn={idx === 0 ? { base: "auto", lg: "span 2" } : "auto"} 
               >
                 <Box position="relative" h={idx === 0 ? "320px" : "240px"}>
                   <MotionImage
@@ -228,60 +224,11 @@ export const Blog = () => {
       </Container>
 
       {/* Dialog Modal */}
-      <Modal
+      <BlogDialog
         isOpen={isOpen}
         onClose={onClose}
-        size="4xl"
-        motionPreset="slideInBottom"
-        isCentered
-        scrollBehavior="inside"
-      >
-        <ModalOverlay />
-        <ModalContent
-          bg="gray.900"
-          color="white"
-          rounded="2xl"
-          shadow="2xl"
-          overflow="hidden"
-        >
-          {selectedPost && (
-            <>
-              <ModalHeader p={0} position="relative">
-                <Image
-                  src={selectedPost.image}
-                  alt={selectedPost.title}
-                  w="full"
-                  h="280px"
-                  objectFit="cover"
-                />
-              </ModalHeader>
-              <ModalCloseButton color="white" top={3} right={3} />
-              <ModalBody p={8}>
-                <Badge
-                  bg="#C28840"
-                  color="white"
-                  mb={3}
-                  rounded="full"
-                  px={3}
-                  py={1}
-                  fontSize="xs"
-                >
-                  {selectedPost.category}
-                </Badge>
-                <Heading fontSize="2xl" mb={3}>
-                  {selectedPost.title}
-                </Heading>
-                <Text fontSize="sm" color="gray.400" mb={6}>
-                  {selectedPost.date}
-                </Text>
-                <Text fontSize="md" color="gray.200" lineHeight="tall" whiteSpace="pre-line">
-                  {selectedPost.content ?? selectedPost.excerpt}
-                </Text>
-              </ModalBody>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+        post={selectedPost}
+      />
     </Box>
   );
 };

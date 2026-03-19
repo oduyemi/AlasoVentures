@@ -11,7 +11,7 @@ import {
   import { motion, AnimatePresence } from "framer-motion";
   import { useEffect, useState } from "react";
   import { useRouter } from "next/navigation";
-  import { TestimonialDialog } from "../dialogs/TestimonialDialog";
+  import { TestimonialDialog } from "../../dialogs/TestimonialDialog";
   
   const MotionBox = motion(Box);
   
