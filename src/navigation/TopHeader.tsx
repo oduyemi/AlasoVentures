@@ -4,8 +4,6 @@ import {
   Flex,
   Link,
   Button,
-  Badge,
-  Icon,
   Drawer,
   DrawerBody,
   DrawerHeader,
@@ -16,7 +14,9 @@ import {
   IconButton,
 } from '@chakra-ui/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
-import { FaHeart, FaShoppingCart } from 'react-icons/fa';
+
+
+
 
 export const TopHeader: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -67,37 +67,6 @@ export const TopHeader: React.FC = () => {
               Book Appointment
             </Button>
           </Link>
-
-          {/* Icons (only on mobile) */}
-          <Flex display={{ base: "flex", lg: "none" }} align="center" gap={4}>
-            <Box position="relative">
-              <Icon as={FaHeart} fontSize="20px" color="gray.200" />
-              <Badge
-                position="absolute"
-                top="-1"
-                right="-2"
-                fontSize="0.7em"
-                colorScheme="red"
-                borderRadius="full"
-              >
-                0
-              </Badge>
-            </Box>
-
-            <Box position="relative">
-              <Icon as={FaShoppingCart} fontSize="20px" color="gray.200" />
-              <Badge
-                position="absolute"
-                top="-1"
-                right="-2"
-                fontSize="0.7em"
-                colorScheme="green"
-                borderRadius="full"
-              >
-                0
-              </Badge>
-            </Box>
-          </Flex>
         </Flex>
       </Flex>
 
