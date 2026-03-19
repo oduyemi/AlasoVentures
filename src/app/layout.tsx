@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "animate.css";
 import type { Metadata } from "next";
 import { ClientSideLayout } from "@/components/ClientSideLayout";
+import { Providers } from "@/components/Providers";
 
 
 
@@ -27,19 +28,17 @@ export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-  hideLayout?: boolean;
 }) {
   return (
     <html lang="en">
       <body style={{ margin: 0, padding: 0 }}>
-        <ChakraProvider>
-          <Box minH="100vh" display="flex" flexDirection="column" m={0} p={0}>
-            {<ClientSideLayout>{children}</ClientSideLayout>}
+        <Providers>
+          <Box minH="100vh" display="flex" flexDirection="column">
+            <ClientSideLayout>{children}</ClientSideLayout>
           </Box>
-        </ChakraProvider>
+        </Providers>
       </body>
     </html>
   );
 }
-
 
