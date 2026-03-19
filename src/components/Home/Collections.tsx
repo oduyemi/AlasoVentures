@@ -28,10 +28,10 @@ const fadeInUp = {
 
 export const HomeCollections = () => {
   const items = [
-    { title: "Custom Asọòkè", image: "/images/customasooke.jpg", link: "shop/?filter=Asooke" },
+    { title: "Custom Asọòkè", image: "/images/new_asooke.jpg", link: "shop/?filter=Asooke" },
     { title: "Off the Shelf", image: "/images/shelf.jpeg", link: "shop/?filter=Off%20the%20Shelf" },
     { title: "Ready to Wear", image: "/images/cstm.jpg", link: "custom-orders" },
-    { title: "Made to Fit", image: "/images/fit.jpg", link: "shop" },
+    { title: "Made to Fit", image: "/images/to_fit.jpg", link: "shop" },
   ];
 
   const bg = useColorModeValue("white", "gray.900");

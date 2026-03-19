@@ -190,7 +190,7 @@ const products = [
     "id": 27,
     "name": "Multi-Color Sleek Asooke (Premium)",
     "type": "Asooke",
-    "image": "/images/asooke/n.jpg"
+    "image": "/images/asooke/n.DNG"
   },
   {
     "id": 28,
@@ -208,7 +208,7 @@ const products = [
     "id": 30,
     "name": "Textured Metallic Asooke",
     "type": "Asooke",
-    "image": "/images/asooke/q.jpg"
+    "image": "/images/asooke/q.dng"
   },
   {
     "id": 31,
@@ -222,50 +222,50 @@ const products = [
     "type": "Asooke",
     "image": "/images/asooke/r.jpg"
   },
+  // {
+  //   "id": 33,
+  //   "name": "Lilac Metallic Asooke",
+  //   "type": "Asooke",
+  //   "image": "/images/asooke/s.JPEG"
+  // },
   {
     "id": 33,
-    "name": "Lilac Metallic Asooke",
-    "type": "Asooke",
-    "image": "/images/asooke/s.jpeg"
-  },
-  {
-    "id": 34,
     "name": "Textured Asooke (Variant)",
     "type": "Asooke",
     "image": "/images/asooke/t.jpg"
   },
   {
-    "id": 35,
+    "id": 34,
     "name": "Multi-Color Linen Asooke",
     "type": "Asooke",
     "image": "/images/asooke/u.jpg"
   },
   {
-    "id": 36,
+    "id": 35,
     "name": "Metallic Textured Asooke",
     "type": "Asooke",
     "image": "/images/asooke/v.jpg"
   },
   {
-    "id": 37,
+    "id": 36,
     "name": "Navy Blue Textured Asooke",
     "type": "Asooke",
     "image": "/images/asooke/w.jpg"
   },
   {
-    "id": 38,
+    "id": 37,
     "name": "Sunset Yellow Textured Asooke",
     "type": "Asooke",
     "image": "/images/asooke/x.jpg"
   },
   {
-    "id": 39,
+    "id": 38,
     "name": "Gray Metallic Asooke",
     "type": "Asooke",
     "image": "/images/asooke/y.jpeg"
   },
   {
-    "id": 40,
+    "id": 39,
     "name": "3-Color Trado Asooke",
     "type": "Asooke",
     "image": "/images/asooke/z.jpg"

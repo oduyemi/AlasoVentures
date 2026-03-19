@@ -34,11 +34,11 @@ interface Product {
 }
 
 const productItems: Product[] = [
-  { id: 1, name: "Two Piece Asooke", image: "/images/asooke/h.jpg", category: "fabrics", type: "Asooke" },
-  { id: 3, name: "Two Tone Dotted Asooke", image: "/images/asooke/i.jpg", category: "fabrics", type: "Asooke" },
-  { id: 5, name: "Tonic Blend Asooke", image: "/images/asooke/a.jpg", category: "fabrics", type: "Asooke" },
-  { id: 7, name: "Bridal Asooke Set", image: "/images/asooke/asooke2.jpg", category: "ready-made", type: "Ready to Wear" },
-  { id: 11, name: "High Textured Asooke", image: "/images/asooke/k.jpg", category: "fabrics", type: "Asooke" },
+  { id: 1, name: "Two Piece Asooke", image: "images/asooke/h.jpg", category: "fabrics", type: "Asooke" },
+  { id: 3, name: "Two Tone Dotted Asooke", image: "images/asooke/i.jpg", category: "fabrics", type: "Asooke" },
+  { id: 5, name: "Tonic Blend Asooke", image: "images/asooke/a.jpg", category: "fabrics", type: "Asooke" },
+  { id: 7, name: "Bridal Asooke Set", image: "images/asooke/2.jpg", category: "ready-made", type: "Ready to Wear" },
+  { id: 11, name: "High Textured Asooke", image: "images/asooke/k.jpg", category: "fabrics", type: "Asooke" },
 ];
 
 const categoryPricing: Record<string, string> = {
