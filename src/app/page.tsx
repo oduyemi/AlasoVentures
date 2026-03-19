@@ -16,7 +16,7 @@ export default function Home() {
     <div>
       <main className={styles.main}>
         <div>
-          <Banner />
+          <Banner /> 
           <SocialProof />
           <AboutSection />
           <HomeCollections />
