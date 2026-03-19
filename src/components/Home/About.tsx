@@ -1,5 +1,4 @@
 "use client";
-
 import {
   Box,
   Flex,
@@ -17,95 +16,163 @@ const MotionImage = motion(Image);
 const MotionText = motion(Text);
 
 export const AboutSection = () => {
-  const textColor = useColorModeValue("gray.700", "gray.300");
-  const imageShadow = useColorModeValue("xl", "2xl");
-  const imageMaxW = useBreakpointValue({ base: "100%", md: "420px" });
-  const bgGradient = useColorModeValue(
-    "linear(to-r, white, gray.50)",
-    "linear(to-r, gray.800, gray.900)"
-  );
+  const textColor = useColorModeValue("gray.600", "gray.300");
+  const mutedText = useColorModeValue("gray.500", "gray.400");
+  const imageMaxW = useBreakpointValue({ base: "100%", md: "440px" });
 
   return (
-    <Box as="section" py={{ base: 12, md: 24 }} px={{ base: 6, md: 16 }} bgGradient={bgGradient}>
+    <Box
+      as="section"
+      py={{ base: 16, md: 28 }}
+      px={{ base: 6, md: 16 }}
+      bg="white"
+      position="relative"
+      overflow="hidden"
+    >
+      {/* subtle background glow */}
+      <Box
+        position="absolute"
+        top="-100px"
+        right="-100px"
+        w="300px"
+        h="300px"
+        bg="#C28840"
+        opacity={0.08}
+        filter="blur(120px)"
+      />
+
       <Flex
         direction={{ base: "column", md: "row" }}
         align="center"
-        justify="center"
-        gap={{ base: 10, md: 16 }}
+        justify="space-between"
+        gap={{ base: 12, md: 20 }}
         maxW="7xl"
         mx="auto"
       >
-        {/* Text Content */}
+        {/* TEXT SIDE */}
         <MotionBox
           flex="1"
-          initial={{ opacity: 0, x: -60 }}
+          initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <Heading
-            as="h2"
-            fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}
-            fontWeight="extrabold"
-            mb={6}
-            lineHeight="short"
-            bgGradient="linear(to-r, #C28840, #0D0D0D)"
-            bgClip="text"
+          {/* Label */}
+          <Text
+            fontSize="xs"
+            letterSpacing="0.2em"
+            textTransform="uppercase"
+            color={mutedText}
+            mb={4}
           >
-            Hi, we&apos;re Kòfowórọlá Alásọòkè.
+            About Us
+          </Text>
+
+          {/* Heading */}
+          <Heading
+            fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}
+            fontWeight="semibold"
+            lineHeight="short"
+          >
+            Kòfowórọlá Alásọòkè
           </Heading>
 
-          <VStack align="start" spacing={5}>
-            {[
-              <>
-                Founded by <strong>Kòfowórọlá Aró</strong>, our brand celebrates heritage,
-                craftsmanship, and culture through timeless fashion and fabric artistry.
-              </>,
-              <>
-                Kòfowórọlá Alásọòkè is a subsidiary of ElegancebyRholarglow, specializing in
-                designing, weaving, and tailoring bespoke Asọ òkè for individuals and groups, at
-                events both locally and internationally. Through EleganceRTW, we transform asooke
-                into modern Ready-to-Wear pieces including dansiki, skirts, corset tops, and more.
-              </>,
-              <>
-                We weave strictly on pre-orders, allowing customers to personalize their patterns,
-                colors, and styles. With global delivery and years of impeccable service, we
-                prioritize uniqueness and customer satisfaction.
-              </>,
-              <>
-                Our mission is to design elegant, African-inspired clothing and textiles that tell
-                stories, honor tradition, and inspire confidence—wrapping you in beauty and
-                boldness, one stitch at a time.
-              </>,
-            ].map((para, index) => (
-              <MotionText
-                key={index}
-                fontSize={{ base: "md", md: "lg" }}
-                color={textColor}
-                lineHeight="1.9"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-              >
-                {para}
-              </MotionText>
-            ))}
+          {/* gold accent */}
+          <Box mt={4} w="60px" h="2px" bg="#C28840" mb={8} />
+
+          <VStack align="start" spacing={6}>
+            <MotionText
+              fontSize="lg"
+              color={textColor}
+              lineHeight="tall"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+            >
+              Founded by{" "}
+              <Text as="span" fontWeight="semibold" color="black">
+                Kòfowórọlá Aró
+              </Text>
+              , our brand celebrates heritage, craftsmanship, and culture through
+              timeless fashion and fabric artistry.
+            </MotionText>
+
+            <MotionText
+              fontSize="md"
+              color={textColor}
+              lineHeight="tall"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              A subsidiary of ElegancebyRholarglow, we specialize in bespoke Asọ òkè
+              for individuals and groups—crafted for occasions both locally and
+              internationally. Through EleganceRTW, we reinterpret tradition into
+              modern silhouettes.
+            </MotionText>
+
+            <MotionText
+              fontSize="md"
+              color={textColor}
+              lineHeight="tall"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              Every piece is woven on pre-order, allowing full personalization of
+              pattern, color, and style. This ensures each design is as unique as the
+              individual wearing it.
+            </MotionText>
+
+            {/* signature line */}
+            <MotionText
+              fontSize="sm"
+              color={mutedText}
+              fontStyle="italic"
+              pt={4}
+              borderTop="1px solid"
+              borderColor="blackAlpha.200"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+            >
+              “We don’t just create garments — we weave stories into every thread.”
+            </MotionText>
           </VStack>
         </MotionBox>
 
-        {/* Image Section */}
-        <MotionImage
+        {/* IMAGE SIDE */}
+        <MotionBox
           flex="1"
-          borderRadius="2xl"
-          boxShadow={imageShadow}
-          src="/images/kofo.jpg"
-          alt="Kofoworola Aro, CEO of Kòfowórọlá Alásọòkè"
-          objectFit="cover"
-          maxW={imageMaxW}
-          initial={{ opacity: 0, x: 60 }}
+          position="relative"
+          display="flex"
+          justifyContent="center"
+          initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          whileHover={{ scale: 1.05, boxShadow: "2xl" }}
-        />
+          transition={{ duration: 0.8 }}
+        >
+          {/* glow behind image */}
+          <Box
+            position="absolute"
+            w="100%"
+            h="100%"
+            bg="#C28840"
+            opacity={0.1}
+            filter="blur(80px)"
+            borderRadius="2xl"
+          />
+
+          <MotionImage
+            src="/images/kofo.jpg"
+            alt="Kofoworola Aro"
+            borderRadius="2xl"
+            objectFit="cover"
+            maxW={imageMaxW}
+            position="relative"
+            zIndex={1}
+            boxShadow="0 20px 60px rgba(0,0,0,0.15)"
+            whileHover={{ scale: 1.04 }}
+            transition={{ duration: 0.4 }}
+          />
+        </MotionBox>
       </Flex>
     </Box>
   );

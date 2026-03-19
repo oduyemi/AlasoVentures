@@ -19,7 +19,7 @@ import {
   useDisclosure,
   IconButton,
 } from '@chakra-ui/react';
-import { ChevronDownIcon, HamburgerIcon } from '@chakra-ui/icons';
+import { HamburgerIcon } from '@chakra-ui/icons';
 import { FaHeart, FaShoppingCart } from 'react-icons/fa';
 
 export const TopHeader: React.FC = () => {
@@ -50,6 +50,7 @@ export const TopHeader: React.FC = () => {
         >
           <Link color="gray.100" href="/">Home</Link>
           <Link color="gray.100" href="/about">About</Link>
+          <Link color="gray.100" href="/#testimonies">Testimonials</Link>
           <Link color="gray.100" href="/faq">FAQs</Link>
           <Link color="gray.100" href="/blog">Blog</Link>
           <Link color="gray.100" href="/contact">Contact</Link>
@@ -60,23 +61,16 @@ export const TopHeader: React.FC = () => {
           align="center"
           gap={4}
         >
-          {/* My Account Dropdown */}
-          <Menu>
-            <MenuButton
-              as={Button}
+          <Link href="/book-appointment">
+            <Button
               size="sm"
-              bg="gray.100"
-              color="black"
-              _hover={{ bg: "gray.200" }}
-              rightIcon={<ChevronDownIcon />}
+              bg="yellow.700"
+              color="white"
+              _hover={{ bg: "yellow.800" }}
             >
-              My Account
-            </MenuButton>
-            <MenuList>
-              <MenuItem  _hover={{ bg: "black" }} as="a" href="/login">Login</MenuItem>
-              <MenuItem  _hover={{ bg: "black" }} as="a" href="/register">Register</MenuItem>
-            </MenuList>
-          </Menu>
+              Book Appointment
+            </Button>
+          </Link>
 
           {/* Icons (only on mobile) */}
           <Flex display={{ base: "flex", lg: "none" }} align="center" gap={4}>

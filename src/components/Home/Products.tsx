@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   Box,
@@ -8,261 +9,203 @@ import {
   Badge,
   Flex,
   Image,
-  IconButton,
   useColorModeValue,
   ButtonGroup,
+  VStack,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  useDisclosure,
+  HStack,
+  IconButton,
+  Divider,
 } from "@chakra-ui/react";
-import { FaHeart, FaSearch, FaBalanceScale } from "react-icons/fa";
+import { CloseIcon } from "@chakra-ui/icons";
 
 interface Product {
   id: number;
   name: string;
-  price: number;
   image: string;
-  label?: string;
   category: "ready-made" | "fabrics" | "accessories";
+  type: string;
 }
 
 const productItems: Product[] = [
-  {
-    id: 1,
-    name: "Two Piece Asooke",
-    price: 30000,
-    image: "/images/asooke/h.jpg",
-    label: "New",
-    category: "fabrics",
-  },
-  {
-    id: 2,
-    name: "Piqué Biker Jacket",
-    price: 67.24,
-    image: "img/product/product-2.jpg",
-    category: "accessories",
-  },
-  {
-    id: 3,
-    name: "Two Tone Dotted Asooke",
-    price: 20000,
-    image: "/images/asooke/i.jpg",
-    label: "Sale",
-    category: "fabrics",
-  },
-  {
-    id: 4,
-    name: "Diagonal Textured Cap",
-    price: 60.9,
-    image: "img/product/product-4.jpg",
-    category: "accessories",
-  },
-  {
-    id: 5,
-    name: "Tonic Blend Asooke",
-    price: 40000,
-    image: "/images/asooke/a.jpg",
-    category: "fabrics",
-  },
-  {
-    id: 6,
-    name: "Ankle Boots",
-    price: 98.49,
-    image: "img/product/product-6.jpg",
-    label: "Sale",
-    category: "accessories",
-  },
-  {
-    id: 7,
-    name: "Ankle Boots",
-    price: 98.49,
-    image: "img/product/product-6.jpg",
-    label: "Sale",
-    category: "ready-made",
-  },
-  {
-    id: 11,
-    name: "High Textured Asooke",
-    price: 40000,
-    image: "/images/asooke/k.jpg",
-    label: "Sale",
-    category: "fabrics",
-  },
+  { id: 1, name: "Two Piece Asooke", image: "/images/asooke/h.jpg", category: "fabrics", type: "Asooke" },
+  { id: 3, name: "Two Tone Dotted Asooke", image: "/images/asooke/i.jpg", category: "fabrics", type: "Asooke" },
+  { id: 5, name: "Tonic Blend Asooke", image: "/images/asooke/a.jpg", category: "fabrics", type: "Asooke" },
+  { id: 7, name: "Bridal Asooke Set", image: "/images/asooke/asooke2.jpg", category: "ready-made", type: "Ready to Wear" },
+  { id: 11, name: "High Textured Asooke", image: "/images/asooke/k.jpg", category: "fabrics", type: "Asooke" },
 ];
+
+const categoryPricing: Record<string, string> = {
+  fabrics: "₦25,000 – ₦65,000",
+  "ready-made": "₦55,000 – ₦100,000",
+  accessories: "₦20,000 – ₦35,000",
+};
 
 export const Products: React.FC = () => {
   const [filter, setFilter] = React.useState<Product["category"]>("ready-made");
+  const [cart, setCart] = React.useState<Product[]>([]);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const filteredProducts =
     filter === "ready-made"
       ? productItems
       : productItems.filter((product) => product.category === filter);
 
-  const categoryToPath: Record<Product["category"], string> = {
-    "ready-made": "/shop?filter=Ready to Wear",
-    fabrics: "/shop?filter=Asooke",
-    accessories: "/shop?filter=Off The Shelf",
-  };
-
-  const ctaLink = categoryToPath[filter];
   const displayedProducts = filteredProducts.slice(0, 4);
 
-  const cardBg = useColorModeValue("whiteAlpha.900", "gray.800");
-  const textColor = useColorModeValue("#0D0D0D", "gray.100");
+  const toggleCart = (product: Product) => {
+    setCart((prev) => {
+      const exists = prev.find((item) => item.id === product.id);
+      if (exists) return prev.filter((item) => item.id !== product.id);
+      return [...prev, product];
+    });
+  };
+
+  const generateWhatsAppLink = () => {
+    const phone = "2347034739950";
+    const message = `Hello, I’d like to pre-order the following:%0A%0A${cart
+      .map((item, i) => `${i + 1}. ${item.name} (${item.type})`)
+      .join("%0A")}%0A%0APlease share pricing and availability.`;
+    return `https://wa.me/${phone}?text=${message}`;
+  };
+
+  const cardBg = useColorModeValue("white", "gray.800");
 
   return (
-    <Box py={14} px={{ base: 5, md: 10 }} maxW="1200px" mx="auto">
-      {/* Category Filter */}
-      <Flex justify="center" mb={10}>
-        <ButtonGroup
-          isAttached
-          variant="outline"
-          borderRadius="full"
-          overflow="hidden"
-        >
-          {(["ready-made", "fabrics", "accessories"] as Product["category"][]).map(
-            (option) => (
-              <Button
-                key={option}
-                onClick={() => setFilter(option)}
-                size="sm"
-                px={6}
-                textTransform="capitalize"
-                fontWeight="semibold"
-                colorScheme={filter === option ? "yellow" : "gray"}
-                variant={filter === option ? "solid" : "ghost"}
-              >
-                {option.replace("-", " ")}
-              </Button>
-            )
-          )}
+    <Box py={16} px={{ base: 5, md: 10 }} maxW="1200px" mx="auto">
+      {/* Filter */}
+      <Flex justify="center" mb={6}>
+        <ButtonGroup borderRadius="full">
+          {(["ready-made", "fabrics", "accessories"] as Product["category"][]).map((option) => (
+            <Button
+              key={option}
+              onClick={() => setFilter(option)}
+              size="sm"
+              px={6}
+              textTransform="capitalize"
+              colorScheme={filter === option ? "yellow" : "gray"}
+              variant={filter === option ? "solid" : "ghost"}
+            >
+              {option.replace("-", " ")}
+            </Button>
+          ))}
         </ButtonGroup>
       </Flex>
 
-      {/* Product Grid */}
-      <Grid
-        templateColumns={{ base: "1fr", sm: "repeat(2, 1fr)", md: "repeat(4, 1fr)" }}
-        gap={8}
-      >
-        {displayedProducts.map((product) => (
-          <GridItem
-            key={product.id}
-            bg={cardBg}
-            borderRadius="2xl"
-            boxShadow="md"
-            overflow="hidden"
-            transition="all 0.35s ease"
-            _hover={{ transform: "translateY(-6px)", boxShadow: "xl" }}
-            display="flex"
-            flexDirection="column"
-          >
-            {/* Product Image */}
-            <Box position="relative" h="250px" w="100%">
-              {product.label && (
-                <Badge
-                  position="absolute"
-                  top={3}
-                  left={3}
-                  colorScheme="yellow"
-                  px={2}
-                  py={1}
-                  borderRadius="md"
-                  fontSize="xs"
-                >
-                  {product.label}
-                </Badge>
-              )}
-              <Image
-                src={product.image}
-                loading="lazy"
-                alt={product.name}
-                w="100%"
-                h="100%"
-                objectFit="cover"
-                transition="transform 0.4s ease"
-                _hover={{ transform: "scale(1.05)" }}
-              />
-            </Box>
+      {/* Price Range */}
+      <Text textAlign="center" mb={10} fontSize="sm" color="gray.500">
+        Price Range: {categoryPricing[filter]}
+      </Text>
 
-            {/* Icons */}
-            <Flex justify="center" gap={3} mt={3}>
-              <IconButton
-                aria-label="Like"
-                icon={<FaHeart />}
-                color={textColor}
-                variant="ghost"
-                size="sm"
-                _hover={{ color: "#C28840" }}
-              />
-              <IconButton
-                aria-label="Compare"
-                icon={<FaBalanceScale />}
-                color={textColor}
-                variant="ghost"
-                size="sm"
-                _hover={{ color: "#C28840" }}
-              />
-              <IconButton
-                aria-label="Search"
-                icon={<FaSearch />}
-                color={textColor}
-                variant="ghost"
-                size="sm"
-                _hover={{ color: "#C28840" }}
-              />
-            </Flex>
+      {/* Grid */}
+      <Grid templateColumns={{ base: "1fr", sm: "repeat(2,1fr)", md: "repeat(4,1fr)" }} gap={8}>
+        {displayedProducts.map((product) => {
+          const isSelected = cart.find((item) => item.id === product.id);
 
-            {/* Product Info */}
-            <Box p={4} mt="auto" textAlign="center">
-              <Text
-                fontWeight="bold"
-                fontSize="md"
-                bgGradient="linear(to-r, #C28840, #0D0D0D)"
-                bgClip="text"
-                mb={2}
-              >
-                {product.name}
-              </Text>
-              <Text fontWeight="bold" color="#C28840" fontSize="lg" mb={3}>
-                ₦{product.price.toFixed(2)}
-              </Text>
-              <Button
-                size="md"
-                w="full"
-                borderRadius="full"
-                variant="outline"
-                borderColor="#C28840"
-                color="#C28840"
-                _hover={{
-                  bg: "#C28840",
-                  color: "white",
-                  transform: "scale(1.02)",
-                }}
-                transition="all 0.3s ease"
-              >
-                Buy via WhatsApp
-              </Button>
+          return (
+            <GridItem
+              key={product.id}
+              bg={cardBg}
+              borderRadius="2xl"
+              overflow="hidden"
+              border="1px solid"
+              borderColor={isSelected ? "yellow.400" : "gray.100"}
+              shadow={isSelected ? "lg" : "sm"}
+              cursor="pointer"
+              onClick={() => toggleCart(product)}
+              _hover={{ transform: "translateY(-6px)", shadow: "xl" }}
+              transition="0.3s"
+            >
+              <Box position="relative" h="220px">
+                <Image src={product.image} alt={product.name} w="100%" h="100%" objectFit="cover" />
 
-            </Box>
-          </GridItem>
-        ))}
+                {isSelected && (
+                  <Badge position="absolute" top={3} right={3} colorScheme="green" borderRadius="full" px={3}>
+                    Selected
+                  </Badge>
+                )}
+              </Box>
+
+              <VStack p={4} spacing={2}>
+                <Badge colorScheme="yellow">{product.type}</Badge>
+                <Text fontWeight="semibold" textAlign="center">
+                  {product.name}
+                </Text>
+              </VStack>
+            </GridItem>
+          );
+        })}
       </Grid>
 
+      {/* Floating CTA */}
+      {cart.length > 0 && (
+        <Button
+          position="fixed"
+          bottom="30px"
+          right="30px"
+          colorScheme="yellow"
+          borderRadius="full"
+          onClick={onOpen}
+        >
+          View Selection ({cart.length})
+        </Button>
+      )}
+
+      {/* Drawer */}
+      <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerHeader>Your Selection ({cart.length})</DrawerHeader>
+
+          <DrawerBody>
+            <VStack spacing={4} align="stretch">
+              {cart.map((item) => (
+                <Box key={item.id}>
+                  <HStack justify="space-between">
+                    <HStack>
+                      <Image src={item.image} boxSize="50px" rounded="md" />
+                      <Text fontSize="sm">{item.name}</Text>
+                    </HStack>
+                    <IconButton
+                      aria-label="remove"
+                      icon={<CloseIcon />}
+                      size="xs"
+                      onClick={() => toggleCart(item)}
+                    />
+                  </HStack>
+                  <Divider mt={3} />
+                </Box>
+              ))}
+            </VStack>
+          </DrawerBody>
+
+          <DrawerFooter>
+            <Button as="a" href={generateWhatsAppLink()} target="_blank" colorScheme="yellow" w="full">
+              Send to WhatsApp
+            </Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+
       {/* CTA */}
-      <Flex justify="center" mt={12}>
+      <Flex justify="center" mt={14}>
         <Button
           as="a"
-          href={ctaLink}
+          href={`/shop?filter=${filter === "fabrics" ? "Asooke" : filter === "ready-made" ? "Ready to Wear" : "Off the Shelf"}`}
           size="lg"
           px={10}
           borderRadius="full"
-          fontWeight="bold"
           bg="#C28840"
           color="white"
-          _hover={{
-            bg: "#a86d32", // slightly darker shade of #C28840
-            transform: "scale(1.05)",
-          }}
-          transition="all 0.3s ease"
+          _hover={{ bg: "#a86d32", transform: "scale(1.05)" }}
         >
-          Shop All {filter.replace("-", " ")}
+          Explore More
         </Button>
       </Flex>
     </Box>

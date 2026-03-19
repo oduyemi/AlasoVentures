@@ -1,27 +1,37 @@
 "use client";
-import { Box } from "@chakra-ui/react";
 import styles from "./page.module.css";
 import { Banner } from "@/components/Home/Banner";
-import { Features } from "@/components/Home/Features";
+import { SocialProof } from "@/components/Home/SocialProof";
 import { HomeCollections } from "@/components/Home/Collections";
+import { FeaturedVideos } from "@/components/Home/FeaturedVideos";
 import { Products } from "@/components/Home/Products";
 import { Deals } from "@/components/Home/Deals";
 import { AboutSection } from "@/components/Home/About";
 import { FeaturedIn } from "@/components/Home/FeaturedIn";
+import { Testimonials } from "@/components/Home/Testimonials";
+import { WhatsAppCTA } from "@/components/Home/CTA";
+import { BlogPreview } from "@/components/Home/Blog";
 
 export default function Home() {
   return (
     <div>
       <main className={styles.main}>
-        <Box>
+        <div>
           <Banner />
-          <Features />
+          <SocialProof />
           <AboutSection />
           <HomeCollections />
-          <FeaturedIn />
+          <WhatsAppCTA />
           <Products />
-          <Deals />
-        </Box>
+          <FeaturedVideos />
+          <FeaturedIn />
+          <BlogPreview />
+          <div id="testimonies">
+            <Testimonials />
+          </div>
+          
+          {/* <Deals /> */}
+        </div>
       </main>
     </div>
   );

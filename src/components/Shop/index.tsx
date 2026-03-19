@@ -11,290 +11,262 @@ import {
   Stack,
   HStack,
   Badge,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  useDisclosure,
+  IconButton,
+  Divider,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
+import { CloseIcon } from "@chakra-ui/icons";
+
+const MotionBox = motion(Box);
 
 const products = [
   {
     "id": 1,
     "name": "Tonic Blend Asooke",
     "type": "Asooke",
-    "price": "₦40,000",
     "image": "/images/asooke/a.jpg"
   },
   {
     "id": 2,
     "name": "Ivory & Gold Kente Wrap",
     "type": "Kente",
-    "price": "₦48,000",
     "image": "/images/kente1.jpg"
   },
   {
     "id": 3,
     "name": "4-Color Textured Asooke",
     "type": "Asooke",
-    "price": "₦35,000",
     "image": "/images/asooke/6.jpg"
   },
   {
     "id": 4,
     "name": "Blue Two Tone Asooke",
     "type": "Asooke",
-    "price": "₦35,000",
     "image": "/images/asooke/7.jpg"
   },
   {
     "id": 5,
     "name": "Coffee Brown Glove",
     "type": "Asooke",
-    "price": "₦30,000",
     "image": "/images/asooke/glove.jpg"
   },
   {
     "id": 6,
     "name": "Rich Lemon Asooke",
     "type": "Asooke",
-    "price": "₦40,000",
     "image": "/images/asooke/d.jpg"
   },
   {
     "id": 7,
     "name": "Wine Red Textured Asooke",
     "type": "Asooke",
-    "price": "₦30,000",
     "image": "/images/asooke/e.jpg"
   },
   {
     "id": 8,
     "name": "Dreamy Blue Bridal Asooke",
     "type": "Asooke",
-    "price": "₦30,000",
     "image": "/images/asooke/f.jpg"
   },
   {
     "id": 9,
     "name": "Multi-color Linen Asooke",
     "type": "Asooke",
-    "price": "₦30,000",
     "image": "/images/asooke/g.jpg"
   },
   {
     "id": 10,
     "name": "Two Piece Asooke",
     "type": "Asooke",
-    "price": "₦30,000",
     "image": "/images/asooke/h.jpg"
   },
   {
     "id": 11,
     "name": "Lemon Green Glitter Asooke",
     "type": "Asooke",
-    "price": "₦40,000",
     "image": "/images/asooke/1.jpg"
   },
   {
     "id": 12,
     "name": "Burgundy Glitter Asooke",
     "type": "Asooke",
-    "price": "₦40,000",
     "image": "/images/asooke/2.jpg"
   },
   {
     "id": 13,
     "name": "Deep Green Glitter Asooke",
     "type": "Asooke",
-    "price": "₦40,000",
     "image": "/images/asooke/3.jpg"
   },
   {
     "id": 14,
     "name": "Two Tone Dotted Asooke",
     "type": "Asooke",
-    "price": "₦20,000",
     "image": "/images/asooke/i.jpg"
   },
   {
     "id": 15,
     "name": "High Textured Asooke",
     "type": "Asooke",
-    "price": "₦40,000",
     "image": "/images/asooke/k.jpg"
   },
   {
     "id": 16,
     "name": "Two Tone Textured Asooke",
     "type": "Asooke",
-    "price": "₦35,000",
     "image": "/images/asooke/4.jpg"
   },
   {
     "id": 17,
     "name": "Multi Color Sleek Asooke",
     "type": "Asooke",
-    "price": "₦45,000",
     "image": "/images/asooke/5.jpg"
   },
   {
     "id": 18,
     "name": "Earth-Toned Saki Robe",
     "type": "Saki",
-    "price": "₦52,500",
     "image": "/images/saki1.jpg"
   },
   {
     "id": 19,
     "name": "Crimson Akwete Statement Dress",
     "type": "Akwete",
-    "price": "₦70,000",
     "image": "/images/akwete1.jpg"
   },
   {
     "id": 20,
     "name": "Baby Pink Ocean Weave Asooke",
     "type": "Asooke",
-    "price": "₦40,000",
     "image": "/images/asooke/b.jpg"
   },
   {
     "id": 21,
     "name": "African Asooke Boubou Gown",
     "type": "Ready to Wear",
-    "price": "₦55,000",
     "image": "/images/asooke2.jpg"
   },
   {
     "id": 22,
     "name": "Traditional Bridal Asooke Set",
     "type": "Ready to Wear",
-    "price": "₦95,000",
     "image": "/images/asooke/asooke2.jpg"
   },
   {
     "id": 23,
     "name": "Zara Asooke Ensemble",
     "type": "Off the Shelf",
-    "price": "₦32,000",
     "image": "/images/asooke/asooke2.jpg"
   },
   {
     "id": 24,
     "name": "Tai Turban & Wrapper",
     "type": "Off the Shelf",
-    "price": "₦25,000",
     "image": "/images/asooke/asooke2.jpg"
   },
   {
     "id": 25,
     "name": "Two Tone Textured Asooke (Variant)",
     "type": "Asooke",
-    "price": "₦40,000",
     "image": "/images/asooke/l.jpg"
   },
   {
     "id": 26,
     "name": "Multi Color Asooke",
     "type": "Asooke",
-    "price": "₦35,000",
     "image": "/images/asooke/m.jpg"
   },
   {
     "id": 27,
     "name": "Multi-Color Sleek Asooke (Premium)",
     "type": "Asooke",
-    "price": "₦65,000",
     "image": "/images/asooke/n.jpg"
   },
   {
     "id": 28,
     "name": "Dual Color Dotted Asooke",
     "type": "Asooke",
-    "price": "₦25,000",
     "image": "/images/asooke/o.jpg"
   },
   {
     "id": 29,
     "name": "Textured Asooke",
     "type": "Asooke",
-    "price": "₦40,000",
     "image": "/images/asooke/p.jpg"
   },
   {
     "id": 30,
     "name": "Textured Metallic Asooke",
     "type": "Asooke",
-    "price": "₦55,000",
     "image": "/images/asooke/q.jpg"
   },
   {
     "id": 31,
     "name": "Asooke Handwoven Bag",
     "type": "Off the Shelf",
-    "price": "₦20,000",
     "image": "/images/asooke2.jpg"
   },
   {
     "id": 32,
     "name": "Dual-Color Textured Asooke",
     "type": "Asooke",
-    "price": "₦35,000",
     "image": "/images/asooke/r.jpg"
   },
   {
     "id": 33,
     "name": "Lilac Metallic Asooke",
     "type": "Asooke",
-    "price": "₦65,000",
     "image": "/images/asooke/s.jpeg"
   },
   {
     "id": 34,
     "name": "Textured Asooke (Variant)",
     "type": "Asooke",
-    "price": "₦40,000",
     "image": "/images/asooke/t.jpg"
   },
   {
     "id": 35,
     "name": "Multi-Color Linen Asooke",
     "type": "Asooke",
-    "price": "₦25,000",
     "image": "/images/asooke/u.jpg"
   },
   {
     "id": 36,
     "name": "Metallic Textured Asooke",
     "type": "Asooke",
-    "price": "₦40,000",
     "image": "/images/asooke/v.jpg"
   },
   {
     "id": 37,
     "name": "Navy Blue Textured Asooke",
     "type": "Asooke",
-    "price": "₦45,000",
     "image": "/images/asooke/w.jpg"
   },
   {
     "id": 38,
     "name": "Sunset Yellow Textured Asooke",
     "type": "Asooke",
-    "price": "₦40,000",
     "image": "/images/asooke/x.jpg"
   },
   {
     "id": 39,
     "name": "Gray Metallic Asooke",
     "type": "Asooke",
-    "price": "₦42,000",
     "image": "/images/asooke/y.jpeg"
   },
   {
     "id": 40,
     "name": "3-Color Trado Asooke",
     "type": "Asooke",
-    "price": "₦35,000",
     "image": "/images/asooke/z.jpg"
   }
 ]
@@ -309,14 +281,20 @@ const fabricFilters = [
   "Ready to Wear",
 ];
 
-const MotionBox = motion(Box);
-const MotionHeading = motion(Heading);
-const MotionText = motion(Text);
-const MotionButton = motion(Button);
+const categoryPricing: Record<string, string> = {
+  Asooke: "₦25,000 – ₦65,000",
+  Kente: "₦40,000 – ₦50,000",
+  Saki: "₦50,000 – ₦60,000",
+  Akwete: "₦65,000 – ₦80,000",
+  "Off the Shelf": "₦20,000 – ₦35,000",
+  "Ready to Wear": "₦55,000 – ₦100,000",
+};
 
 export const Shop = () => {
   const searchParams = useSearchParams();
   const [activeFilter, setActiveFilter] = useState("All");
+  const [cart, setCart] = useState<any[]>([]);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     const filterFromUrl = searchParams.get("filter");
@@ -330,141 +308,190 @@ export const Shop = () => {
       ? products
       : products.filter((p) => p.type === activeFilter);
 
+  const toggleCart = (product: any) => {
+    setCart((prev) => {
+      const exists = prev.find((item) => item.id === product.id);
+      if (exists) return prev.filter((item) => item.id !== product.id);
+      return [...prev, product];
+    });
+  };
+
+  const generateWhatsAppLink = () => {
+    const phone = "2347034739950";
+
+    const message = `Hello, I’d like to pre-order the following items:%0A%0A${cart
+      .map((item, i) => `${i + 1}. ${item.name} (${item.type})`)
+      .join("%0A")}%0A%0APlease share pricing, availability, and customization options.`;
+
+    return `https://wa.me/${phone}?text=${message}`;
+  };
+
   return (
     <Box py={{ base: 12, md: 20 }} minH="100vh" bg="gray.50">
       <Container maxW="7xl">
-        {/* Section Header */}
-        <VStack spacing={4} textAlign="center" mb={10}>
-          <MotionHeading
-            fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
+        {/* Header */}
+        <VStack spacing={4} textAlign="center" mb={12}>
+          <Heading
+            fontSize={{ base: "2xl", md: "4xl" }}
             bgGradient="linear(to-r, #C28840, #0D0D0D)"
             bgClip="text"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
           >
-            Shop Our Collection
-          </MotionHeading>
-          <MotionText
-            fontSize={{ base: "md", md: "lg" }}
-            color="gray.600"
-            maxW="2xl"
-            as={motion.p}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-          >
-            Discover timeless craftsmanship and culturally rooted fashion
-            pieces.
-          </MotionText>
+            Explore Our Fabrics
+          </Heading>
+          <Text color="gray.600" maxW="2xl">
+            Tap to select styles you love and send your selection via WhatsApp for pricing and customization.
+          </Text>
         </VStack>
 
         {/* Filters */}
-        <HStack spacing={3} justify="center" mb={12} flexWrap="wrap">
+        <HStack spacing={3} justify="center" mb={6} flexWrap="wrap">
           {fabricFilters.map((filter) => (
-            <MotionButton
+            <Button
               key={filter}
-              variant={activeFilter === filter ? "solid" : "outline"}
+              variant={activeFilter === filter ? "solid" : "ghost"}
               colorScheme="yellow"
               borderRadius="full"
               size="sm"
+              px={5}
+              _hover={{ transform: "scale(1.05)" }}
               onClick={() => setActiveFilter(filter)}
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
               {filter}
-            </MotionButton>
+            </Button>
           ))}
         </HStack>
 
-        {/* Product Grid */}
-        <SimpleGrid
-          columns={{ base: 1, sm: 2, md: 3 }}
-          spacing={{ base: 6, md: 10 }}
-          position="relative"
-          minH="500px"
-        >
-          <AnimatePresence>
-            {filteredProducts.map((product) => (
+        {/* Price Range */}
+        {activeFilter !== "All" && (
+          <Text textAlign="center" mb={10} color="gray.500" fontSize="sm">
+            Price Range: {categoryPricing[activeFilter]}
+          </Text>
+        )}
+
+        {/* Grid */}
+        <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={8}>
+          {filteredProducts.map((product) => {
+            const isSelected = cart.find((item) => item.id === product.id);
+
+            return (
               <MotionBox
                 key={product.id}
                 bg="white"
                 rounded="2xl"
                 overflow="hidden"
                 border="1px solid"
-                borderColor="gray.200"
-                shadow="sm"
+                borderColor={isSelected ? "yellow.400" : "gray.100"}
+                shadow={isSelected ? "lg" : "sm"}
                 cursor="pointer"
-                layout
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 30 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-                _hover={{
-                  shadow: "xl",
-                  transform: "translateY(-6px)",
-                }}
+                onClick={() => toggleCart(product)}
+                whileHover={{ y: -6 }}
+                transition={{ duration: 0.2 }}
               >
-                {/* Product Image */}
-                <Box overflow="hidden" h="250px">
+                <Box position="relative" h="240px" overflow="hidden">
                   <Image
                     src={product.image}
                     alt={product.name}
                     objectFit="cover"
                     h="full"
                     w="full"
-                    fallbackSrc="/images/asooke/placeholder.png"
-                    transition="transform 0.4s ease"
-                    _groupHover={{ transform: "scale(1.05)" }}
+                    transition="0.4s"
+                    _hover={{ transform: "scale(1.08)" }}
                   />
+
+                  {isSelected && (
+                    <Badge
+                      position="absolute"
+                      top={3}
+                      right={3}
+                      colorScheme="green"
+                      borderRadius="full"
+                      px={3}
+                      py={1}
+                    >
+                      Selected
+                    </Badge>
+                  )}
                 </Box>
 
-                {/* Product Details */}
-                <Stack p={5} spacing={3}>
-                  <HStack justify="space-between">
-                    <Badge
-                      px={2}
-                      py={1}
-                      rounded="full"
-                      fontSize="0.7rem"
-                      bg="yellow.100"
-                      color="yellow.800"
-                    >
-                      {product.type}
-                    </Badge>
-                    <Text fontWeight="bold" color="gray.800">
-                      {product.price}
-                    </Text>
-                  </HStack>
-                  <Text
-                    fontSize="lg"
-                    fontWeight="semibold"
-                    bgGradient="linear(to-r, #0D0D0D, #C28840)"
-                    bgClip="text"
-                    noOfLines={2}
-                  >
+                <Stack p={4} spacing={2}>
+                  <Badge w="fit-content" colorScheme="yellow">
+                    {product.type}
+                  </Badge>
+                  <Text fontWeight="semibold" fontSize="md">
                     {product.name}
                   </Text>
-                  <Button
-                    size="sm"
-                    mt={2}
-                    colorScheme="yellow"
-                    variant="outline"
-                    borderRadius="full"
-                    _hover={{
-                      bg: "#C28840",
-                      color: "white",
-                      borderColor: "#C28840",
-                    }}
-                  >
-                    View Details
-                  </Button>
                 </Stack>
               </MotionBox>
-            ))}
-          </AnimatePresence>
+            );
+          })}
         </SimpleGrid>
+
+        {/* Floating Button */}
+        {cart.length > 0 && (
+          <Button
+            position="fixed"
+            bottom="30px"
+            right="12%"
+            colorScheme="yellow"
+            borderRadius="full"
+            px={6}
+            py={6}
+            shadow="xl"
+            onClick={onOpen}
+          >
+            View Selection ({cart.length})
+          </Button>
+        )}
+
+        {/* Drawer */}
+        <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerHeader borderBottomWidth="1px">
+              Your Selection ({cart.length})
+            </DrawerHeader>
+
+            <DrawerBody>
+              <VStack spacing={4} align="stretch">
+                {cart.map((item) => (
+                  <Box key={item.id}>
+                    <HStack justify="space-between">
+                      <HStack>
+                        <Image
+                          src={item.image}
+                          boxSize="50px"
+                          objectFit="cover"
+                          rounded="md"
+                        />
+                        <Text fontSize="sm">{item.name}</Text>
+                      </HStack>
+                      <IconButton
+                        aria-label="remove"
+                        icon={<CloseIcon />}
+                        size="xs"
+                        onClick={() => toggleCart(item)}
+                      />
+                    </HStack>
+                    <Divider mt={3} />
+                  </Box>
+                ))}
+              </VStack>
+            </DrawerBody>
+
+            <DrawerFooter>
+              <Button
+                as="a"
+                href={generateWhatsAppLink()}
+                target="_blank"
+                colorScheme="yellow"
+                w="full"
+                size="lg"
+              >
+                Send to WhatsApp
+              </Button>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
       </Container>
     </Box>
   );

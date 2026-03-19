@@ -24,15 +24,12 @@ import {
 import {
   FaBars,
   FaAngleDown,
-  FaHeart,
-  FaShoppingCart,
   FaTshirt,
   FaStore,
   FaGem,
   FaStar,
   FaTag,
 } from 'react-icons/fa';
-import { MdEventAvailable } from 'react-icons/md';
 import { motion } from 'framer-motion';
 
 const MotionBox = motion(Box);
@@ -51,10 +48,11 @@ export const MainMenu = () =>{
 
   const linkColor = useColorModeValue('gray.700', 'white');
   const primaryNav = [
-    { href: '/shop', label: 'Shop' },
-    { href: '/services', label: 'Services' },
-    { href: '/book-appointment', label: 'Book Appointment', icon: <MdEventAvailable /> },
-  ];
+  { href: '/shop', label: 'Shop' },
+  { href: '/custom-orders', label: 'Custom Orders' },
+  { href: '/flash-sales', label: 'Flash Sales 🔥' },
+  { href: '/book-appointment', label: 'Book Appointment' },
+];
 
   const fabrics = [
     { href: 'Asooke', label: 'Aṣọ òkè', icon: <FaStore /> },
@@ -73,7 +71,14 @@ export const MainMenu = () =>{
 };
 
   return (
-    <Box px={{ base: 4, md: 6 }} py={3} bg={useColorModeValue('white', 'gray.800')} boxShadow="sm">
+    <Box 
+      px={{ base: 4, md: 6 }} 
+      py={3} bg={useColorModeValue('white', 'gray.800')} 
+      boxShadow="sm" 
+      position="sticky"
+      top="0"
+      zIndex="1000"
+    >
       <Flex align="center" justify="space-between" maxW="1200px" mx="auto">
         {/* Left: Fabrics dropdown (desktop) */}
         <Box display={{ base: 'none', lg: 'block' }} position="relative" mr={4}>
@@ -144,14 +149,7 @@ export const MainMenu = () =>{
               borderColor={isActive(item.href) ? '#C28840' : 'transparent'}
               _hover={{ color: '#C28840', textDecoration: 'none' }}
             >
-              {item.icon ? (
-                <HStack spacing={2}>
-                  <Box as="span">{item.icon}</Box>
-                  <Text as="span">{item.label}</Text>
-                </HStack>
-              ) : (
-                item.label
-              )}
+              {item.label}
             </Link>
           ))}
         </HStack>
@@ -159,19 +157,15 @@ export const MainMenu = () =>{
         {/* Right: Icons + Mobile Menu Button */}
         <HStack spacing={4}>
           <HStack spacing={4} display={{ base: 'none', lg: 'flex' }}>
-            <Link as={NextLink} href="/wishlist" position="relative" aria-label="Wishlist">
-              <FaHeart size={18} />
-              <Badge position="absolute" top="-1" right="-2" bg="red.500" color="white" borderRadius="full" fontSize="xs">
-                0
-              </Badge>
-            </Link>
-
-            <Link as={NextLink} href="/cart" position="relative" aria-label="Cart">
-              <FaShoppingCart size={18} />
-              <Badge position="absolute" top="-1" right="-2" bg="green.500" color="white" borderRadius="full" fontSize="xs">
-                0
-              </Badge>
-            </Link>
+            <Button
+              bg="green.500"
+              color="white"
+              size="sm"
+              borderRadius="full"
+              _hover={{ bg: "green.600" }}
+            >
+              Order on WhatsApp
+            </Button>
           </HStack>
 
           <IconButton
@@ -214,7 +208,6 @@ export const MainMenu = () =>{
                 {primaryNav.map((item) => (
                   <Link key={item.href} as={NextLink} href={item.href} py={3} onClick={onCloseMobile}>
                     <HStack>
-                      {item.icon ? item.icon : null}
                       <Text>{item.label}</Text>
                     </HStack>
                   </Link>
@@ -222,17 +215,17 @@ export const MainMenu = () =>{
               </Box>
 
               <HStack spacing={4} pt={4}>
-                <Link as={NextLink} href="/wishlist" onClick={onCloseMobile}>
+                <Link as={NextLink} href="" onClick={onCloseMobile}>
                   <HStack>
-                    <FaHeart /> <Text>Wishlist</Text>
-                    <Badge ml={2}>0</Badge>
-                  </HStack>
-                </Link>
-
-                <Link as={NextLink} href="/cart" onClick={onCloseMobile}>
-                  <HStack>
-                    <FaShoppingCart /> <Text>Cart</Text>
-                    <Badge ml={2}>0</Badge>
+                    <Button
+                      bg="green.500"
+                      color="white"
+                      size="sm"
+                      borderRadius="full"
+                      _hover={{ bg: "green.600" }}
+                    >
+                      Order on WhatsApp
+                    </Button>
                   </HStack>
                 </Link>
               </HStack>
