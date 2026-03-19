@@ -83,6 +83,7 @@ export const Banner: React.FC = () => {
                 key={item.imgSrc}
                 position="relative"
                 height={carouselHeight}
+                width="100%"
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
@@ -94,7 +95,7 @@ export const Banner: React.FC = () => {
               >
                 <MotionImage
                   src={item.imgSrc}
-                  alt="heroImage"
+                  alt={item.title}
                   width="100%"
                   height="100%"
                   loading="lazy"
