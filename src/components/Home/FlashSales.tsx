@@ -51,7 +51,7 @@ import {
     {
       id: 3,
       name: "The Cultured Lady Cap",
-      image: "/images/accessory.jpg",
+      image: "/images/accessory.jpeg",
       price: "₦50,000",
       originalPrice: "₦70,000",
       stock: 2,
@@ -98,7 +98,7 @@ import {
     return (
       <Box py={28} px={4} bg="#fff">
         {/* Header */}
-        <Box textAlign="center" mb={16}>
+        <Box textAlign="center" mb={16} id="flashsales">
           <Heading
             fontSize={{ base: "3xl", md: "4xl" }}
             bgGradient="linear(to-r, #C28840, #000)"

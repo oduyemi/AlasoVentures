@@ -49,7 +49,7 @@ export const MainMenu = () =>{
   const primaryNav = [
   { href: '/shop', label: 'Shop' },
   { href: '/custom-orders', label: 'Custom Orders' },
-  { href: '/flash-sales', label: 'Flash Sales 🔥' },
+  { href: '/#flashsales', label: 'Flash Sales 🔥' },
   { href: '/book-appointment', label: 'Book Appointment' },
 ];
 

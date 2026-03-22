@@ -24,7 +24,9 @@ export default function Home() {
           <WhatsAppCTA />
           <Products />
           <FeaturedVideos />
-          <FlashSales />
+          <div id="flashsales">
+            <FlashSales />
+          </div>
           <BlogPreview />
           <div id="testimonies">
             <Testimonials />
