@@ -4,6 +4,7 @@ import {
   Container,
   Heading,
   Text,
+  Divider,
   Accordion,
   AccordionItem,
   AccordionButton,
@@ -11,13 +12,15 @@ import {
   AccordionIcon,
   VStack,
   Icon,
-  Divider,
   Button,
   useColorModeValue,
   HStack,
 } from "@chakra-ui/react";
 import { FaQuestionCircle, FaWhatsapp, FaEnvelope } from "react-icons/fa";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+
+const MotionBox = motion.create(Box);
+const MotionAccordionItem = motion.create(AccordionItem);
 
 const faqs = [
   {
@@ -57,20 +60,16 @@ const faqs = [
   },
 ];
 
-// Framer Motion wrappers
-const MotionBox = motion(Box);
-const MotionAccordionItem = motion(AccordionItem);
-
 export const FAQ = () => {
   const bg = useColorModeValue("#fff", "#0D0D0D");
-  const textColor = useColorModeValue("gray.700", "gray.200");
+  const textColor = useColorModeValue("gray.700", "gray.300");
   const accent = "#C28840";
-  const border = useColorModeValue("gray.200", "gray.600");
+  const border = useColorModeValue("gray.200", "gray.700");
 
   return (
-    <Box bg={bg} py={{ base: 16, md: 28 }}>
-      <Container maxW="6xl">
-        {/* Section Header */}
+    <Box bg={bg} py={{ base: 14, md: 20 }}>
+      <Container maxW="5xl">
+        {/* Header */}
         <VStack
           spacing={4}
           textAlign="center"
@@ -99,106 +98,81 @@ export const FAQ = () => {
           </Text>
         </VStack>
 
-        {/* FAQ Accordion */}
+        {/* Accordion */}
         <MotionBox
-          shadow="2xl"
-          rounded="2xl"
-          px={{ base: 5, md: 10 }}
-          py={{ base: 8, md: 12 }}
-          maxW="4xl"
-          mx="auto"
+          rounded="xl"
           border="1px solid"
           borderColor={border}
-          bg={useColorModeValue("whiteAlpha.900", "blackAlpha.400")}
-          backdropFilter="blur(10px)"
-          initial={{ opacity: 0, scale: 0.97 }}
-          whileInView={{ opacity: 1, scale: 1, transition: { duration: 0.7, ease: "easeOut" } }}
+          overflow="hidden"
         >
           <Accordion allowToggle>
             {faqs.map((faq, idx) => (
               <MotionAccordionItem
                 key={idx}
                 border="none"
-                py={4}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0, transition: { delay: idx * 0.1, duration: 0.5 } }}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                  transition: { delay: idx * 0.05 },
+                }}
               >
                 {({ isExpanded }) => (
                   <Box
-                    rounded="lg"
-                    px={3}
-                    py={2}
-                    mb={2}
-                    border="1px solid transparent"
-                    _hover={{
-                      borderColor: accent,
-                      boxShadow: "0 0 10px rgba(194,136,64,0.3)",
-                      transform: "translateY(-2px)",
-                    }}
-                    transition="all 0.3s ease"
-                    bgGradient={
-                      isExpanded
-                        ? "linear(to-r, rgba(194,136,64,0.08), rgba(13,13,13,0.05))"
-                        : "none"
-                    }
+                    borderBottom="1px solid"
+                    borderColor={border}
+                    px={{ base: 4, md: 6 }}
+                    py={4}
+                    position="relative"
+                    bg={isExpanded ? "blackAlpha.50" : "transparent"}
                   >
-                    <h2>
-                      <AccordionButton
-                        px={0}
-                        _hover={{ bg: "transparent" }}
-                        _expanded={{ color: accent }}
-                      >
+                    {/* Accent line */}
+                    {isExpanded && (
+                      <Box
+                        position="absolute"
+                        left="0"
+                        top="0"
+                        bottom="0"
+                        w="3px"
+                        bg={accent}
+                        borderRadius="full"
+                      />
+                    )}
+
+                    <AccordionButton
+                      px={0}
+                      _hover={{ bg: "transparent" }}
+                    >
+                      <HStack spacing={3} flex="1" align="start">
+                        <Icon
+                          as={FaQuestionCircle}
+                          color={accent}
+                          mt="2px"
+                        />
+
                         <Box
-                          flex="1"
                           textAlign="left"
-                          fontSize={{ base: "md", md: "lg" }}
-                          fontWeight="semibold"
-                          display="flex"
-                          alignItems="center"
-                          gap={2}
-                          color={isExpanded ? accent : textColor}
+                          fontWeight="medium"
+                          fontSize="md"
+                          color={isExpanded ? "black" : textColor}
                         >
-                          <motion.div
-                            animate={
-                              isExpanded
-                                ? { scale: [1, 1.2, 1] }
-                                : { scale: 1 }
-                            }
-                            transition={{ duration: 0.6 }}
-                          >
-                            <Icon as={FaQuestionCircle} color={accent} />
-                          </motion.div>
                           {faq.question}
                         </Box>
-                        <AccordionIcon
-                          transition="transform 0.3s ease"
-                          transform={isExpanded ? "rotate(180deg)" : "rotate(0deg)"}
-                        />
-                      </AccordionButton>
-                    </h2>
+                      </HStack>
 
-                    <AnimatePresence>
-                      {isExpanded && (
-                        <motion.div
-                          key="content"
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: "auto" }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.4, ease: "easeInOut" }}
-                        >
-                          <AccordionPanel
-                            px={1}
-                            pt={3}
-                            pb={2}
-                            color={textColor}
-                            fontSize={{ base: "sm", md: "md" }}
-                            lineHeight="1.75"
-                          >
-                            {faq.answer}
-                          </AccordionPanel>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                      <AccordionIcon />
+                    </AccordionButton>
+
+                    <AccordionPanel
+                      px={0}
+                      pt={2}
+                      pb={2}
+                      color={textColor}
+                      fontSize="sm"
+                      lineHeight="1.7"
+                    >
+                      {faq.answer}
+                    </AccordionPanel>
                   </Box>
                 )}
               </MotionAccordionItem>
@@ -206,53 +180,46 @@ export const FAQ = () => {
           </Accordion>
         </MotionBox>
 
-        {/* Support CTA */}
+        {/* CTA */}
         <MotionBox
-          mt={20}
+          mt={14}
           textAlign="center"
-          p={10}
-          rounded="2xl"
-          border="1px solid transparent"
-          bg={useColorModeValue("whiteAlpha.800", "blackAlpha.500")}
-          backdropFilter="blur(14px)"
-          // borderImage="linear-gradient(90deg, #C28840, #0D0D0D) 1"
-          shadow="lg"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
+          p={8}
+          rounded="xl"
+          border="1px solid"
+          borderColor={border}
         >
-          <Heading fontSize="2xl" mb={4} color={accent}>
-            Still need help?
+          <Heading fontSize="lg" mb={3}>
+            Still have questions?
           </Heading>
-          <Text color={textColor} maxW="2xl" mx="auto" mb={6}>
-            Our fashion consultants are available to assist you with any
-            additional questions, styling advice, or custom requests.
+
+          <Text color="gray.500" mb={6}>
+            Our team is available to guide you through your order.
           </Text>
-          <HStack justify="center" spacing={5}>
+
+          <HStack justify="center" spacing={4}>
             <Button
               as="a"
               href="https://wa.me/2348094217767"
               leftIcon={<FaWhatsapp />}
-              colorScheme="green"
-              size="lg"
+              bg="green.500"
+              color="white"
               rounded="full"
-              _hover={{ transform: "scale(1.05)" }}
-              transition="all 0.3s ease"
+              px={6}
+              _hover={{ bg: "green.600" }}
             >
-              Chat on WhatsApp
+              WhatsApp
             </Button>
+
             <Button
               as="a"
               href="mailto:kofoworola.alasooke@gmail.com"
               leftIcon={<FaEnvelope />}
-              size="lg"
+              variant="outline"
               rounded="full"
-              bg={accent}
-              color="white"
-              _hover={{ bg: "#a67333", transform: "scale(1.05)" }}
-              transition="all 0.3s ease"
+              px={6}
             >
-              Email Us
+              Email
             </Button>
           </HStack>
         </MotionBox>
