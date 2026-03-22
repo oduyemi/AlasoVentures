@@ -41,7 +41,7 @@ import {
     {
       id: 2,
       name: "Luxury Ready-to-Wear",
-      image: "/images/custom.jpg",
+      image: "/images/custom.JPG",
       price: "₦30,000",
       originalPrice: "₦50,000",
       stock: 5,
