@@ -72,7 +72,7 @@ export const MainMenu = () =>{
   return (
     <Box 
       px={{ base: 4, md: 6 }} 
-      py={3} bg={useColorModeValue('white', 'gray.800')} 
+      py={3} bg={useColorModeValue('yellow.700', 'gray.800')} 
       boxShadow="sm" 
       position="sticky"
       top="0"
