@@ -10,6 +10,7 @@ import { FeaturedIn } from "@/components/Home/FeaturedIn";
 import { Testimonials } from "@/components/Home/Testimonials";
 import { WhatsAppCTA } from "@/components/Home/CTA";
 import { BlogPreview } from "@/components/Home/Blog";
+import { FlashSales } from "@/components/Home/FlashSales";
 
 export default function Home() {
   return (
@@ -23,7 +24,7 @@ export default function Home() {
           <WhatsAppCTA />
           <Products />
           <FeaturedVideos />
-          {/* Flash sales */}
+          <FlashSales />
           <BlogPreview />
           <div id="testimonies">
             <Testimonials />
