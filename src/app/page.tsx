@@ -11,6 +11,7 @@ import { Testimonials } from "@/components/Home/Testimonials";
 import { WhatsAppCTA } from "@/components/Home/CTA";
 import { BlogPreview } from "@/components/Home/Blog";
 import { FlashSales } from "@/components/Home/FlashSales";
+import { CustomStylesPreview } from "@/components/Home/FeaturedStyles";
 
 export default function Home() {
   return (
@@ -20,10 +21,10 @@ export default function Home() {
           <Banner /> 
           <SocialProof />
           <AboutSection />
-          <HomeCollections />
-          <WhatsAppCTA />
-          <Products />
+          <CustomStylesPreview />
           <FeaturedVideos />
+          <Products />
+          <WhatsAppCTA />
           <div id="flashsales">
             <FlashSales />
           </div>

@@ -21,7 +21,7 @@ export const WhatsAppCTA = () => {
       </Heading>
 
       <Text mb={6}>
-        Chat with us directly on WhatsApp and place your preorder instantly.
+        We are just a click away! Send us a message directly on WhatsApp and place your preorder instantly.
       </Text>
 
       <Button
@@ -31,7 +31,7 @@ export const WhatsAppCTA = () => {
         _hover={{ opacity: 0.9 }}
         onClick={() =>
           window.open(
-            "https://wa.me/2347034739950",
+            "https://wa.me/2348094217767",
             "_blank"
           )
         }

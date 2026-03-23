@@ -134,20 +134,10 @@ import {
               transform: "translateY(-2px)",
               boxShadow: "lg",
             }}
-            onClick={() => router.push("/testimonies")}
-          >
-            View All Testimonies
-          </Button>
-  
-          <Text
-            fontSize="sm"
-            color="gray.500"
-            cursor="pointer"
-            _hover={{ color: "#C28840" }}
             onClick={() => setIsOpen(true)}
           >
-            ✨ Share your experience
-          </Text>
+            Share Your Experience
+          </Button>
         </Flex>
   
         <TestimonialDialog

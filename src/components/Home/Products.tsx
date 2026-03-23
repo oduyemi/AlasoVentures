@@ -42,9 +42,9 @@ const productItems: Product[] = [
 ];
 
 const categoryPricing: Record<string, string> = {
-  fabrics: "₦25,000 – ₦65,000",
-  "ready-made": "₦55,000 – ₦100,000",
-  accessories: "₦20,000 – ₦35,000",
+  fabrics: "₦25,000 upwards",
+  "ready-made": "₦55,000 upwards",
+  accessories: "₦20,000 upwards",
 };
 
 export const Products: React.FC = () => {

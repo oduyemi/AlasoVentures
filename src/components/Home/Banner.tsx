@@ -175,7 +175,7 @@ export const Banner: React.FC = () => {
 
         {/* Offer Section */}
         <Flex flex="1" direction="column" gap={6}>
-          {["/images/etu.jpg", "/images/booking.jpg"].map((offerImg, index) => (
+          {["/images/sewing.jpg", "/images/to_fit.jpg"].map((offerImg, index) => (
             <MotionBox
               key={offerImg}
               height="230px"
@@ -213,14 +213,15 @@ export const Banner: React.FC = () => {
                   textTransform="uppercase"
                   letterSpacing="1px"
                 >
-                  {index === 0 ? "Buy Aṣọ òkè Fabrics" : "Book Appointment"}
+                  {index === 0 ? "Flash Sales" : "Book Appointment"}
                 </Text>
                 <Heading as="h3" size="sm" fontWeight="semibold" mb={2} maxW="90%">
                   {index === 0
-                    ? "Check out our selection for unique or custom, handmade pieces."
+                    // ? "Check out our selection for unique or custom, handmade pieces."
+                    ? "Grab stunning products at up to 70% OFF! Limited stock, once sold out - GONE FOREVER!"
                     : "Get expert styling, fashion advice & outfit recommendations."}
                 </Heading>
-                <Link href={index === 0 ? "/pre-order" : "/book-appointment"}>
+                <Link href={index === 0 ? "/#flashsales" : "/book-appointment"}>
                   <MotionBox whileHover={{ scale: 1.05 }}>
                     <Button
                       size="sm"
@@ -231,7 +232,7 @@ export const Banner: React.FC = () => {
                       _hover={{ bg: "white", color: "#0D0D0D" }}
                       boxShadow="base"
                     >
-                      {index === 0 ? "Pre Order" : "Book Now"}
+                      {index === 0 ? "Flash Sales" : "Book Now"}
                     </Button>
                   </MotionBox>
                 </Link>

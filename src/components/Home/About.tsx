@@ -103,7 +103,7 @@ export const AboutSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              A subsidiary of ElegancebyRholarglow, we specialize in bespoke Asọ òkè
+              We specialize in bespoke Asọ òkè
               for individuals and groups—crafted for occasions both locally and
               internationally. Through EleganceRTW, we reinterpret tradition into
               modern silhouettes.
