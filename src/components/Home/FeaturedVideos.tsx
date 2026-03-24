@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { useYouTubeVideos } from "../../../hooks/useYouTubeVideos";
+import { useYouTubeVideos } from "../../hooks/useYouTubeVideos";
 
 type Video = {
   id: string;

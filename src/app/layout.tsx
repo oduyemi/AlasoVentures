@@ -1,12 +1,11 @@
-// import { UserProvider } from "@/app/context/UserContext";
-import { Box, ChakraProvider } from "@chakra-ui/react";
 import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "animate.css";
 import type { Metadata } from "next";
 import { ClientSideLayout } from "@/components/ClientSideLayout";
 import { Providers } from "@/components/Providers";
-
+import { AdminProvider } from "./context/admin.context";
+import { ColorModeScript } from "@chakra-ui/react";
 
 
 export const metadata: Metadata = {
@@ -30,13 +29,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body style={{ margin: 0, padding: 0 }}>
-        <Providers>
-          <Box minH="100vh" display="flex" flexDirection="column">
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <AdminProvider>
+          <Providers>
             <ClientSideLayout>{children}</ClientSideLayout>
-          </Box>
-        </Providers>
+          </Providers>
+        </AdminProvider>
       </body>
     </html>
   );

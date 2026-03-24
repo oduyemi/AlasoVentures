@@ -1,4 +1,3 @@
-/* eslint-disable */ 
 "use client";
 import {
   Box,
@@ -10,12 +9,13 @@ import {
   Skeleton,
   useColorModeValue,
   IconButton,
-  HStack,
 } from "@chakra-ui/react";
 import { motion, AnimatePresence } from "framer-motion";
 import NextLink from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { FaArrowLeft, FaArrowRight, FaTimes } from "react-icons/fa";
+import { useSpring, animated } from "@react-spring/web";
+import { useGesture } from "@use-gesture/react";
 
 const MotionBox = motion(Box);
 const ROOT = { Custom: "kofoworola/custom" };
@@ -29,10 +29,9 @@ export const CustomStylesPreview = () => {
     "rgba(255,255,255,0.8)",
     "rgba(20,20,20,0.6)"
   );
-
   const textColor = useColorModeValue("gray.600", "gray.300");
 
-  /* -------- FETCH -------- */
+  /* -------- FETCH IMAGES -------- */
   useEffect(() => {
     const fetchImages = async () => {
       try {
@@ -45,17 +44,16 @@ export const CustomStylesPreview = () => {
         setLoading(false);
       }
     };
-
     fetchImages();
   }, []);
 
-  /*  RANDOM  */
+  /* -------- RANDOMIZE 4 -------- */
   const randomImages = useMemo(() => {
     const shuffled = [...images].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, 4);
   }, [images]);
 
-  /*  NAV  */
+  /* -------- NAVIGATION -------- */
   const handleNext = () => {
     if (activeIndex === null) return;
     setActiveIndex((prev) =>
@@ -85,18 +83,13 @@ export const CustomStylesPreview = () => {
 
   return (
     <Box maxW="1200px" mx="auto" py={16} px={{ base: 4, md: 6 }}>
-      {/* GLASS CONTAINER */}
-      <MotionBox
+      {/* CONTAINER */}
+      <Box
         bg={bg}
         backdropFilter="blur(24px)"
         borderRadius="3xl"
         p={{ base: 6, md: 10 }}
         boxShadow="0 30px 80px rgba(0,0,0,0.1)"
-        border="1px solid rgba(255,255,255,0.2)"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
       >
         {/* HEADER */}
         <Heading
@@ -124,60 +117,25 @@ export const CustomStylesPreview = () => {
                 overflow="hidden"
                 position="relative"
                 cursor="pointer"
-                role="group"
                 onClick={() => !loading && setActiveIndex(i)}
               >
                 {loading ? (
                   <Skeleton h="280px" borderRadius="2xl" />
                 ) : (
-                  <MotionBox
-                    whileHover={{ scale: 1.07 }}
-                    transition={{ duration: 0.4 }}
-                  >
+                  <MotionBox whileHover={{ scale: 1.07 }}>
                     <Image
                       src={item.url}
                       alt="Custom style"
                       h="280px"
                       w="100%"
                       objectFit="cover"
-                      loading="lazy"
                     />
                   </MotionBox>
-                )}
-
-                {/* HOVER GLOW */}
-                {!loading && (
-                  <Box
-                    position="absolute"
-                    inset={0}
-                    bg="linear-gradient(to top, rgba(0,0,0,0.55), transparent)"
-                    opacity={0}
-                    transition="0.3s"
-                    _groupHover={{ opacity: 1 }}
-                  />
                 )}
               </Box>
             </Box>
           ))}
         </Flex>
-
-        {/* DOT NAV */}
-        {!loading && (
-          <HStack justify="center" mt={6}>
-            {randomImages.map((_, i) => (
-              <Box
-                key={i}
-                w={activeIndex === i ? "20px" : "8px"}
-                h="8px"
-                borderRadius="full"
-                bg={activeIndex === i ? "#C28840" : "gray.400"}
-                transition="0.3s"
-                cursor="pointer"
-                onClick={() => setActiveIndex(i)}
-              />
-            ))}
-          </HStack>
-        )}
 
         {/* CTA */}
         <Box mt={14} textAlign="center">
@@ -189,78 +147,145 @@ export const CustomStylesPreview = () => {
             borderRadius="full"
             px={10}
             size="lg"
-            _hover={{ transform: "translateY(-2px)" }}
-            transition="0.3s"
           >
             Start Custom Order
           </Button>
         </Box>
-      </MotionBox>
+      </Box>
 
-      {/* LIGHTBOX */}
+      {/* -------- LIGHTBOX -------- */}
       <AnimatePresence>
-        {activeIndex !== null && (
-          <MotionBox
-            position="fixed"
-            inset={0}
-            bg="rgba(0,0,0,0.92)"
-            backdropFilter="blur(10px)"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            zIndex={9999}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            {/* CLOSE */}
-            <IconButton
-              icon={<FaTimes />}
-              aria-label="Close"
-              position="absolute"
-              top={4}
-              right={4}
-              onClick={() => setActiveIndex(null)}
-            />
+        {activeIndex !== null && (() => {
+          const current = randomImages[activeIndex];
 
-            {/* PREV */}
-            <IconButton
-              icon={<FaArrowLeft />}
-              aria-label="Previous"
-              position="absolute"
-              left={6}
-              onClick={handlePrev}
-            />
+          const [{ x, y, scale }, api] = useSpring(() => ({
+            x: 0,
+            y: 0,
+            scale: 1,
+          }));
 
-            {/* NEXT */}
-            <IconButton
-              icon={<FaArrowRight />}
-              aria-label="Next"
-              position="absolute"
-              right={6}
-              onClick={handleNext}
-            />
+          const bind = useGesture({
+            onDrag: ({ down, movement: [mx, my], velocity, direction }) => {
+              if (scale.get() > 1) {
+                api.start({ x: mx, y: my });
+                return;
+              }
+            
+              if (!down) {
+                if (Math.abs(mx) > 120 || Math.abs(velocity[0]) > 0.3) {
+                  direction[0] > 0 ? handlePrev() : handleNext();
+                }
+                api.start({ x: 0 });
+              } else {
+                api.start({ x: mx });
+              }
+            },
 
-            {/* IMAGE */}
+            onPinch: ({ offset: [d] }) => {
+              api.start({ scale: Math.min(Math.max(d / 200, 1), 3) });
+            },
+
+            onDoubleClick: () => {
+              api.start({ scale: scale.get() > 1 ? 1 : 2 });
+            },
+          });
+
+          return (
             <MotionBox
-              key={activeIndex}
-              initial={{ scale: 0.85, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.85, opacity: 0 }}
-              transition={{ duration: 0.35 }}
-              maxW="92%"
-              maxH="92%"
+              position="fixed"
+              inset={0}
+              zIndex={9999}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              bg="rgba(0,0,0,0.92)"
+              backdropFilter="blur(12px)"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
             >
-              <Image
-                src={randomImages[activeIndex].url}
-                alt="Preview"
-                borderRadius="lg"
-                maxH="90vh"
-                mx="auto"
+              {/* BACKGROUND */}
+              <Box
+                position="absolute"
+                inset={0}
+                bgImage={`url(${current.url})`}
+                bgSize="cover"
+                bgPosition="center"
+                filter="blur(50px) brightness(0.4)"
+                transform="scale(1.3)"
               />
+
+              {/* COUNTER */}
+              <Box
+                position="absolute"
+                top={6}
+                left="50%"
+                transform="translateX(-50%)"
+                color="white"
+                fontSize="sm"
+                opacity={0.8}
+              >
+                {activeIndex + 1} / {randomImages.length}
+              </Box>
+
+              {/* CLOSE */}
+              <IconButton
+                icon={<FaTimes />}
+                aria-label="Close"
+                position="absolute"
+                top={4}
+                right={4}
+                onClick={() => setActiveIndex(null)}
+              />
+
+              {/* NAV */}
+              <IconButton
+                icon={<FaArrowLeft />}
+                aria-label="Prev"
+                position="absolute"
+                left={6}
+                onClick={handlePrev}
+              />
+              <IconButton
+                icon={<FaArrowRight />}
+                aria-label="Next"
+                position="absolute"
+                right={6}
+                onClick={handleNext}
+              />
+
+              {/* IMAGE */}
+              <animated.div
+                {...bind()}
+                style={{
+                  x,
+                  y,
+                  scale,
+                  touchAction: "none",
+                  cursor: scale.get() > 1 ? "grab" : "pointer",
+                }}
+              >
+                <MotionBox
+                  key={activeIndex}
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.9, opacity: 0 }}
+                  transition={{ duration: 0.4 }}
+                  maxW="92vw"
+                  maxH="92vh"
+                >
+                  <Image
+                    src={current.url}
+                    alt="Preview"
+                    borderRadius="xl"
+                    maxH="90vh"
+                    boxShadow="0 30px 120px rgba(0,0,0,0.6)"
+                  />
+                </MotionBox>
+              </animated.div>
             </MotionBox>
-          </MotionBox>
-        )}
+          );
+        })()}
       </AnimatePresence>
     </Box>
   );
