@@ -1,5 +1,12 @@
 "use client";
-import { Box, Text, Flex, Spinner } from "@chakra-ui/react";
+import {
+  Box,
+  Text,
+  Flex,
+  Spinner,
+  Skeleton,
+  VStack,
+} from "@chakra-ui/react";
 
 type Stats = {
   products: number;
@@ -19,20 +26,47 @@ function StatCard({
 }) {
   return (
     <Box
-      bg="white"
+      bg="#111"
       border="1px solid"
-      borderColor="gray.200"
-      borderRadius="xl"
+      borderColor="whiteAlpha.200"
+      borderRadius="2xl"
       p={5}
-      transition="0.2s"
-      _hover={{ transform: "translateY(-4px)", boxShadow: "md" }}
+      transition="all 0.25s ease"
+      _hover={{
+        transform: "translateY(-4px)",
+        borderColor: color,
+        boxShadow: `0 0 0 1px ${color}`,
+      }}
     >
-      <Text fontSize="sm" color="gray.500">
+      <Text fontSize="sm" color="gray.400" letterSpacing="wide">
         {title}
       </Text>
-      <Text fontSize="2xl" fontWeight="bold" mt={2} color={color}>
+
+      <Text
+        fontSize={{ base: "xl", md: "2xl" }}
+        fontWeight="bold"
+        mt={2}
+        color={color}
+      >
         {value}
       </Text>
+    </Box>
+  );
+}
+
+function StatSkeleton() {
+  return (
+    <Box
+      bg="#111"
+      border="1px solid"
+      borderColor="whiteAlpha.200"
+      borderRadius="2xl"
+      p={5}
+    >
+      <VStack align="start" spacing={3}>
+        <Skeleton height="10px" width="80px" />
+        <Skeleton height="20px" width="50px" />
+      </VStack>
     </Box>
   );
 }
@@ -49,21 +83,41 @@ export const DashboardStats = ({
       display="grid"
       gridTemplateColumns={{
         base: "repeat(2, 1fr)",
+        sm: "repeat(2, 1fr)",
         md: "repeat(4, 1fr)",
       }}
-      gap={4}
+      gap={{ base: 3, md: 5 }}
       w="100%"
     >
       {loading ? (
-        <Flex justify="center" gridColumn="span 4">
-          <Spinner />
-        </Flex>
+        <>
+          <StatSkeleton />
+          <StatSkeleton />
+          <StatSkeleton />
+          <StatSkeleton />
+        </>
       ) : (
         <>
-          <StatCard title="Products" value={stats.products} color="#2563eb" />
-          <StatCard title="Custom Orders" value={stats.customOrders} color="#7c3aed" />
-          <StatCard title="Bookings" value={stats.bookings} color="#16a34a" />
-          <StatCard title="Flash Sales" value={stats.flashSales} color="#f59e0b" />
+          <StatCard
+            title="Products"
+            value={stats.products}
+            color="#3b82f6"
+          />
+          <StatCard
+            title="Custom Orders"
+            value={stats.customOrders}
+            color="#8b5cf6"
+          />
+          <StatCard
+            title="Bookings"
+            value={stats.bookings}
+            color="#22c55e"
+          />
+          <StatCard
+            title="Flash Sales"
+            value={stats.flashSales}
+            color="#f59e0b"
+          />
         </>
       )}
     </Box>

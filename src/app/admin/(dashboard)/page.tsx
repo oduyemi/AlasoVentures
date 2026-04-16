@@ -1,10 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Text, Flex } from "@chakra-ui/react";
 import { DashboardStats } from "@/components/Admin/Stats";
 import { Booking, Bookings } from "@/components/Admin/Bookings";
+import { useAuth } from "@/app/context/auth.context";
 
 export default function DashboardHome() {
+  const { user } = useAuth();
+
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -35,34 +38,50 @@ export default function DashboardHome() {
           status: "pending",
         },
       ];
-  
+
       setBookings(mockBookings);
-  
+
       setStats({
         products: 24,
         customOrders: 12,
         bookings: 8,
         flashSales: 3,
       });
-  
+
       setLoading(false);
     }, 1000);
-  
+
     return () => clearTimeout(timeout);
   }, []);
 
   return (
     <Box>
-      <Box className="bg-white border-b border-gray-200 px-6 py-4">
-        <Text className="text-lg font-bold">Dashboard</Text>
-        <Text className="text-sm text-gray-500">
-          Overview of your store performance and activities
-        </Text>
+      {/* Header */}
+      <Box
+        px={{ base: 4, md: 6 }}
+        py={{ base: 4, md: 5 }}
+        borderBottom="1px solid"
+        borderColor="whiteAlpha.200"
+        bg="#111"
+      >
+        <Flex direction="column" gap={1}>
+          <Text fontSize={{ base: "xl", md: "2xl" }} fontWeight="bold">
+            Hello {user?.fname || "Admin"}
+          </Text>
+
+          <Text fontSize="sm" color="gray.400">
+            Overview of your store performance and activities
+          </Text>
+        </Flex>
       </Box>
 
-      <DashboardStats stats={stats} loading={loading} />
+      {/* Stats Section */}
+      <Box px={{ base: 4, md: 6 }} py={{ base: 4, md: 5 }}>
+        <DashboardStats stats={stats} loading={loading} />
+      </Box>
 
-      <Box className="p-6">
+      {/* Bookings Section */}
+      <Box px={{ base: 4, md: 6 }} pb={{ base: 6, md: 8 }}>
         <Bookings bookings={bookings} loading={loading} />
       </Box>
     </Box>
