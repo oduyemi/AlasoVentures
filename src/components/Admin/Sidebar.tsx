@@ -33,12 +33,12 @@ export function Sidebar({ logoutAdmin }: SidebarProps) {
     },
     {
       label: "Blog",
-      path: "/admin/bloguer",
+      path: "/admin/blog",
       icon: <FiFileText />,
     },
     {
       label: "Events",
-      path: "/admin/evenements",
+      path: "/admin/events",
       icon: <FiCalendar />,
     },
     {
@@ -53,13 +53,13 @@ export function Sidebar({ logoutAdmin }: SidebarProps) {
     },
     {
       label: "My Profile",
-      path: "/admin/profil",
+      path: "/admin/profile",
       icon: <FiUser />,
     },
   ];
 
   return (
-    <Box className="w-[260px] bg-slate-800 text-white p-6 flex flex-col">
+    <Box className="w-[260px] bg-[#0D0D0D] text-white p-6 flex flex-col">
       {/* Title */}
       <Text fontSize="lg" fontWeight="800" mb={6}>
         Administration
@@ -102,9 +102,9 @@ export function Sidebar({ logoutAdmin }: SidebarProps) {
       </Button>
 
       {/* Footer */}
-      <Text fontSize="xs" opacity={0.6}>
+      {/* <Text fontSize="xs" opacity={0.6}>
         © 2026 Orphanage
-      </Text>
+      </Text> */}
     </Box>
   );
 }

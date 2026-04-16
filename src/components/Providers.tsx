@@ -3,7 +3,6 @@
 import {
   ChakraProvider,
   PortalManager,
-  ColorModeScript,
 } from "@chakra-ui/react";
 import { CacheProvider } from "@emotion/react";
 import { emotionCache } from "@/lib/emotion-cache";
@@ -21,7 +20,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <CacheProvider value={emotionCache}>
-      <ColorModeScript initialColorMode="light" />
       <ChakraProvider theme={theme}>
         <PortalManager>{children}</PortalManager>
       </ChakraProvider>

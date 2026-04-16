@@ -4,7 +4,7 @@ import "animate.css";
 import type { Metadata } from "next";
 import { ClientSideLayout } from "@/components/ClientSideLayout";
 import { Providers } from "@/components/Providers";
-import { AdminProvider } from "./context/admin.context";
+import { AuthProvider } from "./context/auth.context";
 import { ColorModeScript } from "@chakra-ui/react";
 
 
@@ -30,14 +30,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>
-        <AdminProvider>
-          <Providers>
-            <ClientSideLayout>{children}</ClientSideLayout>
-          </Providers>
-        </AdminProvider>
-      </body>
-    </html>
+  <body suppressHydrationWarning>
+    <ColorModeScript initialColorMode="light" />
+
+    <Providers>
+      <AuthProvider>
+        <ClientSideLayout>{children}</ClientSideLayout>
+      </AuthProvider>
+    </Providers>
+  </body>
+</html>
   );
 }
 

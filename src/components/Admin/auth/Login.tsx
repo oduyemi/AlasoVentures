@@ -11,35 +11,67 @@ import {
   AlertIcon,
 } from "@chakra-ui/react";
 import { LockIcon } from "@chakra-ui/icons";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
-import { useAdmin } from "../../../app/context/admin.context";
+import axios from "@/utils/axios";
+import { useAuth, MeResponse } from "../../../app/context/auth.context";
 
 export const AdminLogin = () => {
   const router = useRouter();
-  const { refreshAdmin } = useAdmin();
+  const { setUser } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
 
-  const handleLogin = async () => {
+  const redirectTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (redirectTimeout.current) {
+        clearTimeout(redirectTimeout.current);
+      }
+    };
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (loading) return;
+
+    setLoading(true);
+    setError("");
+    setSuccess(false);
+
     try {
-      setLoading(true);
-      setError("");
-
-      await axios.post(
+      const response = await axios.post<MeResponse>(
         "/api/auth/login",
         { email, password },
         { withCredentials: true }
       );
 
-      await refreshAdmin();
-      router.push("/admin");
+      const user = response.data.user;
+      if (user.role !== "admin") {
+        setError("Access denied: Administrators only");
+        setLoading(false);
+        return;
+      }
+      if (user.role === "admin") {
+        setSuccess(true);
+        setUser(user);
+        setSuccess(true);
+        redirectTimeout.current = setTimeout(() => {
+          router.push("/admin");
+        }, 3000); // 3 secs
+      }
+
     } catch (err: any) {
-      setError(err.response?.data?.error || "Login failed");
+      if (err.response?.status === 403) {
+        setError("Access denied: Administrators only");
+      } else {
+        setError("Invalid credentials");
+      }
     } finally {
       setLoading(false);
     }
@@ -51,7 +83,7 @@ export const AdminLogin = () => {
       display="grid"
       placeItems="center"
       px={4}
-      bgGradient="linear(to-br, #eef2ff, #f8fafc, #ecfdf5)"
+      bg="#0D0D0D"
     >
       <Box
         w="400px"
@@ -89,6 +121,13 @@ export const AdminLogin = () => {
 
         <Divider mb={4} />
 
+        {success && (
+          <Alert status="success" mb={4} rounded="md">
+            <AlertIcon />
+            Login successful! Redirecting to dashboard shortly...
+          </Alert>
+        )}
+
         {error && (
           <Alert status="error" mb={4} rounded="md">
             <AlertIcon />
@@ -96,40 +135,47 @@ export const AdminLogin = () => {
           </Alert>
         )}
 
-        <VStack spacing={3}>
-          <Input
-            placeholder="Email address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+        <form onSubmit={handleSubmit}>
+          <VStack spacing={3}>
+            <Input
+              placeholder="Email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              isDisabled={success}
+            />
 
-          <Input
-            placeholder="Password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </VStack>
+            <Input
+              placeholder="Password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              isDisabled={success}
+            />
+          </VStack>
 
-        <Button
-          mt={6}
-          w="full"
-          onClick={handleLogin}
-          isLoading={loading}
-          loadingText="Logging in..."
-          rounded="full"
-          bgGradient="linear(to-r, yellow.600, yellow.400)"
-          color="white"
-          fontWeight="bold"
-          letterSpacing="wide"
-          textTransform="uppercase"
-          _hover={{
-            bgGradient: "linear(to-r, yellow.400, yellow.300)",
-          }}
-          boxShadow="lg"
-        >
-          Sign In
-        </Button>
+          <Button
+            mt={6}
+            w="full"
+            type="submit"
+            isLoading={loading}
+            loadingText="Logging in..."
+            isDisabled={success}
+            rounded="full"
+            bgGradient="linear(to-r, yellow.600, yellow.400)"
+            color="white"
+            fontWeight="bold"
+            letterSpacing="wide"
+            textTransform="uppercase"
+            _hover={{
+              bgGradient: "linear(to-r, yellow.400, yellow.300)",
+            }}
+            boxShadow="lg"
+          >
+            Sign In
+          </Button>
+        </form>
       </Box>
     </Box>
   );

@@ -24,40 +24,78 @@ const MotionAccordionItem = motion.create(AccordionItem);
 
 const faqs = [
   {
-    question: "What services do you offer?",
+    question: "Do you offer fully custom designs?",
     answer:
-      "We specialize in bespoke tailoring, premium Asọ Òkè craftsmanship, traditional Yoruba attire, fashion styling for weddings and ceremonies, and style consulting for individuals and groups.",
+      "Yes, we specialize in custom-woven aso-oke. You can request specific colors, patterns, and styles, or share your inspiration, and we’ll bring your vision to life.",
   },
   {
-    question: "Do you take urgent or express orders?",
+    question: "Can I provide my own design or color inspiration?",
     answer:
-      "Yes, we accommodate express orders depending on availability. An express fee may apply. Contact us directly for confirmation.",
+      "Absolutely. You can send us reference images, color palettes, or ideas, and we’ll work closely with you to create a unique design.",
   },
   {
-    question: "How long does it take to finish an outfit?",
+    question: "How long does it take to complete a custom order?",
     answer:
-      "Tailoring time depends on the design complexity. Standard completion ranges from 5–10 business days. Bridal or group orders may take longer.",
+      "Production timelines vary depending on the complexity and quantity of your order. On average, custom orders take 3–6 weeks. Larger or more intricate designs may take longer.",
   },
   {
-    question: "Can I book a fashion consultation?",
+    question: "Do you accept bulk or aso-ebi orders?",
     answer:
-      "Absolutely. We offer both in-person and virtual consultations to discuss your needs, recommend fabrics, and curate your perfect outfit.",
+      "Yes, we handle both small and large group orders, including aso-ebi for weddings and events. Early booking is recommended for bulk requests",
   },
   {
-    question: "Do you deliver outside Ilorin or Ibadan?",
+    question: "Is there a minimum order quantity?",
     answer:
-      "Yes. We deliver across Nigeria through trusted courier services. Nationwide shipping is available upon order completion.",
+      "Minimum order requirements may apply depending on the design. Please contact us with your request for specific details.",
   },
   {
-    question: "Are matching accessories available?",
+    question: "How many loom sets/bundles do I need for my outfit?",
     answer:
-      "Yes, we provide accessories such as Gele, Fila, Ipele, jewelry, and coordinated footwear on request.",
+      "This depends on the styles and we’re happy to guide you based on your needs.",
   },
   {
-    question: "How do I pay for an order?",
+    question: "How is pricing determined?",
     answer:
-      "Payments can be made via secure bank transfer, POS, or USSD. You will receive account details once your order is confirmed.",
+      `Prices are based on:
+
+      Type of material (cotton, metallic, supernet etc.)
+      Complexity of design
+      Color combinations
+      Quantity ordered
+      
+      Custom designs may cost more due to the level of detail involved.`,
   },
+  {
+    question: "What payment methods do you accept?",
+    answer: "We accept bank transfers and other secure payment options. A deposit is required before production begins."
+  },
+  {
+    question: "Do you offer nationwide or international delivery?",
+    answer: "Yes, we deliver across Nigeria and internationally. Shipping fees and timelines vary depending on location."
+  },
+  {
+    question: "Can I request changes after placing my order?",
+    answer: "Changes can only be made before production begins. Once weaving has started, modifications may not be possible."
+  },
+  {
+    question: "Do you accept returns or exchanges?",
+    answer: "Due to the custom nature of our products, we do not accept returns or exchanges unless there is an error on our part."
+  },
+  {
+    question: "How do I care for my aso-oke?",
+    answer: `Dry clean for best results
+    Avoid harsh detergents
+    Store in a cool, dry place
+    Proper care will help maintain its quality and longevity.`
+  },
+  {
+    question: "Can I see samples before placing an order?",
+    answer: "Yes, we can provide photos, videos, or sample swatches upon request. Studio visits may also be arranged by appointment."
+  },
+  {
+    question: "How do I get started?",
+    answer: "Simply contact us via our website, WhatsApp, or social media with your ideas, and we’ll guide you through the process from design to delivery."
+  }
 ];
 
 export const FAQ = () => {
@@ -170,6 +208,7 @@ export const FAQ = () => {
                       color={textColor}
                       fontSize="sm"
                       lineHeight="1.7"
+                      whiteSpace="pre-line" 
                     >
                       {faq.answer}
                     </AccordionPanel>
