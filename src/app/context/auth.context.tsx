@@ -13,11 +13,7 @@ import { useRouter } from "next/navigation";
 
 type Role = "user" | "admin";
 
-export interface MeResponse {
-  user: User;
-}
-
-interface User {
+export interface User {
   _id: string;
   fname: string;
   lname: string;
@@ -28,6 +24,7 @@ interface User {
 interface AuthContextType {
   user: User | null;
   loading: boolean;
+  isAuthChecked: boolean;
   refreshUser: () => Promise<User | null>;
   logout: () => Promise<void>;
   setUser: (user: User | null) => void;
@@ -36,47 +33,52 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [hydrated, setHydrated] = useState(false);
   const router = useRouter();
+  const [user, setUser] = useState<User | null>(null); // ✅ no localStorage
+  const [loading, setLoading] = useState(true);
+  const [isAuthChecked, setIsAuthChecked] = useState(false);
 
   const fetchUser = useCallback(async () => {
+    setLoading(true);
+
     try {
-      const res = await axios.get<MeResponse>("/api/admin/me", {
-        withCredentials: true,
-      });
+      const res = await axios.get("/api/auth/me");
 
       setUser(res.data.user);
       return res.data.user;
-    } catch (err) {
-      setUser(null);
+    } catch (err: any) {
+      if (err.response?.status === 401) {
+        setUser(null);
+      }
       return null;
     } finally {
       setLoading(false);
+      setIsAuthChecked(true);
     }
   }, []);
 
   useEffect(() => {
-    setHydrated(true);
     fetchUser();
   }, [fetchUser]);
 
   const logout = async () => {
-    try {
-      await axios.post("/api/auth/logout", {}, { withCredentials: true });
-      setUser(null);
-      router.push("/login");
-    } catch (err) {
-      console.error("Logout failed:", err);
-    }
+    await axios.post("/api/auth/logout");
+    setUser(null);
+    router.push("/admin/login");
   };
 
   return (
     <AuthContext.Provider
-      value={{ user, loading, refreshUser: fetchUser, logout, setUser }}
+      value={{
+        user,
+        loading,
+        isAuthChecked,
+        refreshUser: fetchUser,
+        logout,
+        setUser,
+      }}
     >
-      {hydrated ? children : null}
+      {children}
     </AuthContext.Provider>
   );
 }

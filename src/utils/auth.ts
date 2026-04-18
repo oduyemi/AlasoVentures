@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
+import { headers } from "next/headers";
 import jwt from "jsonwebtoken";
 import User from "@/models/user.model";
 import bcrypt from "bcryptjs";
-
 
 interface JwtPayload {
   userId: string;
@@ -10,7 +10,6 @@ interface JwtPayload {
 }
 
 type Role = "user" | "admin";
-
 
 export const verifyToken = (token: string): JwtPayload | null => {
   try {
@@ -20,22 +19,30 @@ export const verifyToken = (token: string): JwtPayload | null => {
   }
 };
 
-export const getAuthUser = (token: string) => {
+
+export const getCurrentUser = async () => {
+  const headerList = await headers();
+  const authHeader = headerList.get("authorization");
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return null;
+  }
+
+  const token = authHeader.split(" ")[1];
+
   const decoded = verifyToken(token);
   if (!decoded) return null;
-  return {
-    userId: decoded.userId,
-    role: decoded.role,
-  };
+
+  return await User.findById(decoded.userId).select("-password");
 };
 
-export const requireRole = (user: any, roles: string[]) => {
-  if (!roles.includes(user.role)) {
+// Role guard
+export const requireRole = (user: any, roles: Role[]) => {
+  if (!user || !roles.includes(user.role)) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
   return null;
 };
-
 
 
 export async function handleLogin(req: Request, allowedRole: Role) {
@@ -53,23 +60,21 @@ export async function handleLogin(req: Request, allowedRole: Role) {
     return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
   }
 
-  // Role enforcement
-  if (user.role.toLowerCase().trim() !== allowedRole.toLowerCase()) {
+  if (user.role !== allowedRole) {
     return NextResponse.json(
       { error: `Access denied: ${allowedRole}s only` },
       { status: 403 }
     );
   }
 
-  user.lastLogin = new Date();
-  await user.save();
   const token = jwt.sign(
     { userId: user._id.toString(), role: user.role },
     process.env.JWT_SECRET!,
     { expiresIn: "7d" }
   );
 
-  const res = NextResponse.json({
+  return NextResponse.json({
+    token, 
     user: {
       _id: user._id,
       fname: user.fname,
@@ -77,15 +82,6 @@ export async function handleLogin(req: Request, allowedRole: Role) {
       email: user.email,
       role: user.role,
     },
+    firstLogin: user.firstLogin
   });
-
-  res.cookies.set("token", token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    path: "/",
-    maxAge: 60 * 60 * 24 * 7,
-  });
-
-  return res;
 }

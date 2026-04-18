@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Box,
   Text,
@@ -25,20 +26,20 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 
-export type Order = {
+export type PreOrder = {
   id: string;
-  customerName?: string;
-  email?: string;
-  phone?: string;
-  title: string;
-  type: "pre order" | "flash sale" | "custom style";
-  description?: string;
-  images?: string[];
-  date: string;
+  fullname: string;
+  email: string;
+  phone: string;
+  style: string;
+  description: string;
+  additionalInfo?: string;
+  images: string[];
   status: "ordered" | "processing" | "sorted" | "complete";
+  createdAt: string;
 };
 
-const statusColor = (status: Order["status"]) => {
+const statusColor = (status: PreOrder["status"]) => {
   switch (status) {
     case "complete":
       return "yellow";
@@ -51,20 +52,21 @@ const statusColor = (status: Order["status"]) => {
   }
 };
 
-export const OrdersTable = ({
+export const PreOrdersTable = ({
   orders,
   loading,
   onUpdateStatus,
 }: {
-  orders?: Order[]; 
+  orders?: PreOrder[];
   loading: boolean;
-  onUpdateStatus: (id: string, status: Order["status"]) => void;
+  onUpdateStatus: (id: string, status: PreOrder["status"]) => void;
 }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [selected, setSelected] = useState<Order | null>(null);
-
   const safeOrders = orders ?? [];
-  const openDetails = (order: Order) => {
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [selected, setSelected] = useState<PreOrder | null>(null);
+
+  const openDetails = (order: PreOrder) => {
     setSelected(order);
     onOpen();
   };
@@ -80,7 +82,7 @@ export const OrdersTable = ({
       {/* Header */}
       <Flex justify="space-between" align="center" mb={4}>
         <Text fontWeight="600" color="white" fontSize="lg">
-          Recent Orders
+          Pre-Orders
         </Text>
       </Flex>
 
@@ -89,10 +91,8 @@ export const OrdersTable = ({
         <Stack spacing={3}>
           <Skeleton height="40px" />
           <Skeleton height="40px" />
-          <Skeleton height="40px" />
         </Stack>
       ) : safeOrders.length === 0 ? (
-        /* EMPTY STATE */
         <Flex
           direction="column"
           align="center"
@@ -101,28 +101,21 @@ export const OrdersTable = ({
           textAlign="center"
           color="gray.400"
         >
-          <Box mb={4} fontSize="40px" opacity={0.6}>
-            📦
-          </Box>
-
-          <Text fontSize="lg" fontWeight="500" color="gray.300">
-            No orders yet
+          <Box fontSize="40px">🧵</Box>
+          <Text fontSize="lg" color="gray.300">
+            No pre-orders yet
           </Text>
-
-          <Text fontSize="sm" maxW="300px">
-            When customers place pre-orders or purchase from flash sales,
-            their orders will appear here.
+          <Text fontSize="sm">
+            Customer custom orders will appear here.
           </Text>
         </Flex>
       ) : (
-        /* TABLE */
         <Box overflowX="auto">
           <Table size="sm">
             <Thead>
               <Tr>
                 <Th>Customer</Th>
-                <Th>Type</Th>
-                <Th>Title</Th>
+                <Th>Style</Th>
                 <Th>Date</Th>
                 <Th>Status</Th>
                 <Th>Actions</Th>
@@ -132,38 +125,38 @@ export const OrdersTable = ({
             <Tbody>
               {safeOrders.map((o) => (
                 <Tr key={o.id} _hover={{ bg: "whiteAlpha.50" }}>
-                  <Td>{o.customerName || "N/A"}</Td>
-
+                  
+                  {/* Customer */}
                   <Td>
-                    <Badge
-                      colorScheme={
-                        o.type === "pre-order" ? "orange" : "pink"
-                      }
-                    >
-                      {o.type}
-                    </Badge>
+                    <Text fontWeight="500">{o.fullname}</Text>
+                    <Text fontSize="sm" color="gray.400">
+                      {o.email}
+                    </Text>
                   </Td>
 
-                  <Td>{o.title}</Td>
+                  {/* Style */}
+                  <Td>{o.style}</Td>
 
+                  {/* Date */}
                   <Td fontSize="sm" color="gray.400">
-                    {new Date(o.date).toLocaleDateString()}
+                    {new Date(o.createdAt).toLocaleDateString()}
                   </Td>
 
+                  {/* Status */}
                   <Td>
                     <Badge colorScheme={statusColor(o.status)}>
                       {o.status}
                     </Badge>
                   </Td>
 
+                  {/* Actions */}
                   <Td>
                     <HStack spacing={2} wrap="wrap">
-                      {/* View */}
+                      
                       <Button size="xs" onClick={() => openDetails(o)}>
                         View
                       </Button>
 
-                      {/* Processing */}
                       <Button
                         size="xs"
                         colorScheme="blue"
@@ -175,7 +168,6 @@ export const OrdersTable = ({
                         Processing
                       </Button>
 
-                      {/* Sorted */}
                       <Button
                         size="xs"
                         colorScheme="purple"
@@ -187,7 +179,6 @@ export const OrdersTable = ({
                         Sorted
                       </Button>
 
-                      {/* Complete */}
                       <Button
                         size="xs"
                         colorScheme="yellow"
@@ -211,52 +202,48 @@ export const OrdersTable = ({
       <Modal isOpen={isOpen} onClose={onClose} size="lg">
         <ModalOverlay />
         <ModalContent bg="#1a1a1a">
-          <ModalHeader color="white">Order Details</ModalHeader>
+          <ModalHeader color="white">Pre-Order Details</ModalHeader>
           <ModalCloseButton />
 
           <ModalBody>
             {selected && (
               <Stack spacing={3}>
                 <Text>
-                  <b>Type:</b> {selected.type}
+                  <b>Name:</b> {selected.fullname}
                 </Text>
                 <Text>
-                  <b>Title:</b> {selected.title}
+                  <b>Email:</b> {selected.email}
                 </Text>
+                <Text>
+                  <b>Phone:</b> {selected.phone}
+                </Text>
+
+                <Text>
+                  <b>Style:</b> {selected.style}
+                </Text>
+
                 <Text>
                   <b>Status:</b> {selected.status}
                 </Text>
+
                 <Text>
                   <b>Date:</b>{" "}
-                  {new Date(selected.date).toLocaleString()}
+                  {new Date(selected.createdAt).toLocaleString()}
                 </Text>
 
-                {selected.customerName && (
-                  <Text>
-                    <b>Customer:</b> {selected.customerName}
-                  </Text>
-                )}
+                <Text>
+                  <b>Description:</b> {selected.description}
+                </Text>
 
-                {selected.email && (
+                {selected.additionalInfo && (
                   <Text>
-                    <b>Email:</b> {selected.email}
-                  </Text>
-                )}
-
-                {selected.phone && (
-                  <Text>
-                    <b>Phone:</b> {selected.phone}
-                  </Text>
-                )}
-
-                {selected.description && (
-                  <Text>
-                    <b>Description:</b> {selected.description}
+                    <b>Additional Info:</b>{" "}
+                    {selected.additionalInfo}
                   </Text>
                 )}
 
                 {/* Images */}
-                {selected.images && selected.images.length > 0 && (
+                {selected.images?.length > 0 && (
                   <Flex gap={2} wrap="wrap">
                     {selected.images.map((img, i) => (
                       <Image
@@ -265,7 +252,6 @@ export const OrdersTable = ({
                         boxSize="80px"
                         objectFit="cover"
                         borderRadius="md"
-                        fallbackSrc="https://via.placeholder.com/80"
                       />
                     ))}
                   </Flex>

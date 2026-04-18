@@ -8,6 +8,7 @@ export interface IUser extends Document {
   password: string;
   role: "user" | "admin";
   image?: string;
+  firstLogin: boolean;
   lastLogin?: Date;
   createdAt: Date;
   updatedAt: Date;
@@ -40,6 +41,10 @@ const userSchema = new Schema<IUser>(
     image: {
       type: String,
       default: null,
+    },
+    firstLogin: {
+      type: Boolean,
+      default: true,
     },
     lastLogin: {
       type: Date,

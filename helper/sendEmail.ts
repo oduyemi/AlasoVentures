@@ -6,7 +6,7 @@ export const sendEmail = async (
   html: string
 ) => {
   await transporter.sendMail({
-    from: `"ProGrowing Forum" <no-reply@progrowing.com>`,
+    from: `"Kofoworola Alasoke" <no-reply@kofoworolaalasooke.com>`,
     to,
     subject,
     html,

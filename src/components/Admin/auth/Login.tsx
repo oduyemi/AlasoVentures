@@ -14,12 +14,17 @@ import { LockIcon } from "@chakra-ui/icons";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "@/utils/axios";
-import { useAuth, MeResponse } from "../../../app/context/auth.context";
+import { useAuth, User } from "../../../app/context/auth.context";
+
+
+type LoginResponse = {
+  token: string;
+  user: User;
+};
 
 export const AdminLogin = () => {
   const router = useRouter();
   const { setUser } = useAuth();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -39,33 +44,29 @@ export const AdminLogin = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (loading) return;
-
+  
     setLoading(true);
     setError("");
-    setSuccess(false);
-
+  
     try {
-      const response = await axios.post<MeResponse>(
+      const response = await axios.post<LoginResponse>(
         "/api/auth/login",
         { email, password },
-        { withCredentials: true }
+        // { withCredentials: true }
       );
-
-      const user = response.data.user;
+  
+      const { token, user } = response.data;
+      localStorage.setItem("token", token);
+      localStorage.setItem("auth_user", JSON.stringify(user));
       if (user.role !== "admin") {
         setError("Access denied: Administrators only");
-        setLoading(false);
         return;
       }
-      if (user.role === "admin") {
-        setSuccess(true);
-        setUser(user);
-        setSuccess(true);
-        redirectTimeout.current = setTimeout(() => {
-          router.push("/admin");
-        }, 3000); // 3 secs
-      }
 
+      setUser(user);
+
+      router.push("/admin");
+  
     } catch (err: any) {
       if (err.response?.status === 403) {
         setError("Access denied: Administrators only");

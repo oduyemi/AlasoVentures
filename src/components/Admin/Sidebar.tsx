@@ -17,14 +17,18 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import {
   FiHome,
-  FiFileText,
-  FiCalendar,
-  FiSettings,
+  FiShoppingBag,
+  FiShoppingCart,
+  FiPackage,
+  FiEdit3,
+  FiImage,
+  FiUsers,
   FiUser,
   FiMenu,
+  FiLogOut,
 } from "react-icons/fi";
 import Image from "next/image";
-import Link from "next/link"; 
+import Link from "next/link";
 
 interface SidebarProps {
   logoutAdmin: () => Promise<void>;
@@ -39,17 +43,20 @@ export function Sidebar({ logoutAdmin }: SidebarProps) {
 
   const isActive = (path: string) => pathname.startsWith(path);
 
-  const menu = [
-    { label: "Dashboard", path: "/admin", icon: <FiHome /> },
-    { label: "Blog", path: "/admin/blog", icon: <FiFileText /> },
-    { label: "Bookings", path: "/admin/bookings", icon: <FiCalendar /> },
-    { label: "Admins", path: "/admin/create-admin", icon: <FiSettings /> },
-    {
-      label: "Administrators",
-      path: "/admin/administrators",
-      icon: <FiSettings />,
-    },
-    { label: "My Profile", path: "/admin/profile", icon: <FiUser /> },
+  // 🔥 Clean semantic grouping
+  const contentMenu = [
+    { label: "Dashboard", path: "/admin", icon: FiHome },
+    { label: "Products", path: "/admin/products", icon: FiPackage },
+    { label: "Flash Sales", path: "/admin/sales", icon: FiShoppingBag },
+    { label: "Custom Orders", path: "/admin/custom-orders", icon: FiShoppingBag },
+    { label: "Pre-orders", path: "/admin/pre-orders", icon: FiShoppingCart },
+    { label: "Blog", path: "/admin/blog", icon: FiEdit3 },
+    { label: "Carousel", path: "/admin/carousel", icon: FiImage },
+  ];
+
+  const systemMenu = [
+    { label: "Administrators", path: "/admin/administrators", icon: FiUser },
+    { label: "My Profile", path: "/admin/profile", icon: FiUser },
   ];
 
   const SidebarContent = () => (
@@ -61,65 +68,121 @@ export function Sidebar({ logoutAdmin }: SidebarProps) {
       p={5}
       display="flex"
       flexDirection="column"
-      boxShadow="lg"
     >
       {/* Header */}
-      <Flex align="center" justify="space-between" mb={6}>
-        <Link href="/" textDecoration="none" display="inline-block">
+      <Flex align="center" justify="space-between" mb={8}>
+        <Link href="/">
           <Image
             src="/images/logo/logo.png"
-            width={180}
-            height={100}
-            alt="sitelogo"
+            width={160}
+            height={80}
+            alt="logo"
           />
         </Link>
-        {isMobile && (
-          <DrawerCloseButton position="relative" top={0} right={0} />
-        )}
+
+        {isMobile && <DrawerCloseButton position="relative" />}
       </Flex>
 
-      {/* Menu */}
-      <Stack spacing={2}>
-        {menu.map((item) => (
-          <Button
-            key={item.path}
-            leftIcon={item.icon}
-            onClick={() => {
-              router.push(item.path);
-              if (isMobile) onClose();
-            }}
-            justifyContent="flex-start"
-            variant="ghost"
-            fontWeight="medium"
-            borderRadius="lg"
-            px={3}
-            py={2}
-            _hover={{ bg: "#1f2937" }}
-            bg={isActive(item.path) ? "#1f2937" : "transparent"}
-            color={isActive(item.path) ? "white" : "gray.400"}
-          >
-            {item.label}
-          </Button>
-        ))}
+      {/* CONTENT SECTION */}
+      <Text fontSize="xs" color="gray.500" mb={2}>
+        CONTENT
+      </Text>
+
+      <Stack spacing={1} mb={6}>
+        {contentMenu.map((item) => {
+          const Icon = item.icon;
+
+          return (
+            <Button
+              key={item.path}
+              leftIcon={<Icon />}
+              onClick={() => {
+                router.push(item.path);
+                if (isMobile) onClose();
+              }}
+              justifyContent="flex-start"
+              variant="ghost"
+              fontWeight="medium"
+              borderRadius="lg"
+              px={3}
+              py={5}
+              fontSize="sm"
+              transition="all 0.2s"
+              borderLeft={
+                isActive(item.path) ? "3px solid #3b82f6" : "3px solid transparent"
+              }
+              bg={isActive(item.path) ? "whiteAlpha.100" : "transparent"}
+              _hover={{
+                bg: "whiteAlpha.100",
+                transform: "translateX(2px)",
+              }}
+              color={isActive(item.path) ? "white" : "gray.400"}
+            >
+              {item.label}
+            </Button>
+          );
+        })}
+      </Stack>
+
+      <Divider borderColor="whiteAlpha.200" mb={4} />
+
+      {/* SYSTEM SECTION */}
+      <Text fontSize="xs" color="gray.500" mb={2}>
+        SYSTEM
+      </Text>
+
+      <Stack spacing={1}>
+        {systemMenu.map((item) => {
+          const Icon = item.icon;
+
+          return (
+            <Button
+              key={item.path}
+              leftIcon={<Icon />}
+              onClick={() => {
+                router.push(item.path);
+                if (isMobile) onClose();
+              }}
+              justifyContent="flex-start"
+              variant="ghost"
+              fontWeight="medium"
+              borderRadius="lg"
+              px={3}
+              py={5}
+              fontSize="sm"
+              transition="all 0.2s"
+              borderLeft={
+                isActive(item.path) ? "3px solid #8b5cf6" : "3px solid transparent"
+              }
+              bg={isActive(item.path) ? "whiteAlpha.100" : "transparent"}
+              _hover={{
+                bg: "whiteAlpha.100",
+                transform: "translateX(2px)",
+              }}
+              color={isActive(item.path) ? "white" : "gray.400"}
+            >
+              {item.label}
+            </Button>
+          );
+        })}
       </Stack>
 
       <Box flex="1" />
 
-      <Divider borderColor="whiteAlpha.300" my={4} />
-
       {/* Logout */}
       <Button
+        leftIcon={<FiLogOut />}
         variant="outline"
         colorScheme="red"
         onClick={logoutAdmin}
-        mb={2}
+        mt={6}
       >
         Logout
       </Button>
     </Box>
   );
 
-  // Mobile: Drawer
+  // Mobile Drawer
   if (isMobile) {
     return (
       <>
@@ -143,7 +206,6 @@ export function Sidebar({ logoutAdmin }: SidebarProps) {
     );
   }
 
-  // Desktop: Fixed sidebar
   return (
     <Box position="fixed" left={0} top={0}>
       <SidebarContent />

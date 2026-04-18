@@ -2,13 +2,12 @@
 import { useEffect, useState } from "react";
 import { Box, Text, Flex } from "@chakra-ui/react";
 import { DashboardStats } from "@/components/Admin/Stats";
-import { Booking, Bookings } from "@/components/Admin/Bookings";
+import { Order, OrdersTable } from "@/components/Admin/Bookings";
 import { useAuth } from "@/app/context/auth.context";
 
 export default function DashboardHome() {
   const { user } = useAuth();
-
-  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
 
   const [stats, setStats] = useState({
@@ -20,26 +19,37 @@ export default function DashboardHome() {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      const mockBookings: Booking[] = [
+      const mockOrders: Order[] = [
         {
           id: "1",
           customerName: "Sarah Johnson",
           email: "sarah@example.com",
-          style: "Ankara Gown",
+          title: "Ankara Gown",
+          type: "pre order",
           date: new Date().toISOString(),
-          status: "confirmed",
+          status: "ordered",
         },
         {
           id: "2",
           customerName: "David Lee",
           email: "david@example.com",
-          style: "Agbada",
+          title: "Agbada",
+          type: "flash sale",
           date: new Date().toISOString(),
-          status: "pending",
+          status: "processing",
+        },
+        {
+          id: "3",
+          customerName: "Segun Oni",
+          email: "shegzyleee@gmail.com",
+          title: "Atiku",
+          type: "custom style",
+          date: new Date().toISOString(),
+          status: "ordered",
         },
       ];
 
-      setBookings(mockBookings);
+      setOrders(mockOrders);
 
       setStats({
         products: 24,
@@ -53,6 +63,12 @@ export default function DashboardHome() {
 
     return () => clearTimeout(timeout);
   }, []);
+
+  const handleUpdateStatus = (id: string, status: Order["status"]) => {
+    setOrders((prev) =>
+      prev.map((o) => (o.id === id ? { ...o, status } : o))
+    );
+  };
 
   return (
     <Box>
@@ -82,7 +98,11 @@ export default function DashboardHome() {
 
       {/* Bookings Section */}
       <Box px={{ base: 4, md: 6 }} pb={{ base: 6, md: 8 }}>
-        <Bookings bookings={bookings} loading={loading} />
+      <OrdersTable
+        orders={orders}
+        loading={loading}
+        onUpdateStatus={handleUpdateStatus}
+      />
       </Box>
     </Box>
   );
