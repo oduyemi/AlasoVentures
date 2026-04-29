@@ -147,7 +147,7 @@ export async function uploadProduct(
   return new Promise((resolve, reject) => {
     const stream = cloudinary.uploader.upload_stream(
       {
-        folder: "kofo/products", 
+        folder: "kofoworola/products", 
         resource_type: "image",
 
         transformation: [
@@ -179,7 +179,7 @@ export async function uploadHeroSlideImage(
   return new Promise((resolve, reject) => {
     const stream = cloudinary.uploader.upload_stream(
       {
-        folder: "kofo/carousel",
+        folder: "kofoworola/carousel",
         resource_type: "image",
         overwrite: true,
         invalidate: true,
