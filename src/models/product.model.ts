@@ -143,3 +143,4 @@ productSchema.pre("validate", function (next) {
   });
 
   const Product = mongoose.models.Product || mongoose.model<IProduct>("Product", productSchema);
+  export default Product

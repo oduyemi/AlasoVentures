@@ -12,6 +12,8 @@ export interface IUser extends Document {
   lastLogin?: Date;
   createdAt: Date;
   updatedAt: Date;
+  isDeleted: boolean;
+  deletedAt: Date;
 }
 
 const userSchema = new Schema<IUser>(
@@ -19,14 +21,14 @@ const userSchema = new Schema<IUser>(
     fname: { type: String, required: true },
     lname: { type: String, required: true },
     email: {
-        type: String,
-        unique: true,
-        index: true,
-        lowercase: true,
-        trim: true,
-        required: true,
-        match: [/^\S+@\S+\.\S+$/, "Please use a valid email address"],
-      },
+      type: String,
+      unique: true,
+      index: true,
+      lowercase: true,
+      trim: true,
+      required: true,
+      match: [/^\S+@\S+\.\S+$/, "Please use a valid email address"],
+    },
     password: {
       type: String,
       required: true,
@@ -47,6 +49,15 @@ const userSchema = new Schema<IUser>(
       default: true,
     },
     lastLogin: {
+      type: Date,
+      default: null,
+    },
+
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+    deletedAt: {
       type: Date,
       default: null,
     },

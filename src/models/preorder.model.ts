@@ -4,17 +4,18 @@ export interface IPreOrder extends Document {
   _id: Types.ObjectId
   fullname: string;
   email: string;
-  phone: string;            // User's WhatsApp number
-  style: string;            // Style name/title
-  description: string;      // Short description
-  additionalInfo?: string;  // Extra details (optional)
-  images: string[];         // Uploaded Cloudinary URLs
+  phone: string;            
+  style: string;            
+  description: string;      
+  additionalInfo?: string;  
+  images: string[];         
   status: "ordered" | "processing" | "sorted" | "complete";
   createdAt: Date;
 }
 
-const PreOrderSchema: Schema<IPreOrder> = new Schema(
+const preOrderSchema = new Schema<IPreOrder>(
   {
+    fullname: { type: String, required: true },
     email: { type: String, required: true },
     phone: { type: String, required: true },
     style: { type: String, required: true },
@@ -23,7 +24,7 @@ const PreOrderSchema: Schema<IPreOrder> = new Schema(
     images: { type: [String], required: true },
     status: {
       type: String,
-      enum: ["ordered" | "processing" | "sorted" | "complete"],
+      enum: ["ordered", "processing", "sorted", "complete"],
       required: true,
       index: true,
       lowercase: true,
@@ -35,6 +36,6 @@ const PreOrderSchema: Schema<IPreOrder> = new Schema(
 
 const PreOrder: Model<IPreOrder> =
   mongoose.models.PreOrder ||
-  mongoose.model<IPreOrder>("PreOrder", PreOrderSchema);
+  mongoose.model<IPreOrder>("PreOrder", preOrderSchema);
 
 export default PreOrder;

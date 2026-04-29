@@ -13,14 +13,8 @@ import {
 import { LockIcon } from "@chakra-ui/icons";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import axios from "@/utils/axios";
 import { useAuth, User } from "../../../app/context/auth.context";
 
-
-type LoginResponse = {
-  token: string;
-  user: User;
-};
 
 export const AdminLogin = () => {
   const router = useRouter();
@@ -43,38 +37,26 @@ export const AdminLogin = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (loading) return;
-  
-    setLoading(true);
-    setError("");
   
     try {
-      const response = await axios.post<LoginResponse>(
-        "/api/auth/login",
-        { email, password },
-        // { withCredentials: true }
-      );
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
   
-      const { token, user } = response.data;
-      localStorage.setItem("token", token);
-      localStorage.setItem("auth_user", JSON.stringify(user));
-      if (user.role !== "admin") {
-        setError("Access denied: Administrators only");
-        return;
-      }
-
-      setUser(user);
-
+      const data = await res.json();
+  
+      if (!res.ok) throw new Error(data.error);
+  
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("auth_user", JSON.stringify(data.user));
+  
+      setUser(data.user);
+  
       router.push("/admin");
-  
     } catch (err: any) {
-      if (err.response?.status === 403) {
-        setError("Access denied: Administrators only");
-      } else {
-        setError("Invalid credentials");
-      }
-    } finally {
-      setLoading(false);
+      setError(err.message);
     }
   };
 

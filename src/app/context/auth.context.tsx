@@ -1,5 +1,4 @@
 "use client";
-
 import {
   createContext,
   useContext,
@@ -30,11 +29,15 @@ interface AuthContextType {
   setUser: (user: User | null) => void;
 }
 
+type MeResponse = {
+  user: User;
+};
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
-  const [user, setUser] = useState<User | null>(null); // ✅ no localStorage
+  const [user, setUser] = useState<User | null>(null); 
   const [loading, setLoading] = useState(true);
   const [isAuthChecked, setIsAuthChecked] = useState(false);
 
@@ -42,7 +45,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setLoading(true);
 
     try {
-      const res = await axios.get("/api/auth/me");
+      const res = await axios.get<MeResponse>("/api/auth/me");
 
       setUser(res.data.user);
       return res.data.user;

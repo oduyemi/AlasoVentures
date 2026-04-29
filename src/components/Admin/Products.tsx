@@ -50,6 +50,21 @@ export type Product = {
   createdAt: string;
 };
 
+type ProductForm = Partial<Product> & {
+  imageFile?: File;
+
+  subcategory?: {
+    type?: "asooke" | "saki" | "kente" | "akwete";
+    variant?: "cotton asooke" | "metallic asooke" | "supernet";
+    style?: "monotone" | "two-tone";
+  };
+
+  sales?: {
+    expiryDate?: Date;
+  };
+};
+
+
 const categoryColor = (cat: Product["category"]) => {
   switch (cat) {
     case "custom":
@@ -82,8 +97,23 @@ export const ProductsTable = ({
   } = useDisclosure();
 
   const [editing, setEditing] = useState<Product | null>(null);
+  const [form, setForm] = useState<ProductForm>({});
 
-  const [form, setForm] = useState<Partial<Product>>({});
+  // const openNew = () => {
+  //   setEditing(null);
+  //   setForm(prev => {
+  //     if (!prev.pricing?.originalPrice) return prev;
+    
+  //     return {
+  //       ...prev,
+  //       pricing: {
+  //         ...prev.pricing,
+  //         salePrice: Number(e.target.value),
+  //       },
+  //     };
+  //   });
+  //   onFormOpen();
+  // };
 
   const openNew = () => {
     setEditing(null);
@@ -108,6 +138,15 @@ export const ProductsTable = ({
     onFormClose();
   };
 
+  const updatePricing = (updates: Partial<Product["pricing"]>) => {
+    setForm(prev => ({
+      ...prev,
+      pricing: {
+        ...prev.pricing,
+        ...updates,
+      } as Product["pricing"],
+    }));
+  };
   return (
     <Box
       bg="#111"
@@ -284,8 +323,8 @@ export const ProductsTable = ({
 
                     setForm({
                     ...form,
-                    imageFile: file, // for upload
-                    imageUrl: preview, // for preview
+                    imageFile: file, 
+                    imageUrl: preview, 
                     });
                 }}
                 />
@@ -431,18 +470,21 @@ export const ProductsTable = ({
                 {form.isFlashSales && (
                 <>
                     <Input
-                    placeholder="Sale Price"
-                    type="number"
-                    value={form.pricing?.salePrice || ""}
-                    onChange={(e) =>
-                        setForm({
-                        ...form,
-                        pricing: {
-                            ...form.pricing,
-                            salePrice: Number(e.target.value),
-                        },
-                        })
-                    }
+                      placeholder="Sale Price"
+                      type="number"
+                      value={form.pricing?.salePrice || ""}
+                      // onChange={(e) =>
+                      //   setForm(prev => ({
+                      //     ...prev,
+                      //     pricing: {
+                      //       originalPrice: prev.pricing?.originalPrice ?? 0,
+                      //       salePrice: Number(e.target.value),
+                      //     },
+                      //   }))
+                      // }
+                      onChange={(e) =>
+                        updatePricing({ salePrice: Number(e.target.value) })
+                      }
                     />
 
                     <Input
@@ -450,14 +492,15 @@ export const ProductsTable = ({
                     type="number"
                     value={form.inventory?.quantity || ""}
                     onChange={(e) =>
-                        setForm({
+                      setForm({
                         ...form,
                         inventory: {
-                            ...form.inventory,
-                            quantity: Number(e.target.value),
-                        },
+                          quantity: Number(e.target.value),
+                          salesOrderStatus:
+                            form.inventory?.salesOrderStatus || "instock",
+                          },
                         })
-                    }
+                      }
                     />
 
                     <Input

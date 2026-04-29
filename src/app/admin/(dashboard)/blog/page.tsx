@@ -2,65 +2,91 @@
 import { Box, Text, Flex } from "@chakra-ui/react";
 import { useAuth } from "@/app/context/auth.context";
 import { BlogTable, Blog } from "@/components/Admin/Blog";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function BlogPage() {
   const { user } = useAuth();
-
   const [blogs, setBlogs] = useState<Blog[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  const handleDelete = (id: string) => {
-    // TODO: API call
-    setBlogs((prev) => prev.filter((b) => b.id !== id));
+
+  const fetchBlogs = async () => {
+    setLoading(true);
+    const res = await fetch("/api/blog");
+    const data = await res.json();
+
+    const normalized = data.map((b: any) => ({
+      ...b,
+      id: b._id,
+      date: b.createdAt,
+    }));
+
+    setBlogs(normalized);
+    setLoading(false);
   };
 
-  const handleSave = (blog: Partial<Blog>) => {
-    // TODO: API call
+  useEffect(() => {
+    fetchBlogs();
+    const interval = setInterval(fetchBlogs, 10000);
+    return () => clearInterval(interval);
+  }, []);
 
-    if (blog.id) {
-      // update
-      setBlogs((prev) =>
-        prev.map((b) => (b.id === blog.id ? { ...b, ...blog } as Blog : b))
-      );
-    } else {
-      // create
-      const newBlog: Blog = {
-        id: Date.now().toString(),
-        title: blog.title || "",
-        excerpt: blog.excerpt || "",
-        image: blog.image || "",
-        category: blog.category || "",
-        content: blog.content || "",
-        date: new Date().toISOString(),
-      };
+  const handleSave = async (form: any, editing?: Blog | null) => {
+    let blogId = editing?.id;
 
-      setBlogs((prev) => [newBlog, ...prev]);
+    const res = await fetch(
+      editing ? `/api/blog/${editing.id}` : `/api/blog`,
+      {
+        method: editing ? "PUT" : "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      }
+    );
+
+    const blog = await res.json();
+    blogId = blog._id;
+    if (form.imageFile && blogId) {
+      const fd = new FormData();
+      fd.append("file", form.imageFile);
+      fd.append("blogId", blogId);
+    
+      const upload = await fetch("/api/blog/uploads", {
+        method: "POST",
+        body: fd,
+      });
+    
+      const img = await upload.json();
+    
+      await fetch(`/api/blog/${blogId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ image: img.secure_url }),
+      });
     }
+
+    fetchBlogs();
+  };
+
+  // DELETE
+  const handleDelete = async (id: string) => {
+    await fetch(`/api/blog/${id}`, { method: "DELETE" });
+    setBlogs((prev) => prev.filter((b) => b.id !== id));
   };
 
   return (
     <Box>
-      {/* Header */}
-      <Box
-        px={{ base: 4, md: 6 }}
-        py={{ base: 4, md: 5 }}
-        borderBottom="1px solid"
-        borderColor="whiteAlpha.200"
-        bg="#111"
-      >
-        <Flex direction="column" gap={1}>
-          <Text fontSize={{ base: "xl", md: "2xl" }} fontWeight="bold">
-            Hello {user?.fname || "Admin"}
+      <Box px={6} py={5} borderBottom="1px solid" borderColor="whiteAlpha.200">
+        <Flex direction="column">
+          <Text fontSize="2xl" fontWeight="bold">
+            {user?.fname || "Admin"}
           </Text>
-
           <Text fontSize="sm" color="gray.400">
-            Overview of your store performance and activities
+            Manage your blog articles here.
           </Text>
         </Flex>
       </Box>
 
-      <Box px={{ base: 4, md: 6 }} pb={{ base: 6, md: 8 }} mt={2}>
+      <Box px={6} mt={2}>
         <BlogTable
           blogs={blogs}
           loading={loading}

@@ -1,5 +1,4 @@
 "use client";
-
 import {
   Box,
   Text,
@@ -186,6 +185,7 @@ export const AdminsTable = ({
               <Input
                 placeholder="First Name"
                 value={form.fname}
+                color="white"
                 onChange={(e) =>
                   setForm({ ...form, fname: e.target.value })
                 }
@@ -194,6 +194,7 @@ export const AdminsTable = ({
               <Input
                 placeholder="Last Name"
                 value={form.lname}
+                color="white"
                 onChange={(e) =>
                   setForm({ ...form, lname: e.target.value })
                 }
@@ -202,6 +203,7 @@ export const AdminsTable = ({
               <Input
                 placeholder="Email"
                 type="email"
+                color="white"
                 value={form.email}
                 onChange={(e) =>
                   setForm({ ...form, email: e.target.value })
@@ -211,6 +213,7 @@ export const AdminsTable = ({
               <Input
                 placeholder="Temporary Password"
                 type="password"
+                color="white"
                 value={form.password}
                 onChange={(e) =>
                   setForm({ ...form, password: e.target.value })

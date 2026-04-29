@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Box, Text, Flex } from "@chakra-ui/react";
+import { Box, Text, Flex, useToast } from "@chakra-ui/react";
 import { useAuth } from "@/app/context/auth.context";
 import {
   PreOrdersTable,
@@ -9,49 +9,74 @@ import {
 
 export default function PreOrderPage() {
   const { user } = useAuth();
-
+  const toast = useToast();
   const [orders, setOrders] = useState<PreOrder[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const mock: PreOrder[] = [
-      {
-        id: "1",
-        fullname: "Sarah Johnson",
-        email: "sarah@example.com",
-        phone: "08012345678",
-        style: "Ankara Gown",
-        description: "Fitted gown with slit",
-        images: ["https://via.placeholder.com/80"],
-        status: "ordered",
-        createdAt: new Date().toISOString(),
-      },
-      {
-        id: "2",
-        fullname: "David Lee",
-        email: "david@example.com",
-        phone: "08087654321",
-        style: "Agbada",
-        description: "Traditional agbada with embroidery",
-        images: ["https://via.placeholder.com/80"],
-        status: "processing",
-        createdAt: new Date().toISOString(),
-      },
-    ];
+  const fetchOrders = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch("/api/pre-orders");
+      const data = await res.json();
+      if (!data.success) throw new Error(data.message);
+      const formatted = data.orders.map((o: any) => ({
+        ...o,
+        id: o._id,
+      }));
 
-    setTimeout(() => {
-      setOrders(mock);
+      setOrders(formatted);
+    } catch (err: any) {
+      toast({
+        title: "Error fetching orders",
+        description: err.message,
+        status: "error",
+      });
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
+  };
+
+  useEffect(() => {
+    fetchOrders();
+    const interval = setInterval(fetchOrders, 10000);
+    return () => clearInterval(interval);
   }, []);
 
-  const handleUpdateStatus = (
+
+  const handleUpdateStatus = async (
     id: string,
     status: PreOrder["status"]
   ) => {
-    setOrders((prev) =>
-      prev.map((o) => (o.id === id ? { ...o, status } : o))
-    );
+    try {
+      setOrders((prev) =>
+        prev.map((o) => (o.id === id ? { ...o, status } : o))
+      );
+
+      const res = await fetch(`/api/pre-orders/status/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status }),
+      });
+
+      const data = await res.json();
+
+      if (!data.success) throw new Error(data.message);
+
+      toast({
+        title: "Status updated",
+        status: "success",
+      });
+    } catch (err: any) {
+      toast({
+        title: "Update failed",
+        description: err.message,
+        status: "error",
+      });
+
+      fetchOrders();
+    }
   };
 
   return (
@@ -75,6 +100,7 @@ export default function PreOrderPage() {
         </Flex>
       </Box>
 
+      {/* Table */}
       <Box px={{ base: 4, md: 6 }} pb={{ base: 6, md: 8 }} mt={2}>
         <PreOrdersTable
           orders={orders}

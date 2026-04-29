@@ -1,5 +1,4 @@
 "use client";
-
 import {
   Modal,
   ModalOverlay,
@@ -14,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 
 interface Post {
-  id: number;
+  id: string;
   title: string;
   excerpt: string;
   image: string;
@@ -72,7 +71,7 @@ export const BlogDialog = ({ isOpen, onClose, post }: Props) => {
             {post.date}
           </Text>
 
-          <Text lineHeight="tall">
+          <Text lineHeight="tall" color="gray.400">
             {post.content ?? post.excerpt}
           </Text>
         </ModalBody>

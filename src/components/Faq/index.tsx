@@ -241,7 +241,7 @@ export const FAQ = () => {
               as="a"
               href="https://wa.me/2348094217767"
               leftIcon={<FaWhatsapp />}
-              bg="green.500"
+              bg="yellow.600"
               color="white"
               rounded="full"
               px={6}

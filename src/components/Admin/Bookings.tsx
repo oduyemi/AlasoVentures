@@ -36,6 +36,7 @@ export type Order = {
   images?: string[];
   date: string;
   status: "ordered" | "processing" | "sorted" | "complete";
+  source: "custom" | "pre" | "sale"; 
 };
 
 const statusColor = (status: Order["status"]) => {
@@ -137,7 +138,7 @@ export const OrdersTable = ({
                   <Td>
                     <Badge
                       colorScheme={
-                        o.type === "pre-order" ? "orange" : "pink"
+                        o.type === "pre order" ? "orange" : "pink"
                       }
                     >
                       {o.type}

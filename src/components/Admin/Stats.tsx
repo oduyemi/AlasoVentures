@@ -4,8 +4,10 @@ import {
   Text,
   Skeleton,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 type Stats = {
   products: number;
@@ -26,7 +28,7 @@ function StatCard({
   href: string;
 }) {
   return (
-    <Link href={href} style={{ textDecoration: "none"}}>
+    <Link href={href} style={{ textDecoration: "none" }}>
       <Box
         bg="#111"
         border="1px solid"
@@ -74,21 +76,53 @@ function StatSkeleton() {
   );
 }
 
-export const DashboardStats = ({
-  stats,
-  loading,
-}: {
-  stats: Stats;
-  loading: boolean;
-}) => {
+export const DashboardStats = () => {
+  const toast = useToast();
+  const [stats, setStats] = useState<Stats>({
+    products: 0,
+    customOrders: 0,
+    bookings: 0,
+    flashSales: 0,
+  });
+  const [loading, setLoading] = useState(true);
+
+
+  const fetchStats = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch("/api/stats", {
+        cache: "no-store",
+      });
+
+      const data = await res.json();
+      if (!data.success) throw new Error(data.message);
+
+      setStats(data.stats);
+    } catch (err: any) {
+      toast({
+        title: "Failed to load stats",
+        description: err.message,
+        status: "error",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchStats();
+    const interval = setInterval(fetchStats, 15000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <Box
       display="grid"
       gridTemplateColumns={{
-        base: "repeat(1, 1fr)",   // 📱 very small screens
-        sm: "repeat(2, 1fr)",     // 📱 phones
-        md: "repeat(2, 1fr)",     // 📱 large phones / small tablets
-        lg: "repeat(4, 1fr)",     // 💻 desktop
+        base: "repeat(1, 1fr)",
+        sm: "repeat(2, 1fr)",
+        md: "repeat(2, 1fr)",
+        lg: "repeat(4, 1fr)",
       }}
       gap={{ base: 3, md: 5 }}
       w="100%"

@@ -42,8 +42,6 @@ export function Sidebar({ logoutAdmin }: SidebarProps) {
   const isMobile = useBreakpointValue({ base: true, md: false });
 
   const isActive = (path: string) => pathname.startsWith(path);
-
-  // 🔥 Clean semantic grouping
   const contentMenu = [
     { label: "Dashboard", path: "/admin", icon: FiHome },
     { label: "Products", path: "/admin/products", icon: FiPackage },
@@ -51,7 +49,8 @@ export function Sidebar({ logoutAdmin }: SidebarProps) {
     { label: "Custom Orders", path: "/admin/custom-orders", icon: FiShoppingBag },
     { label: "Pre-orders", path: "/admin/pre-orders", icon: FiShoppingCart },
     { label: "Blog", path: "/admin/blog", icon: FiEdit3 },
-    { label: "Carousel", path: "/admin/carousel", icon: FiImage },
+    { label: "Hero Manager", path: "/admin/hero-manager", icon: FiImage },
+    { label: "Testimonials", path: "/admin/testimonials", icon: FiUsers },
   ];
 
   const systemMenu = [
