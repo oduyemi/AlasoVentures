@@ -73,7 +73,7 @@ export const AboutSection = () => {
             fontWeight="semibold"
             lineHeight="short"
           >
-            Kòfowórọlá Alásọòkè
+            Kòfowórọlá Alásọ
           </Heading>
 
           {/* gold accent */}

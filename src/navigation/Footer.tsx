@@ -109,7 +109,7 @@ export const Footer: React.FC = () => {
 
             <Flex justify="center" textAlign="center">
               <Text color="gray.400">
-                Copyright &copy; {new Date().getFullYear()} Kòfowórọlá Alásọòkè | All Rights Reserved.
+                Copyright &copy; {new Date().getFullYear()} Kòfowórọlá Alásọ | All Rights Reserved.
               </Text>
             </Flex>
           </Container>

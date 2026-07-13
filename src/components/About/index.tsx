@@ -103,7 +103,7 @@ export const AboutUs = () => {
               {[
                 <>
                   <Text as="span" fontWeight="semibold" color="#C28840">
-                    At Kòfowórọlá Alásọòkè
+                    At Kòfowórọlá Alásọ
                   </Text>{" "}
                   is a subsidiary of ElegancebyRholarglow which specializes in
                   designing, weaving, and tailoring bespoke Aso Oke for both
