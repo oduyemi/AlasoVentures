@@ -26,7 +26,7 @@ export async function POST(req: Request) {
     const uploadResult = await new Promise((resolve, reject) => {
       cloudinary.uploader.upload_stream(
         {
-          folder: "blogs",
+          folder: "kofo/blogs",
           public_id: blogId, 
           overwrite: true,   
         },
