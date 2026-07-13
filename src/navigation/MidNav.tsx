@@ -36,7 +36,7 @@ export const MidNav: React.FC = () => {
       >
         <Link href="/" textDecoration="none" display="inline-block">
           <Image
-            src="/images/logo/logo.png"
+            src="/images/logo/logob.png"
             width={200}
             height={100}
             alt="sitelogo"
