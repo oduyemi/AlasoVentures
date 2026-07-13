@@ -5,7 +5,7 @@ export interface ITestimony extends Document {
   _id: Types.ObjectId;
   fullname: string;
   email: string;
-  who: "returning customer" | "client" | "fashion enthusiast" | "new visitor";
+  who: "returning customer" | "client" | "fashion enthusiast" | "new visitor" | "google review";
   testimony: string;
   status: "pending" | "approved" | "disapproved"
   createdAt: Date;
@@ -17,7 +17,7 @@ const testimonySchema = new Schema<ITestimony>(
     email: { type: String, required: true },
     who: {
       type: String,
-      enum: ["returning customer", "client", "fashion enthusiast", "new visitor"],
+      enum: ["returning customer", "client", "fashion enthusiast", "new visitor", "google review"],
       required: true,
       index: true,
       lowercase: true,

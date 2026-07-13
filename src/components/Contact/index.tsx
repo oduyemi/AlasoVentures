@@ -38,54 +38,66 @@ export const Contact: React.FC = () => {
     fullname: "",
     email: "",
     phone: "",
+    subject: "",
     message: "",
   });
 
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+  
     setLoading(true);
-
+  
     try {
-      const res = await fetch("http://localhost:5000/api/contact", {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(formData),
       });
-
+  
       const result = await res.json();
-
-      if (res.ok) {
-        toast({
-          title: "Message sent!",
-          description: result.message,
-          status: "success",
-          duration: 5000,
-          isClosable: true,
-        });
-        setFormData({ fullname: "", email: "", phone: "", message: "" });
-      } else {
-        toast({
-          title: "Error",
-          description: result.error || "Submission failed.",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        });
+  
+      if (!res.ok) {
+        throw new Error(result.message || "Failed to submit form");
       }
-    } catch {
+  
       toast({
-        title: "Network Error",
-        description: "Please try again later.",
+        title: "Message Sent",
+        description: result.message,
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+  
+      setFormData({
+        fullname: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: "",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Submission Failed",
+        description: error.message || "Something went wrong.",
         status: "error",
         duration: 5000,
         isClosable: true,
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -203,7 +215,7 @@ export const Contact: React.FC = () => {
                 <FormLabel color="gray.400">Name</FormLabel>
                 <Input
                   placeholder="Your full name"
-                  name="name"
+                  name="fullname"
                   variant="filled"
                   focusBorderColor="#C28840"
                   value={formData.fullname}
@@ -224,7 +236,7 @@ export const Contact: React.FC = () => {
                 />
               </FormControl>
 
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel color="gray.400">Phone</FormLabel>
                 <Input
                   placeholder="Optional"
@@ -232,6 +244,18 @@ export const Contact: React.FC = () => {
                   variant="filled"
                   focusBorderColor="#C28840"
                   value={formData.phone}
+                  onChange={handleChange}
+                />
+              </FormControl>
+
+              <FormControl isRequired>
+                <FormLabel color="gray.400">Subject</FormLabel>
+                <Input
+                  placeholder="What is this regarding?"
+                  name="subject"
+                  variant="filled"
+                  focusBorderColor="#C28840"
+                  value={formData.subject}
                   onChange={handleChange}
                 />
               </FormControl>
@@ -252,6 +276,8 @@ export const Contact: React.FC = () => {
               <Button
                 type="submit"
                 isLoading={loading}
+                loadingText="Sending..."
+                isDisabled={loading}
                 size="lg"
                 w="full"
                 bgGradient="linear(to-r, #C28840, #fff)"

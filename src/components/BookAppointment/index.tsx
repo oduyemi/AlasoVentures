@@ -25,14 +25,14 @@ const MotionButton = motion(Button);
 export const BookAppointment = () => {
   const toast = useToast();
   const [formData, setFormData] = useState({
-    name: "",
+    fullname: "",
     email: "",
     phone: "",
-    date: "",
+    proposedDate: "",
     service: "",
-    message: "",
+    additionalNotes: "",
   });
-
+  const [loading, setLoading] = useState(false);
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -41,22 +41,55 @@ export const BookAppointment = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = () => {
-    toast({
-      title: "Appointment booked.",
-      description: "We'll contact you shortly to confirm.",
-      status: "success",
-      duration: 5000,
-      isClosable: true,
-    });
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      date: "",
-      service: "",
-      message: "",
-    });
+  const handleSubmit = async (
+    e?: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e?.preventDefault();
+  
+    setLoading(true);
+  
+    try {
+      const response = await fetch("/api/appointment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      const result = await response.json();
+  
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to book appointment");
+      }
+  
+      toast({
+        title: "Appointment Booked",
+        description: result.message,
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+  
+      setFormData({
+        fullname: "",
+        email: "",
+        phone: "",
+        proposedDate: "",
+        service: "",
+        additionalNotes: "",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Booking Failed",
+        description: error.message || "Something went wrong.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   // animation for staggered fields
@@ -111,16 +144,17 @@ export const BookAppointment = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          <SimpleGrid columns={{ base: 1, md: 2 }} spacing={8}>
-            {/* Left column - personal info */}
-            <VStack spacing={5}>
+          <form onSubmit={handleSubmit}>
+            <SimpleGrid columns={{ base: 1, md: 2 }} spacing={8}>
+              {/* Left column - personal info */}
+              <VStack spacing={5}>
               {[
                 {
                   label: "Full Name",
-                  name: "name",
+                  name: "fullname",
                   type: "text",
                   required: true,
-                  placeholder: "Your name",
+                  placeholder: "Your full name",
                 },
                 {
                   label: "Email",
@@ -133,12 +167,12 @@ export const BookAppointment = () => {
                   label: "Phone Number",
                   name: "phone",
                   type: "tel",
-                  required: false,
+                  required: true,
                   placeholder: "+234...",
                 },
                 {
-                  label: "Appointment Date",
-                  name: "date",
+                  label: "Proposed Appointment Date",
+                  name: "proposedDate",
                   type: "date",
                   required: true,
                   placeholder: "",
@@ -154,6 +188,7 @@ export const BookAppointment = () => {
                   w="full"
                 >
                   <FormLabel color="gray.300">{field.label}</FormLabel>
+
                   <Input
                     name={field.name}
                     type={field.type}
@@ -169,85 +204,89 @@ export const BookAppointment = () => {
                   />
                 </MotionFormControl>
               ))}
-            </VStack>
+                            
+              </VStack>
 
-            {/* Right column - service + notes */}
-            <VStack spacing={5}>
-              <MotionFormControl
-                isRequired
-                variants={fieldVariant}
-                initial="hidden"
-                animate="visible"
-                custom={4}
-                w="full"
-              >
-                <FormLabel color="gray.300">Service</FormLabel>
-                <Select
-                  name="service"
-                  value={formData.service}
-                  onChange={handleChange}
-                  placeholder="Select a service"
-                  bg="gray.800"
-                  color="gray.100"
-                  _focus={{
-                    borderColor: "#C28840",
-                    boxShadow: "0 0 0 1px #C28840",
-                  }}
+              {/* Right column - service + notes */}
+              <VStack spacing={5}>
+                <MotionFormControl
+                  isRequired
+                  variants={fieldVariant}
+                  initial="hidden"
+                  animate="visible"
+                  custom={4}
+                  w="full"
                 >
-                  <option style={{ background: "#1A202C" }}>Custom Aso-Oke</option>
-                  <option style={{ background: "#1A202C" }}>Made to Fit</option>
-                </Select>
-              </MotionFormControl>
+                  <FormLabel color="gray.300">Service</FormLabel>
+                  <Select
+                    name="service"
+                    value={formData.service}
+                    onChange={handleChange}
+                    placeholder="Select a service"
+                    bg="gray.800"
+                    color="gray.100"
+                    _focus={{
+                      borderColor: "#C28840",
+                      boxShadow: "0 0 0 1px #C28840",
+                    }}
+                  >
+                    <option style={{ background: "#1A202C" }}>Custom Fabrics</option>
+                    <option style={{ background: "#1A202C" }}>Custom Styles (Made to Fit)</option>
+                    <option style={{ background: "#1A202C" }}>Others</option>
+                  </Select>
+                </MotionFormControl>
 
-              <MotionFormControl
-                variants={fieldVariant}
-                initial="hidden"
-                animate="visible"
-                custom={5}
-                w="full"
-              >
-                <FormLabel color="gray.300">Additional Notes</FormLabel>
-                <Textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder="Describe your idea, colors, or any special request"
-                  bg="gray.800"
-                  color="gray.100"
-                  rows={6}
-                  _focus={{
-                    borderColor: "#C28840",
-                    boxShadow: "0 0 0 1px #C28840",
-                  }}
-                />
-              </MotionFormControl>
-            </VStack>
-          </SimpleGrid>
-
-          {/* Submit button */}
-          <MotionButton
-            size="lg"
-            width="full"
-            mt={8}
-            onClick={handleSubmit}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 300 }}
-            variants={fieldVariant}
-            initial="hidden"
-            animate="visible"
-            custom={6}
-            bgGradient="linear(to-r, #C28840, #fff)"
-            color="black"
-            fontWeight="semibold"
-            rounded="xl"
-            _hover={{
-              transform: "translateY(-2px)",
-              boxShadow: "0 8px 20px rgba(194,136,64,0.5)",
-            }}
-          >
-            Submit Appointment
-          </MotionButton>
+                <MotionFormControl
+                  variants={fieldVariant}
+                  initial="hidden"
+                  animate="visible"
+                  custom={5}
+                  w="full"
+                >
+                  <FormLabel color="gray.300">Additional Notes</FormLabel>
+                  <Textarea
+                    name="additionalNotes"
+                    value={formData.additionalNotes}
+                    onChange={handleChange}
+                    placeholder="Describe your idea, colors, or any special request"
+                    bg="gray.800"
+                    color="gray.100"
+                    rows={6}
+                    _focus={{
+                      borderColor: "#C28840",
+                      boxShadow: "0 0 0 1px #C28840",
+                    }}
+                  />
+                </MotionFormControl>
+              </VStack>
+            </SimpleGrid>
+            <MotionButton
+              size="lg"
+              type="submit"
+              isLoading={loading}
+              loadingText="Booking..."
+              isDisabled={loading}
+              width="full"
+              mt={8}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              variants={fieldVariant}
+              initial="hidden"
+              animate="visible"
+              custom={6}
+              bgGradient="linear(to-r, #C28840, #fff)"
+              color="black"
+              fontWeight="semibold"
+              rounded="xl"
+              _hover={{
+                transform: "translateY(-2px)",
+                boxShadow: "0 8px 20px rgba(194,136,64,0.5)",
+              }}
+            >
+              Submit Appointment
+            </MotionButton>
+          </form>
         </MotionBox>
       </Container>
     </Box>

@@ -160,19 +160,19 @@ export default function CustomOrderDialog() {
             status: "warning",
           });
 
-          return false;
+          return [];;
         }
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (!emailRegex.test(formData.email.trim())) {
+        if (!emailRegex.test(formData.email)) {
           toast({
             title: "Invalid Email",
-            description: "Please enter a valid email address.",
+            description:
+              "Please enter a valid email address.",
             status: "warning",
           });
 
-          return false;
+          return [];;
         }
 
         const phoneDigits = formData.phone.replace(/\D/g, "");
@@ -184,7 +184,7 @@ export default function CustomOrderDialog() {
             status: "warning",
           });
 
-          return false;
+          return [];;
         }
 
         break;
@@ -197,7 +197,7 @@ export default function CustomOrderDialog() {
             status: "warning",
           });
   
-          return false;
+          return [];;
         }
         break;
   
@@ -210,9 +210,25 @@ export default function CustomOrderDialog() {
               status: "warning",
             });
   
-            return false;
+            return [];;
           }
   
+          if (
+            formData.category === "couple") {
+            const missingPartnerMeasurement = currentMeasurementFields.some(
+              (field) => !formData.partnerMeasurements[field]?.trim()
+            );
+          
+            if (missingPartnerMeasurement) {
+              toast({
+                title: "Partner Measurements Required",
+                description: "Please complete all partner measurement fields.",
+                status: "warning",
+              });
+          
+              return [];;
+            }
+          }
           if (
             formData.category === "couple" &&
             !formData.partnerStandardSize
@@ -224,29 +240,38 @@ export default function CustomOrderDialog() {
               status: "warning",
             });
   
-            return false;
+            return [];;
           }
         } else {
-          const missingMeasurements =
-          currentMeasurementFields.some(
-            (field) =>
-              !formData.measurements[field]?.trim()
+          const missingMeasurement = currentMeasurementFields.some(
+            (field) => !formData.measurements[field]?.trim()
           );
-
-          if (missingMeasurements) {
+          
+          if (missingMeasurement) {
             toast({
               title: "Measurements Required",
               description:
-                "Please complete all required measurements.",
+                "Please complete all measurement fields.",
               status: "warning",
             });
-
-            return false;
+          
+            return [];;
           }
         }
         break;
   
       case 4:
+        const quantity = Number(formData.quantity);
+        if (Number.isNaN(quantity) || quantity < 1) {
+          toast({
+            title: "Invalid Quantity",
+            description:
+              "Quantity must be at least 1.",
+            status: "warning",
+          });
+
+          return [];;
+        }
         if (
           !formData.fabricType.trim() ||
           !formData.fabricColor.trim() ||
@@ -259,7 +284,7 @@ export default function CustomOrderDialog() {
             status: "warning",
           });
   
-          return false;
+          return [];;
         }
         break;
   
@@ -272,7 +297,7 @@ export default function CustomOrderDialog() {
             status: "warning",
           });
   
-          return false;
+          return [];;
         }
         break;
     }
@@ -280,28 +305,20 @@ export default function CustomOrderDialog() {
     return true;
   };
 
-  const availableStyles = useMemo(() => {
-    if (formData.category === "male") return maleStyles;
-    if (formData.category === "female") return femaleStyles;
-    if (formData.category === "couple") {
-      const missingPartnerMeasurements =
-        currentMeasurementFields.some(
-          (field) =>
-            !formData.partnerMeasurements[field]?.trim()
-        );
-    
-      if (missingPartnerMeasurements) {
-        toast({
-          title: "Partner Measurements Required",
-          description:
-            "Please complete all partner measurements.",
-          status: "warning",
-        });
-    
-        return false;
-      }
+  const availableStyles = useMemo((): string[] => {
+    switch (formData.category) {
+      case "male":
+        return maleStyles;
+  
+      case "female":
+        return femaleStyles;
+  
+      case "couple":
+        return ["couple_set"];
+  
+      default:
+        return [];
     }
-    return ["couple_set"];
   }, [formData.category]);
 
   
@@ -357,19 +374,8 @@ export default function CustomOrderDialog() {
         status: "warning",
       });
   
-      return false;
+      return [];;
     }
-  
-    // if (!formData.confirmed) {
-    //   toast({
-    //     title: "Confirmation Required",
-    //     description:
-    //       "Please confirm your details.",
-    //     status: "warning",
-    //   });
-  
-    //   return false;
-    // }
   
     return true;
   };
@@ -386,6 +392,7 @@ export default function CustomOrderDialog() {
       });
       return;
     }
+    if (submitting) return;
   
     try {
       setSubmitting(true);
@@ -433,7 +440,7 @@ export default function CustomOrderDialog() {
           status: "warning",
         });
       
-        return false;
+        return [];;
       }
   
       const response = await fetch(
@@ -743,7 +750,7 @@ export default function CustomOrderDialog() {
                   accept="image/png,image/jpeg,image/webp"
                   onChange={(e) => {
                     const files = Array.from(e.target.files || []);
-        
+                  
                     if (files.length > 5) {
                       toast({
                         title: "Too many images",
@@ -752,21 +759,20 @@ export default function CustomOrderDialog() {
                       });
                       return;
                     }
-
+                  
                     const oversized = files.find(
                       (file) => file.size > 5 * 1024 * 1024
                     );
-                    
+                  
                     if (oversized) {
                       toast({
                         title: "File too large",
                         description: `${oversized.name} exceeds the 5MB limit`,
                         status: "warning",
                       });
-                    
                       return;
                     }
-                    
+                  
                     setFormData((prev) => ({
                       ...prev,
                       images: files,
