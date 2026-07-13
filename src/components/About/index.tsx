@@ -161,7 +161,7 @@ export const AboutUs = () => {
               transition="all 0.4s ease"
             >
               <MotionImage
-                src="/images/abthero.jpg"
+                src="/images/abthero.JPG"
                 alt="Weaving Aso-Oke fabric"
                 objectFit="cover"
                 w="full"

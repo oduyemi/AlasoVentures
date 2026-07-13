@@ -31,13 +31,13 @@ const MotionModalContent = motion(ModalContent);
 const services = [
   {
     title: "Custom Aso-Oke",
-    image: "/images/custom.jpg",
+    image: "/images/custom.JPG",
     description:
       "Design your own Aso-Oke with unique color combinations, motifs, and weaves. Perfect for individuals and couples looking for personalized elegance.",
   },
   {
     title: "Made to Fit",
-    image: "/images/made.jpg",
+    image: "/images/made.JPG",
     description:
       "Experience bespoke tailoring crafted to your measurements and taste. Whether it's traditional or contemporary, our design team brings your vision to life.",
   },
