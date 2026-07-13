@@ -91,7 +91,7 @@ export const Footer: React.FC = () => {
                   </GridItem>
                   <GridItem>
                     <VStack align="start" spacing={2} style={{ marginTop: "20%" }} className="whitie">
-                      <Link href="/services" _hover={{ color: "#C28840" }}>Services</Link>
+                      <Link href="/faq" _hover={{ color: "#C28840" }}>FAQs</Link>
                       <Link href="/contact" _hover={{ color: "#C28840" }}>Contact</Link>
                     </VStack>
                   </GridItem>

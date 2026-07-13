@@ -8,39 +8,79 @@ import {
   import { motion, AnimatePresence } from "framer-motion";
   import { useEffect, useState } from "react";
   
+
+  interface Testimonial {
+    _id: string;
+    fullname: string;
+    email: string;
+    who: string;
+    testimony: string;
+    status: string;
+  }
+
+
   const MotionBox = motion(Box);
   
-  const testimonials = [
-    {
-      name: "Amina O.",
-      role: "Client",
-      text: "The quality is unmatched. The fabric feels premium and the delivery was faster than expected.",
-    },
-    {
-      name: "Chioma K.",
-      role: "Returning Customer",
-      text: "Every order feels like a luxury experience. The packaging alone is top-tier.",
-    },
-    {
-      name: "Tolu A.",
-      role: "Fashion Enthusiast",
-      text: "Their attention to detail is incredible. Easily one of the best I've worked with.",
-    },
-  ];
+  // const testimonials = [
+  //   {
+  //     name: "Amina O.",
+  //     role: "Client",
+  //     text: "The quality is unmatched. The fabric feels premium and the delivery was faster than expected.",
+  //   },
+  //   {
+  //     name: "Chioma K.",
+  //     role: "Returning Customer",
+  //     text: "Every order feels like a luxury experience. The packaging alone is top-tier.",
+  //   },
+  //   {
+  //     name: "Tolu A.",
+  //     role: "Fashion Enthusiast",
+  //     text: "Their attention to detail is incredible. Easily one of the best I've worked with.",
+  //   },
+  // ];
   
   export const SocialProof: React.FC = () => {
     const [index, setIndex] = useState(0);
+    const [loading, setLoading] = useState(true);
+    const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   
     useEffect(() => {
+      const fetchTestimonials = async () => {
+        try {
+          const res = await fetch("/api/testimonials/approved");
+          const data = await res.json();
+    
+          if (data.success) {
+            const approved = data.testimonials.filter(
+              (item: Testimonial) => item.status === "approved"
+            );
+    
+            setTestimonials(approved);
+          }
+        } catch (error) {
+          console.error("Failed to fetch testimonials", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+    
+      fetchTestimonials();
+    }, []);
+    
+    useEffect(() => {
+      if (testimonials.length <= 1) return;
+    
       const interval = setInterval(() => {
         setIndex((prev) => (prev + 1) % testimonials.length);
       }, 7000);
+    
       return () => clearInterval(interval);
-    }, []);
+    }, [testimonials.length]);
+
+    const current = testimonials[index] || null;
   
     return (
       <Box bg="white" pt={0} pb={{ base: 24, md: 32 }} px={6} position="relative">
-        {/* 🔥 FLOATING CONTAINER (overlaps hero) */}
         <Box
           maxW="7xl"
           mx="auto"
@@ -48,7 +88,6 @@ import {
           position="relative"
           zIndex={2}
         >
-          {/* 🔥 BACKGROUND GLOW */}
           <Box
             position="absolute"
             inset={0}
@@ -79,9 +118,7 @@ import {
             opacity={0.4}
           />
   
-          {/* CONTENT */}
           <Box position="relative" p={{ base: 6, md: 12 }}>
-            {/* 🔥 STATS FIRST (IMMEDIATE IMPACT) */}
             <SimpleGrid columns={{ base: 1, md: 3 }} spacing={8} mb={20}>
               {[
                 { value: "500+", label: "Happy Clients", color: "purple.500" },
@@ -112,107 +149,143 @@ import {
               ))}
             </SimpleGrid>
   
-            {/* 🔥 TESTIMONIAL */}
-            <Flex
-              direction={{ base: "column", md: "row" }}
-              gap={{ base: 10, md: 20 }}
-              align="center"
-            >
-              {/* LEFT */}
-              <Box flex={1} position="relative">
-                <Text
-                  position="absolute"
-                  top="-40px"
-                  left="-10px"
-                  fontSize="140px"
-                  color="blackAlpha.100"
-                  fontFamily="serif"
-                >
-                  “
+            {loading ? (
+              <Box textAlign="center" py={10}>
+                <Text color="gray.500">Loading testimonials...</Text>
+              </Box>
+            ) : testimonials.length === 0 ? (
+              <MotionBox
+                maxW="3xl"
+                mx="auto"
+                p={10}
+                borderRadius="2xl"
+                bg="white"
+                textAlign="center"
+                boxShadow="0 15px 40px rgba(0,0,0,0.06)"
+              >
+                <Text fontSize="5xl" mb={4}>
+                  💬
                 </Text>
-  
-                <AnimatePresence mode="wait">
-                  <MotionBox
-                    key={index}
-                    p={10}
-                    borderRadius="2xl"
-                    bg="rgba(255,255,255,0.7)"
-                    backdropFilter="blur(16px)"
-                    boxShadow="0 30px 80px rgba(0,0,0,0.08)"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
+
+                <Text
+                  fontSize="2xl"
+                  fontWeight="bold"
+                  mb={3}
+                  bgGradient="linear(to-r, #C28840, #000)"
+                  bgClip="text"
+                >
+                  Your Story Could Be The First
+                </Text>
+
+                <Text color="gray.600" maxW="600px" mx="auto">
+                  We are committed to delivering exceptional craftsmanship and
+                  memorable experiences. Be among the first to share your
+                  testimony with the Kòfowórọlá Alásọ Ventures family.
+                </Text>
+              </MotionBox>
+            ) : (
+              <Flex
+                direction={{ base: "column", md: "row" }}
+                gap={{ base: 10, md: 20 }}
+                align="center"
+              >
+                {/* LEFT */}
+                <Box flex={1} position="relative">
+                  <Text
+                    position="absolute"
+                    top="-40px"
+                    left="-10px"
+                    fontSize="140px"
+                    color="blackAlpha.100"
+                    fontFamily="serif"
                   >
-                    <Text fontSize={{ base: "lg", md: "2xl" }}>
-                      {testimonials[index].text}
-                    </Text>
-                  </MotionBox>
-                </AnimatePresence>
-  
-                {/* progress */}
-                <Box mt={8} h="3px" bg="gray.200" borderRadius="full">
-                  <MotionBox
-                    key={index}
-                    h="100%"
-                    borderRadius="full"
-                    bgGradient="linear(to-r, purple.400, orange.400)"
-                    initial={{ width: "0%" }}
-                    animate={{ width: "100%" }}
-                    transition={{ duration: 7, ease: "linear" }}
-                  />
-                </Box>
-              </Box>
-  
-              {/* RIGHT */}
-              <Box flex={0.4}>
-                <AnimatePresence mode="wait">
-                  <MotionBox
-                    key={index}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                  >
-                    <Flex
-                      p={6}
-                      borderRadius="xl"
-                      bg="white"
-                      boxShadow="0 10px 30px rgba(0,0,0,0.05)"
-                      align="center"
-                      gap={4}
+                    “
+                  </Text>
+            
+                  <AnimatePresence mode="wait">
+                    <MotionBox
+                      key={current?._id}
+                      p={10}
+                      borderRadius="2xl"
+                      bg="rgba(255,255,255,0.7)"
+                      backdropFilter="blur(16px)"
+                      boxShadow="0 30px 80px rgba(0,0,0,0.08)"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
                     >
-                      <Avatar name={testimonials[index].name} />
-  
-                      <Box>
-                        <Text fontWeight="bold">
-                          {testimonials[index].name}
-                        </Text>
-                        <Text fontSize="sm" color="gray.500">
-                          {testimonials[index].role}
-                        </Text>
-                      </Box>
-                    </Flex>
-                  </MotionBox>
-                </AnimatePresence>
-  
-                {/* dots */}
-                <Flex mt={8} gap={2}>
-                  {testimonials.map((_, i) => (
-                    <Box
-                      key={i}
-                      onClick={() => setIndex(i)}
-                      cursor="pointer"
-                      w={index === i ? "20px" : "6px"}
-                      h="6px"
+                      <Text fontSize={{ base: "lg", md: "2xl" }}>
+                        {current?.testimony}
+                      </Text>
+                    </MotionBox>
+                  </AnimatePresence>
+            
+                  <Box mt={8} h="3px" bg="gray.200" borderRadius="full">
+                    <MotionBox
+                      key={index}
+                      h="100%"
                       borderRadius="full"
-                      bg={index === i ? "purple.500" : "gray.300"}
-                      transition="all 0.3s ease"
+                      bgGradient="linear(to-r, purple.400, orange.400)"
+                      initial={{ width: "0%" }}
+                      animate={{ width: "100%" }}
+                      transition={{ duration: 7, ease: "linear" }}
                     />
-                  ))}
-                </Flex>
-              </Box>
-            </Flex>
+                  </Box>
+                </Box>
+            
+                {/* RIGHT */}
+                <Box flex={0.4}>
+                  <AnimatePresence mode="wait">
+                    <MotionBox
+                      key={current?._id}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                    >
+                      <Flex
+                        p={6}
+                        borderRadius="xl"
+                        bg="white"
+                        boxShadow="0 10px 30px rgba(0,0,0,0.05)"
+                        align="center"
+                        gap={4}
+                      >
+                        <Avatar name={current?.fullname} />
+            
+                        <Box>
+                          <Text fontWeight="bold">
+                            {current?.fullname}
+                          </Text>
+            
+                          <Text fontSize="sm" color="gray.500">
+                            {current?.who}
+                          </Text>
+                        </Box>
+                      </Flex>
+                    </MotionBox>
+                  </AnimatePresence>
+            
+                  <Flex mt={8} gap={2}>
+                    {testimonials.length > 1 &&
+                      testimonials.map((_, i) => (
+                        <Box
+                          key={i}
+                          onClick={() => setIndex(i)}
+                          cursor="pointer"
+                          w={index === i ? "20px" : "6px"}
+                          h="6px"
+                          borderRadius="full"
+                          bg={index === i ? "purple.500" : "gray.300"}
+                          transition="all 0.3s ease"
+                        />
+                      ))}
+                  </Flex>
+                </Box>
+              </Flex>
+            )}
           </Box>
         </Box>
       </Box>
+
     );
   };

@@ -44,68 +44,36 @@ export default function TestimonyWa() {
     status: "approved" | "disapproved"
   ) => {
     try {
-      setTestimonials((prev) =>
-        prev.map((t) =>
-          t.id === id ? { ...t, status } : t
-        )
-      );
-
       const res = await fetch(`/api/testimonials/${id}`, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ status }),
       });
 
       const data = await res.json();
 
-      if (!data.success) throw new Error(data.message);
+      if (!data.success) {
+        throw new Error(data.message);
+      }
 
       toast({
-        title: "Status updated",
+        title: "Success",
+        description: `Testimonial ${status}`,
         status: "success",
       });
-    } catch (err: any) {
+
+      await fetchTestimonials();
+    } catch (error: any) {
       toast({
-        title: "Update failed",
-        description: err.message,
+        title: "Error",
+        description:
+          error.message || "Failed to update testimonial",
         status: "error",
       });
-
-      fetchTestimonials(); 
     }
   };
-
-  /**
-   * DELETE (optional improvement — your API supports it)
-   */
-//   const handleDelete = async (id: string) => {
-//     try {
-//       setTestimonials((prev) =>
-//         prev.filter((t) => t.id !== id)
-//       );
-
-//       const res = await fetch(`/api/testimonials/${id}`, {
-//         method: "DELETE",
-//       });
-
-//       const data = await res.json();
-
-//       if (!data.success) throw new Error(data.message);
-
-//       toast({
-//         title: "Deleted successfully",
-//         status: "success",
-//       });
-//     } catch (err: any) {
-//       toast({
-//         title: "Delete failed",
-//         description: err.message,
-//         status: "error",
-//       });
-
-//       fetchTestimonials();
-//     }
-//   };
 
   return (
     <Box>

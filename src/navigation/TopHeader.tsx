@@ -46,7 +46,7 @@ export const TopHeader: React.FC = () => {
         >
           <Link color="gray.100" href="/">Home</Link>
           <Link color="gray.100" href="/about">About</Link>
-          <Link color="gray.100" href="/services">Services</Link>
+          {/* <Link color="gray.100" href="/services">Services</Link> */}
           <Link color="gray.100" href="/#testimonies">Testimonials</Link>
           <Link color="gray.100" href="/faq">FAQs</Link>
           <Link color="gray.100" href="/blog">Blog</Link>
