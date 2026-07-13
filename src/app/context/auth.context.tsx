@@ -18,6 +18,11 @@ export interface User {
   lname: string;
   email: string;
   role: Role;
+  image?: string;
+  firstLogin: boolean;
+  lastLogin?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface AuthContextType {

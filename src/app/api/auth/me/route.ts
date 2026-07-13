@@ -13,8 +13,17 @@ export async function GET() {
     }
 
     return NextResponse.json({
-      user,
-      firstLogin: user.firstLogin,
+      user: {
+        _id: user._id,
+        fname: user.fname,
+        lname: user.lname,
+        email: user.email,
+        role: user.role,
+        image: user.image,
+        firstLogin: user.firstLogin,
+        lastLogin: user.lastLogin,
+        createdAt: user.createdAt,
+      },
     });
   } catch (error) {
     console.error("ME ERROR:", error);

@@ -11,9 +11,9 @@ import {
   AlertIcon,
 } from "@chakra-ui/react";
 import { LockIcon } from "@chakra-ui/icons";
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth, User } from "../../../app/context/auth.context";
+import { useAuth } from "../../../app/context/auth.context";
 
 
 export const AdminLogin = () => {
@@ -25,38 +25,42 @@ export const AdminLogin = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
-  const redirectTimeout = useRef<NodeJS.Timeout | null>(null);
-
-  useEffect(() => {
-    return () => {
-      if (redirectTimeout.current) {
-        clearTimeout(redirectTimeout.current);
-      }
-    };
-  }, []);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+  
+    setError("");
+    setLoading(true);
   
     try {
       const res = await fetch("/api/auth/login", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ email, password }),
       });
   
       const data = await res.json();
   
-      if (!res.ok) throw new Error(data.error);
+      if (!res.ok) {
+        throw new Error(data.error || "Login failed");
+      }
   
       localStorage.setItem("token", data.token);
-      localStorage.setItem("auth_user", JSON.stringify(data.user));
   
       setUser(data.user);
   
-      router.push("/admin");
+      setSuccess(true);
+
+      if (data.isFirstLogin) {
+        router.push("/admin/profile");
+      } else {
+        router.push("/admin");
+      }
     } catch (err: any) {
-      setError(err.message);
+      setError(err.message || "Something went wrong.");
+    } finally {
+      setLoading(false);
     }
   };
 

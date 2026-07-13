@@ -216,6 +216,7 @@ export const Contact: React.FC = () => {
                 <Input
                   placeholder="Your full name"
                   name="fullname"
+                  className="text-primary"
                   variant="filled"
                   focusBorderColor="#C28840"
                   value={formData.fullname}
@@ -228,6 +229,7 @@ export const Contact: React.FC = () => {
                 <Input
                   type="email"
                   placeholder="you@example.com"
+                  className="text-primary"
                   name="email"
                   variant="filled"
                   focusBorderColor="#C28840"
@@ -239,8 +241,9 @@ export const Contact: React.FC = () => {
               <FormControl isRequired>
                 <FormLabel color="gray.400">Phone</FormLabel>
                 <Input
-                  placeholder="Optional"
+                  placeholder="+234"
                   name="phone"
+                  className="text-primary"
                   variant="filled"
                   focusBorderColor="#C28840"
                   value={formData.phone}
@@ -253,6 +256,7 @@ export const Contact: React.FC = () => {
                 <Input
                   placeholder="What is this regarding?"
                   name="subject"
+                  className="text-primary"
                   variant="filled"
                   focusBorderColor="#C28840"
                   value={formData.subject}
@@ -264,6 +268,7 @@ export const Contact: React.FC = () => {
                 <FormLabel color="gray.400">Message</FormLabel>
                 <Textarea
                   placeholder="Tell us what you need..."
+                  className="text-primary"
                   rows={5}
                   name="message"
                   variant="filled"

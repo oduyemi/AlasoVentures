@@ -17,6 +17,7 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import {
   FiHome,
+  FiMail,
   FiShoppingBag,
   FiShoppingCart,
   FiPackage,
@@ -44,7 +45,7 @@ export function Sidebar({ logoutAdmin }: SidebarProps) {
   const isActive = (path: string) => pathname.startsWith(path);
   const contentMenu = [
     { label: "Dashboard", path: "/admin", icon: FiHome },
-    { label: "Forms", path: "/admin/forms", icon: FiUsers},
+    { label: "Inbox", path: "/admin/inbox", icon: FiMail},
     { label: "Products", path: "/admin/products", icon: FiPackage },
     { label: "Flash Sales", path: "/admin/sales", icon: FiShoppingBag },
     { label: "Custom Orders", path: "/admin/custom-orders", icon: FiShoppingBag },

@@ -51,13 +51,19 @@ export async function handleLogin(req: Request, allowedRole: Role) {
   const user = await User.findOne({ email }).select("+password");
 
   if (!user) {
-    return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
+    return NextResponse.json(
+      { error: "Invalid credentials" },
+      { status: 401 }
+    );
   }
 
   const isMatch = await bcrypt.compare(password, user.password);
 
   if (!isMatch) {
-    return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
+    return NextResponse.json(
+      { error: "Invalid credentials" },
+      { status: 401 }
+    );
   }
 
   if (user.role !== allowedRole) {
@@ -67,21 +73,43 @@ export async function handleLogin(req: Request, allowedRole: Role) {
     );
   }
 
+  // Was this the user's first successful login?
+  const isFirstLogin = !user.firstLogin;
+
+  if (isFirstLogin) {
+    user.firstLogin = true;
+  }
+
+  // Update last login every time
+  user.lastLogin = new Date();
+
+  await user.save();
+
   const token = jwt.sign(
-    { userId: user._id.toString(), role: user.role },
+    {
+      userId: user._id.toString(),
+      role: user.role,
+    },
     process.env.JWT_SECRET!,
-    { expiresIn: "7d" }
+    {
+      expiresIn: "7d",
+    }
   );
 
   return NextResponse.json({
-    token, 
+    token,
+    isFirstLogin,
     user: {
       _id: user._id,
       fname: user.fname,
       lname: user.lname,
       email: user.email,
       role: user.role,
+      image: user.image,
+      firstLogin: user.firstLogin,
+      lastLogin: user.lastLogin,
+      createdAt: user.createdAt,
+      updatedAt:user.updatedAt
     },
-    firstLogin: user.firstLogin
   });
 }
