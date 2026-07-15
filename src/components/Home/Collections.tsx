@@ -28,7 +28,7 @@ const fadeInUp = {
 
 export const HomeCollections = () => {
   const items = [
-    { title: "Custom Asọòkè", image: "/images/new_asooke.JPG", link: "shop/?filter=Asooke" },
+    { title: "Custom Asọòkè", image: "/images/asooke.JPG", link: "shop/?filter=Asooke" },
     { title: "Off the Shelf", image: "/images/shelf.jpeg", link: "shop/?filter=Off%20the%20Shelf" },
     { title: "Ready to Wear", image: "/images/cstm.jpg", link: "custom-orders" },
     { title: "Made to Fit", image: "/images/to_fit.jpg", link: "shop" },
