@@ -244,7 +244,7 @@ export const AboutHero = () => {
                   lineHeight="1.8"
                 >
                   Every woven textile reflects generations of craftsmanship,
-                  cultural identity, and artistry—carefully created to honour
+                  cultural identity, and artistry, carefully created to honour
                   Africa's rich weaving heritage.
                 </Text>
               </Box>
