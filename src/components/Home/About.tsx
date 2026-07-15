@@ -113,7 +113,7 @@ export const AboutSection = () => {
             </MotionText>
 
             <MotionText
-              fontSize="md"
+              fontSize="lg"
               color={textColor}
               lineHeight="tall"
             >
@@ -124,7 +124,7 @@ export const AboutSection = () => {
             </MotionText>
 
             <MotionText
-              fontSize="md"
+              fontSize="lg"
               color={textColor}
               lineHeight="tall"
             >
