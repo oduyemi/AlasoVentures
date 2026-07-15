@@ -23,7 +23,7 @@ const collections = [
   {
     title: "Asooke",
     subtitle: "Ceremonial Heritage",
-    image: "/images/asooke.jpg",
+    image: "/images/asooke.JPG",
     href: "/shop?filter=Asooke",
     description:
       "Luxurious handwoven ceremonial cloths featuring bold patterns, vibrant colours, and metallic threads. A timeless choice for weddings, celebrations, and prestigious occasions.",
