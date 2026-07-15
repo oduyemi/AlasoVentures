@@ -6,10 +6,13 @@ import {
   Image,
   Text,
   VStack,
+  HStack,
+  Button,
   useColorModeValue,
   useBreakpointValue,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const MotionBox = motion(Box);
 const MotionImage = motion(Image);
@@ -72,15 +75,17 @@ export const AboutSection = () => {
             fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}
             fontWeight="semibold"
             lineHeight="short"
+            bgGradient="linear(to-r, #C28840, #0D0D0D)"
+            bgClip="text"
           >
-            Kòfowórọlá Alásọ
+            Preserving Africa's Woven Heritage
           </Heading>
 
           {/* gold accent */}
           <Box mt={4} w="60px" h="2px" bg="#C28840" mb={8} />
 
           <VStack align="start" spacing={6}>
-            <MotionText
+            {/* <MotionText
               fontSize="lg"
               color={textColor}
               lineHeight="tall"
@@ -93,33 +98,40 @@ export const AboutSection = () => {
               </Text>
               , our brand celebrates heritage, craftsmanship, and culture through
               timeless fashion and fabric artistry.
+            </MotionText> */}
+            <MotionText
+              fontSize="lg"
+              color={textColor}
+              lineHeight="tall"
+            >
+              <Text as="span" fontWeight="bold" color="#C28840">
+                Kòfowórọlá Alásọ
+              </Text>{" "}
+              celebrates the rich textile traditions of Nigeria and West Africa,
+              bringing together authentic handwoven fabrics crafted by skilled
+              artisans whose knowledge has been passed down through generations.
             </MotionText>
 
             <MotionText
               fontSize="md"
               color={textColor}
               lineHeight="tall"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
             >
-              We specialize in bespoke Asọ òkè
-              for individuals and groups—crafted for occasions both locally and
-              internationally. Through EleganceRTW, we reinterpret tradition into
-              modern silhouettes.
+              From the ceremonial elegance of Asooke to the intricate beauty of
+              Akwete, the versatility of Saki, and the vibrant symbolism
+              of Kente, every textile reflects exceptional craftsmanship,
+              cultural identity, and timeless artistry.
             </MotionText>
 
             <MotionText
               fontSize="md"
               color={textColor}
               lineHeight="tall"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
             >
-              Every piece is woven on pre-order, allowing full personalization of
-              pattern, color, and style. This ensures each design is as unique as the
-              individual wearing it.
+              We work directly with local artisans and weaving communities,
+              promoting ethical sourcing, fair compensation, and the preservation
+              of traditional weaving techniques while helping our customers discover
+              fabrics that inspire unforgettable fashion and interior designs.
             </MotionText>
 
             {/* signature line */}
@@ -134,10 +146,34 @@ export const AboutSection = () => {
               whileInView={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
             >
-              “We don’t just create garments — we weave stories into every thread.”
+              “Every woven fabric carries a story of culture, craftsmanship and generations of artistry.”
             </MotionText>
           </VStack>
+          <HStack spacing={4} pt={6}>
+          <Link href="/about">
+            <Button
+              bg="#C28840"
+              color="white"
+              _hover={{
+                bg: "#A56F32",
+              }}
+            >
+              Our Story
+            </Button>
+          </Link>
+
+          <Link href="/shop">
+            <Button
+              variant="outline"
+              borderColor="#C28840"
+              color="#C28840"
+            >
+              Explore Fabrics
+            </Button>
+          </Link>
+        </HStack>
         </MotionBox>
+        
 
         {/* IMAGE SIDE */}
         <MotionBox
